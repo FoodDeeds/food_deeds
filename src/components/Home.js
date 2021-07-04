@@ -1,16 +1,21 @@
-import React, { Component } from "react";
+import React from "react";
 import Donations from "./Donations";
+import Footer from "./Footer";
 
-export class Home extends Component {
-    render() {
-        return (
+const Home = () => {
+    return (
+        <>
             <div>
                 <h3>LOGO</h3>
                 <h3>About Us</h3>
                 <Donations />
             </div>
-        );
-    }
-}
+
+            <div className="footer__view">
+                <Footer />
+            </div>
+        </>
+    );
+};
 
 export default Home;

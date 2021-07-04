@@ -4,8 +4,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./components/Home";
 import MapSearch from "./components/MapSearch";
-import Footer from "./components/Footer";
-
 import LogIn from "./components/LogIn";
 import Signup from "./components/Signup";
 /**
@@ -26,10 +24,6 @@ const Routes = () => {
                 <Route exact path="/login" component={LogIn} />
                 <Route exact path="/signup" component={Signup} />
             </Switch>
-
-            <div className="overall__footer">
-                <Footer />
-            </div>
         </Router>
     );
 };

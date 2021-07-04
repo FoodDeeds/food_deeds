@@ -1,13 +1,13 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-export class Donations extends Component {
-    render() {
+const Donations = ()=> {
+
         return (
             <div>
                 Donations Posted by Supplier
             </div>
         )
-    }
+
 }
 
 export default Donations

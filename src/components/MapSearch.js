@@ -32,8 +32,8 @@ function MapSearch() {
         });
     });
     return (
-        <div className="App">
-            <header className="App-header">
+        <div className="map__view">
+            <header className="map__header">
                 <h1>This is MapSearch Component</h1>
             </header>
             <div className="sidebar">

@@ -1,0 +1,55 @@
+{
+  "name": "Food Deeds",
+  "description": " The app that fights food insecurity.",
+  "icons": [
+    {
+      "src": "/images/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/icon-192.png",
+      "type": "image/png",
+      "sizes": "256x256",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/icon-192.png",
+      "type": "image/png",
+      "sizes": "384x384",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "scope": ".",
+  "background_color": "#edeef0",
+  "theme_color": "#4ee349",
+  "shortcuts": [
+    {
+      "name": "My Account",
+      "short_name": "Account",
+      "description": "View my account and information",
+      "url": "/account"
+    },
+    {
+      "name": "Sign up for a new account",
+      "short_name": "Sign-up",
+      "description": "View sign up form to create account",
+      "url": "/signup"
+    },
+    {
+      "name": "Login to your account",
+      "short_name": "Login",
+      "description": "View log in form to access account",
+      "url": "/login"
+    }
+  ]
+}

@@ -1,5 +1,14 @@
 {
   "name": "Food Deeds",
+  "short_name": "FD",
+  "scope": "/",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#edeef0",
+  "theme_color": "#4ee349",
+  "dir": "ltr",
+  "lang": "en-US",
+  "orientation": "portrait-primary",
   "description": "Each year, 40% of all edible food in the US is thrown away while 1 in 10 households struggles with food insecurity. At FoodDeeds we strive to bridge the gap and connect food banks with excess products from grocery stores, delis, and cafes.",
   "icons": [
     {
@@ -27,11 +36,6 @@
       "purpose": "any maskable"
     }
   ],
-  "start_url": "/",
-  "display": "standalone",
-  "scope": ".",
-  "background_color": "#edeef0",
-  "theme_color": "#4ee349",
   "shortcuts": [
     {
       "name": "My Account",

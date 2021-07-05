@@ -8,51 +8,55 @@ const LogIn = (props) => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
-    const login = (e) => {
-        e.preventDefault();
+    const login = (evt) => {
+        evt.preventDefault();
         auth.signInWithEmailAndPassword(email, password)
             .then(() => {
+                // after logged in, empty fields, redirect to home page
                 setEmail("");
                 setPassword("");
                 setError("");
-                props.history.push('/');
+                props.history.push("/");
             })
             .catch((err) => setError(err.message));
     };
 
     return (
         <div className="form">
-            <form onSubmit={login}>
-                <ul className="form__container">
-                    <li>
-                        <h2>Sign In</h2>
-                    </li>
-                    <li>
-                        {error && <span className="error__msg">{error}</span>}
-                    </li>
-                    <li>
-                        <label htmlFor="username">Username:</label>
-                        <input name="username" type="text" />
-                    </li>
-                    <li>
-                        <label htmlFor="password">Password:</label>
-                        <input name="password" type="password" />
-                    </li>
-                    <li>
-                        <button type="submit" className="primary__btn">
-                            Login
-                        </button>
-                    </li>
-                    <li>New to Food Deeds?</li>
-                    <li>
-                        <Link to="/signup">
-                            <button className="secondary__btn">
-                                Create New Account
-                            </button>
-                        </Link>
-                    </li>
-                </ul>
+            <br />
+            <h2>Login</h2>
+            <br />
+            <form autoComplete="off" className="form__group" onSubmit={login}>
+                <label htmlFor="email">Email</label>
+                <input
+                    type="email"
+                    className="form__text"
+                    required
+                    onChange={(evt) => setEmail(evt.target.value)}
+                    value={email}
+                />
+                <br />
+                <label htmlFor="password">Password</label>
+                <input
+                    type="password"
+                    className="form__text"
+                    required
+                    onChange={(evt) => setPassword(evt.target.value)}
+                    value={password}
+                />
+                <br />
+                <button type="submit" className="primary__btn">
+                    LOGIN
+                </button>
             </form>
+            {error && <span className="error__msg">{error}</span>}
+            <br />
+            <span>
+                Don't have an account?
+                <Link to="signup">
+                    <button className="secondary__btn">REGISTER</button>
+                </Link>
+            </span>
         </div>
     );
 };

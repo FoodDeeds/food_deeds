@@ -10,8 +10,10 @@ const Signup = (props) => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
-    const signup = (e) => {
-        e.preventDefault();
+    const signup = (evt) => {
+        evt.preventDefault();
+        // console.log("sigup Form submmitted");
+        // console.log(name, email, password, error);
         auth.createUserWithEmailAndPassword(email, password)
             .then((userCred) => {
                 db.collection("SignedUpUsers")
@@ -23,6 +25,7 @@ const Signup = (props) => {
                         Password: password
                     })
                     .then(() => {
+                        // after stored in db, empty fields and redirect to login
                         setName("");
                         setEmail("");
                         setPassword("");
@@ -36,47 +39,49 @@ const Signup = (props) => {
 
     return (
         <div className="form">
-            <form onSubmit={signup} name={name}>
-                <ul className="form__container">
-                    <li>
-                        <h2>Create Account</h2>
-                    </li>
-                    <li>
-                        {error && <span className="error__msg">{error}</span>}
-                    </li>
-                    <li>
-                        <label htmlFor="name">Organization name:</label>
-                        <input name="username" type="text" />
-                    </li>
-                    <li>
-                        <label htmlFor="email">Email:</label>
-                        <input name="email" type="email" />
-                    </li>
-                    <li>
-                        <label htmlFor="password">Password:</label>
-                        <input name="password" type="password" />
-                    </li>
-                    <li>
-                        <label htmlFor="address">Address:</label>
-                        <textarea name="address" type="text" />
-                    </li>
-                    <li>
-                        <label htmlFor="phoneNumber">Phone Number:</label>
-                        <input name="phoneNumber" type="text" />
-                    </li>
-                    <li>
-                        <button type="submit" className="primary__btn">
-                            Register
-                        </button>
-                    </li>
-                    <li>Already have an Account?</li>
-                    <li>
-                        <Link to="/login">
-                            <button className="secondary__btn">Log In</button>
-                        </Link>
-                    </li>
-                </ul>
+            <br />
+            <h2>Sign up</h2>
+            <br />
+            <form autoComplete="off" className="form__group" onSubmit={signup}>
+                <label htmlFor="name">Name</label>
+                <input
+                    type="text"
+                    className="form__text"
+                    required
+                    onChange={(evt) => setName(evt.target.value)}
+                    value={name}
+                />
+                <br />
+                <label htmlFor="email">Email</label>
+                <input
+                    type="email"
+                    className="form__text"
+                    required
+                    onChange={(evt) => setEmail(evt.target.value)}
+                    value={email}
+                />
+                <br />
+                <label htmlFor="passowrd">Password</label>
+                <input
+                    type="password"
+                    className="form__text"
+                    required
+                    onChange={(evt) => setPassword(evt.target.value)}
+                    value={password}
+                />
+                <br />
+                <button type="submit" className="primary__btn">
+                    REGISTER
+                </button>
             </form>
+            {error && <span className="error__msg">{error}</span>}
+            <br />
+            <span>
+                Already have an account?
+                <Link to="login">
+                    <button className="secondary__btn">LOG IN</button>
+                </Link>
+            </span>
         </div>
     );
 };

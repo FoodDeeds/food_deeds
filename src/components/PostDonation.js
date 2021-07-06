@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { db } from "../firebase";
 
 const PostDonation = (props) => {
   const [description, setDescription] = useState("");
@@ -7,10 +8,22 @@ const PostDonation = (props) => {
   const [pickupDate, setPickupDate] = useState("");
   const [pickupTime, setPickupTime] = useState("");
   const [pickupLocation, setPickupLocation] = useState("");
-  const status = true;
+
+  const newDonation = {
+    Description: description,
+    Image: image,
+    Quantity: quantity,
+    PickupDate: pickupDate,
+    PickupTime: pickupTime,
+    PickupLocation: pickupLocation,
+    Status: true,
+  };
 
   const submit = (evt) => {
     evt.preventDefault();
+    db.collection("Donations")
+      .add(newDonation)
+      .catch((err) => console.log("Something went wrong", err));
   };
 
   return (
@@ -28,7 +41,6 @@ const PostDonation = (props) => {
         <label htmlFor="image">Image</label>
         <input
           className="form__text"
-          required
           onChange={(evt) => setImage(evt.target.value)}
           value={image}
         />

@@ -13,6 +13,7 @@ const Signup = (props) => {
     const [password, setPassword] = useState("");
     const [address, setAddress] = useState("");
     const [zipcode, setZipcode] = useState("");
+    const [state, setState] = useState("");
     const [error, setError] = useState("");
 
     const signup = (evt) => {
@@ -32,7 +33,8 @@ const Signup = (props) => {
                         Email: email,
                         Password: password,
                         Address: address,
-                        Zipcode: zipcode
+                        Zipcode: zipcode,
+                        State: state
                     })
                     .then(() => {
                         // after stored in db, empty fields and redirect to login
@@ -44,6 +46,7 @@ const Signup = (props) => {
                         setPassword("");
                         setAddress("");
                         setZipcode("");
+                        setState("");
                         setError("");
                         props.history.push("/login");
                     })
@@ -58,7 +61,7 @@ const Signup = (props) => {
             <h2>Sign up</h2>
             <br />
             <form autoComplete="off" className="form__group" onSubmit={signup}>
-                <label htmlFor="type">Organization Type</label>
+                <label htmlFor="type">Type</label>
                 <select
                     name="type"
                     value={type}
@@ -68,17 +71,18 @@ const Signup = (props) => {
                     <option value="recipient">Recipient</option>
                 </select>
                 <br />
-                <label htmlFor="category">Organization Category</label>
+                <label htmlFor="category">Category</label>
                 <select
                     name="category"
                     value={category}
                     onChange={(evt) => setCategory(evt.target.value)}
                 >
-                    <option value="grocery">Grocery</option>
-                    <option value="restaurant">restaurant</option>
+                    <option value="Grocery">Grocery Store</option>
+                    <option value="Deli">Deli</option>
+                    <option value="Cafe">Cafe</option>
                 </select>
                 <br />
-                <label htmlFor="name">Organization Name</label>
+                <label htmlFor="name">Name</label>
                 <input
                     type="text"
                     className="form__text"
@@ -132,6 +136,15 @@ const Signup = (props) => {
                     onChange={(evt) => setZipcode(evt.target.value)}
                 />
                 <br />
+                <label htmlFor="state">State</label>
+                <input
+                    type="text"
+                    className="form__text"
+                    required
+                    value={state}
+                    onChange={(evt) => setState(evt.target.value)}
+                />
+                <br />
                 <button type="submit" className="primary__btn">
                     REGISTER
                 </button>
@@ -149,3 +162,9 @@ const Signup = (props) => {
 };
 
 export default Signup;
+
+// need to add database snapshot to listen to updates
+// ex: if a document is directly deleted in database and an email no longer exists
+//   --> sign up form does not get notified, site still thinks the email exists
+
+// password hash function?

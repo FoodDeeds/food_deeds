@@ -1,34 +1,34 @@
-const CACHE_STATIC = 'static-1';
-const CACHE_DYNAMIC ='dynamic cache';
+// const CACHE_STATIC = 'static-1';
+// const CACHE_DYNAMIC ='dynamic cache';
 
-window.self.addEventListener('install', function(evt){
-    console.log('[Service Worker] Installing Service Worker', evt);
-    evt.waitUntil(
-        caches.open(CACHE_STATIC)
-        .then(function(cache){
-            console.log('[Service Worker] Precaching App');
-            cache.addAll([
-                '/'
-            ]);
-        })
-    );
-})
+// window.self.addEventListener('install', function(evt){
+//     console.log('[Service Worker] Installing Service Worker', evt);
+//     evt.waitUntil(
+//         caches.open(CACHE_STATIC)
+//         .then(function(cache){
+//             console.log('[Service Worker] Precaching App');
+//             cache.addAll([
+//                 '/'
+//             ]);
+//         })
+//     );
+// })
 
-window.self.addEventListener('activate', function(evt){
-    console.log('[Service Worker] Activating Service Worker', evt);
-    evt.waitUntil(
-        caches.keys()
-        .then(function(keyList) {
-            return Promise.all(keyList.map(function(key) {
-                if((key !== CACHE_STATIC) && (key !== CACHE_DYNAMIC)) {
-                    console.log('[Service Worker] Deleting old cache ', key);
-                    return caches.delete(key);
-                }
-            }));
-        })
-    );
-    return window.self.clients.claim();
-});
+// window.self.addEventListener('activate', function(evt){
+//     console.log('[Service Worker] Activating Service Worker', evt);
+//     evt.waitUntil(
+//         caches.keys()
+//         .then(function(keyList) {
+//             return Promise.all(keyList.map(function(key) {
+//                 if((key !== CACHE_STATIC) && (key !== CACHE_DYNAMIC)) {
+//                     console.log('[Service Worker] Deleting old cache ', key);
+//                     return caches.delete(key);
+//                 }
+//             }));
+//         })
+//     );
+//     return window.self.clients.claim();
+// });
 
 // window.self.addEventListener('fetch', function (event) {
 //   // var url = 'https://httpbin.org/get';

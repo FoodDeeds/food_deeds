@@ -4,7 +4,7 @@ const Donations = ()=> {
 
         return (
             <div>
-                Donations Posted by Supplier
+                Currently Available Donations by Supplier
             </div>
         )
 

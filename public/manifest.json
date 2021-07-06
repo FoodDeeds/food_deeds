@@ -1,59 +1,18 @@
 {
   "name": "Food Deeds",
   "short_name": "FD",
-  "scope": "/",
-  "start_url": "/index.html",
+  "start_url": ".",
   "display": "standalone",
   "background_color": "#edeef0",
   "theme_color": "#4ee349",
-  "dir": "ltr",
   "lang": "en-US",
   "orientation": "portrait-primary",
   "description": "Each year, 40% of all edible food in the US is thrown away while 1 in 10 households struggles with food insecurity. At FoodDeeds we strive to bridge the gap and connect food banks with excess products from grocery stores, delis, and cafes.",
   "icons": [
     {
-      "src": "/images/icon-192.png",
+      "src": "/assets/icons/Logo-3.png",
       "type": "image/png",
-      "sizes": "192x192",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/images/icon-256.png",
-      "type": "image/png",
-      "sizes": "256x256",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/images/icon-384.png",
-      "type": "image/png",
-      "sizes": "384x384",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/images/icon-512.png",
-      "type": "image/png",
-      "sizes": "512x512",
-      "purpose": "any maskable"
-    }
-  ],
-  "shortcuts": [
-    {
-      "name": "My Account",
-      "short_name": "Account",
-      "description": "View my account and information",
-      "url": "/account"
-    },
-    {
-      "name": "Sign up for a new account",
-      "short_name": "Sign-up",
-      "description": "View sign up form to create account",
-      "url": "/signup"
-    },
-    {
-      "name": "Login to your account",
-      "short_name": "Login",
-      "description": "View log in form to access account",
-      "url": "/login"
+      "sizes": "512x512"
     }
   ]
 }

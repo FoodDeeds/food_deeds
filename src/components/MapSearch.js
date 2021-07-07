@@ -31,7 +31,7 @@ const locations = [
   },
 ];
 
-function MapSearch() {
+const MapSearch = (props) => {
   const [viewport, setViewport] = useState({
     latitude: 40.76526052397093,
     longitude: -74.02781638792513,
@@ -56,13 +56,16 @@ function MapSearch() {
             longitude={location.geometry.coordinates[1]}
           >
             <button>
-              <img src="https://bit.ly/3hFAjCE" alt="marker" />
+              <img
+                src="https://lh3.googleusercontent.com/x3L1QKz86Kboa9sj2ivtyl1mR3E--wrEXQnoBBbAsHjpwcAqzEfOUKB2_MkwsStHBBTTRkzobFttBQFOJnCE8WUL2Vp2Qh19w4Uc_ELFsXrmn52sewmtVrsa-NqbD5vfU40Bcl7fowOuJXe4QIgaALv4ZUkCxJX7_eSXb6TxkdN7BY7LhLu1AkgnEv9BXgTdFOimA9s9rjGoJmRACHssuG2mK4PZnlpemmYRmYsQ2gug2FXmIzbq1b6lE0HWMnqNLvoCKXqy5wBOWwOcudvAH0q3k9awPATgiSMj8K_D5prmDB3ke-0x9qAbBo728duzgtcu9Cqx5hpPzks61FG0TrsaC2baxbAg5l1YSCKsVFqeFJar8cSHakTNjNkfszfuftIe9aCEJ4_g1_KS48zNciBrbNC-qdhv0yVMtQ3g_26FAp32p8Sh1UxUWkcD86RDNQqYd8tABjOo8aGqkRgSH8wcVxY-ihlfyVxtjiVPJXHPKk9HEgWpbRIdIrVzPmNn6v-YLRfgsCGJGep0zc7cjwd-Cc1PC_D_oxcJWpIVLTI8mKmw8aMdtukFiIzpalZp-VfxJ4DZNkRNhfXiebSrHUTjW44hbvGFBxjkwGcceRD6x4rQTpOl5Rh3Q5ZRZ63u9kNJUtmt-bVUX3CVmIBshmJn2-cDbJb3X3U4jsFRir3PS70ycc3EcROA95GopUkY7Qa2rlI6Um_y1Fl97mrzkJc=s40-no?authuser=0"
+                alt="marker"
+              />
             </button>
           </Marker>
         ))}
       </ReactMapGL>
     </div>
   );
-}
+};
 
 export default MapSearch;

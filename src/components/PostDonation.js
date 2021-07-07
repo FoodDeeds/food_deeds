@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { db } from "../firebase";
+import React, { useEffect, useState } from "react";
+import { auth, db } from "../firebase";
 
 const PostDonation = (props) => {
-  // const userId = this.props.userId
   console.log(props);
+  const [userInfo, setUserInfo] = useState({});
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
   const [quantity, setQuantity] = useState(0);
@@ -26,6 +26,7 @@ const PostDonation = (props) => {
     PostalCode: postalCode,
     Status: true,
     PostingTime: new Date(),
+    supplierId: userInfo.uid,
   };
 
   const submit = (evt) => {
@@ -42,10 +43,21 @@ const PostDonation = (props) => {
         setCity("");
         setState("");
         setPostalCode("");
-        // props.history.push('/supplier/:id')
+        props.history.push("/account");
       })
       .catch((err) => console.log("Something went wrong", err));
   };
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUserInfo(user);
+      } else {
+        setUserInfo({});
+        console.log("Logged out.");
+      }
+    });
+  });
 
   return (
     <div className="form">

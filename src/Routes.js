@@ -9,6 +9,7 @@ import Signup from "./components/Signup";
 import Contact from "./components/Contact";
 import MyAccount from "./components/MyAccount";
 import PostDonation from "./components/PostDonation";
+import SingleSupplier from "./components/SingleSupplier";
 
 /**
  * Header
@@ -30,6 +31,7 @@ const Routes = () => {
         <Route exact path="/contact" component={Contact} />
         <Route exact path="/account" component={MyAccount} />
         <Route exact path="/donate" component={PostDonation} />
+        <Route exact path="/supplier/:id" component={SingleSupplier} />
       </Switch>
     </Router>
   );

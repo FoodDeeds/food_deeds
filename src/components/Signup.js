@@ -12,6 +12,7 @@ const Signup = (props) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [address, setAddress] = useState("");
+    const [city, setCity] = useState("");
     const [zipcode, setZipcode] = useState("");
     const [state, setState] = useState("");
     const [error, setError] = useState("");
@@ -34,6 +35,7 @@ const Signup = (props) => {
                         Password: password,
                         Address: address,
                         Zipcode: zipcode,
+                        City: city,
                         State: state
                     })
                     .then(() => {
@@ -45,6 +47,7 @@ const Signup = (props) => {
                         setEmail("");
                         setPassword("");
                         setAddress("");
+                        setCity("");
                         setZipcode("");
                         setState("");
                         setError("");
@@ -125,6 +128,15 @@ const Signup = (props) => {
                     required
                     value={address}
                     onChange={(evt) => setAddress(evt.target.value)}
+                />
+                <br />
+                <label htmlFor="city">City</label>
+                <input
+                    type="text"
+                    className="form__text"
+                    required
+                    value={city}
+                    onChange={(evt) => setCity(evt.target.value)}
                 />
                 <br />
                 <label htmlFor="zipcode">Zip Code</label>

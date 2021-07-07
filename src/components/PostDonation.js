@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { db } from "../firebase";
 
 const PostDonation = (props) => {
+  // const userId = this.props.userId
+  console.log(props);
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
   const [quantity, setQuantity] = useState(0);
@@ -23,6 +25,7 @@ const PostDonation = (props) => {
     State: state,
     PostalCode: postalCode,
     Status: true,
+    PostingTime: new Date(),
   };
 
   const submit = (evt) => {
@@ -39,7 +42,7 @@ const PostDonation = (props) => {
         setCity("");
         setState("");
         setPostalCode("");
-        // props.history.push('/')
+        // props.history.push('/supplier/:id')
       })
       .catch((err) => console.log("Something went wrong", err));
   };

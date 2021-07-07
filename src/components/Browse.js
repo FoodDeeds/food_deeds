@@ -19,7 +19,6 @@ const Browse = (props) => {
             info: doc.data(),
           }))
         );
-        console.log(snapshot.docs);
       });
   };
 

@@ -3,7 +3,6 @@ import { db } from "../firebase";
 
 const PostDonation = (props) => {
   // const userId = this.props.userId
-  console.log(props);
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
   const [quantity, setQuantity] = useState(0);

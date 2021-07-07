@@ -7,6 +7,7 @@ import MapSearch from "./components/MapSearch";
 import LogIn from "./components/LogIn";
 import Signup from "./components/Signup";
 import Contact from "./components/Contact";
+import SingleSupplier from "./components/SingleSupplier"
 /**
  * Header
  * Route paths
@@ -25,6 +26,7 @@ const Routes = () => {
                 <Route exact path="/login" component={LogIn} />
                 <Route exact path="/signup" component={Signup} />
                 <Route exact path="/contact" component={Contact} />
+                <Route exact path="/store" component={SingleSupplier}/>
             </Switch>
         </Router>
     );

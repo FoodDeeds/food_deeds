@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { db } from "../firebase"
+import React from "react";
+// import { db } from "../firebase" also add { useEffect, useState } back on line 1
 
 const SingleSupplier = () => {
   // const [userInfo, getInfo] = useState({});

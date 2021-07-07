@@ -52,11 +52,12 @@ const PostDonation = (props) => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         setUserInfo(user);
+      } else {
+        setUserInfo({});
+        console.log("Logged out.");
       }
     });
   });
-
-  console.log(userInfo);
 
   return (
     <div className="form">

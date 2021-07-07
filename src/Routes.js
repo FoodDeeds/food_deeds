@@ -17,11 +17,11 @@ import SingleSupplier from "./components/SingleSupplier";
  * Footer
  */
 const Routes = () => {
-  return (
-    <Router>
-      <div className="header">
-        <Header />
-      </div>
+    return (
+        <Router>
+            <div className="header">
+                <Header />
+            </div>
 
       <Switch>
         <Route exact path="/" component={Home} />

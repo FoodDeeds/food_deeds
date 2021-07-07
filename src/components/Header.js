@@ -19,6 +19,7 @@ const Header = () => {
                 <Link to="#" className="menu-bars">
                     <MenuIcon onClick={showSidebar} />
                 </Link>
+                <h1>FOOD DEEDS</h1>
             </div>
             <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
                 <ul className="nav-menu-items" onClick={showSidebar}>

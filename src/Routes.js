@@ -9,30 +9,29 @@ import Signup from "./components/Signup";
 import Contact from "./components/Contact";
 import MyAccount from "./components/MyAccount";
 import PostDonation from "./components/PostDonation";
-
 /**
  * Header
  * Route paths
  * Footer
  */
 const Routes = () => {
-  return (
-    <Router>
-      <div className="header">
-        <Header />
-      </div>
+    return (
+        <Router>
+            <div className="header">
+                <Header />
+            </div>
 
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/map" component={MapSearch} />
-        <Route exact path="/login" component={LogIn} />
-        <Route exact path="/signup" component={Signup} />
-        <Route exact path="/contact" component={Contact} />
-        <Route exact path="/account" component={MyAccount} />
-        <Route exact path="/donate" component={PostDonation} />
-      </Switch>
-    </Router>
-  );
+            <Switch>
+                <Route exact path="/" component={Home} />
+                <Route exact path="/map" component={MapSearch} />
+                <Route exact path="/login" component={LogIn} />
+                <Route exact path="/signup" component={Signup} />
+                <Route exact path="/contact" component={Contact} />
+                <Route exact path="/account" component={MyAccount} />
+                <Route exact path="/donate" component={PostDonation} />
+            </Switch>
+        </Router>
+    );
 };
 
 export default Routes;

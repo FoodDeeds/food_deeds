@@ -17,9 +17,8 @@ const EditAccount = ({ location }) => {
   const [state, setState] = useState(userInfo.State);
   const history = useHistory();
 
-  const handleUpdate = async () => {
-    await db
-      .collection("SignedUpUsers")
+  const handleUpdate = () => {
+    db.collection("SignedUpUsers")
       .doc(userInfo.id)
       .update({
         Type: type,
@@ -32,7 +31,7 @@ const EditAccount = ({ location }) => {
         Zipcode: zipcode,
         State: state,
       })
-      .then((r) => {
+      .then((response) => {
         history.push({
           pathname: "/account",
         });

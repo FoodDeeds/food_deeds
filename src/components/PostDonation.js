@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { auth, db } from "../firebase";
 
 const PostDonation = (props) => {
-  console.log(props);
   const [userInfo, setUserInfo] = useState({});
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
@@ -52,9 +51,8 @@ const PostDonation = (props) => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         setUserInfo(user);
-      } else {
-        setUserInfo({});
-        console.log("Logged out.");
+        // } else {
+        //   setUserInfo({});
       }
     });
   });
@@ -89,6 +87,7 @@ const PostDonation = (props) => {
         <br />
         <label htmlFor="pickupDate">Date</label>
         <input
+          type="date"
           className="form__text"
           required
           onChange={(evt) => setPickupDate(evt.target.value)}
@@ -97,6 +96,7 @@ const PostDonation = (props) => {
         <br />
         <label htmlFor="pickupTime">Time</label>
         <input
+          type="time"
           className="form__text"
           required
           onChange={(evt) => setPickupTime(evt.target.value)}

@@ -9,9 +9,9 @@ import Signup from "./components/Signup";
 import Contact from "./components/Contact";
 import MyAccount from "./components/MyAccount";
 import PostDonation from "./components/PostDonation";
+import EditAccount from "./components/EditAccount";
 import Browse from "./components/Browse";
 import SingleSupplier from "./components/SingleSupplier";
-
 
 /**
  * Header
@@ -19,11 +19,11 @@ import SingleSupplier from "./components/SingleSupplier";
  * Footer
  */
 const Routes = () => {
-    return (
-        <Router>
-            <div className="header">
-                <Header />
-            </div>
+  return (
+    <Router>
+      <div className="header">
+        <Header />
+      </div>
 
       <Switch>
         <Route exact path="/" component={Home} />
@@ -32,6 +32,7 @@ const Routes = () => {
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/contact" component={Contact} />
         <Route exact path="/account" component={MyAccount} />
+        <Route exact path="/edit" component={EditAccount} />
         <Route exact path="/donate" component={PostDonation} />
         <Route exact path="/browse" component={Browse} />
         <Route exact path="/supplier/:id" component={SingleSupplier} />

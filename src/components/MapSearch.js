@@ -39,6 +39,8 @@ const MapSearch = (props) => {
     height: "100vh",
     zoom: 12,
   });
+  const { donations } = props;
+
   return (
     <div>
       <ReactMapGL

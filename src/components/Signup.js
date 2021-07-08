@@ -27,6 +27,7 @@ const Signup = (props) => {
                     .doc(userCred.user.uid)
                     .set({
                         // need more fields
+                        id: userCred.user.uid,
                         Type: type,
                         Category: category,
                         Name: name,

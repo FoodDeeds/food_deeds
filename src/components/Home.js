@@ -1,5 +1,5 @@
 import React from "react";
-import Donations from "./Donations";
+import RecDonations from "./RecDonations";
 import Footer from "./Footer";
 import logo from "../images/Logo-2.png";
 
@@ -17,7 +17,7 @@ const Home = () => {
             to bridge the gap and connect food banks with excess products from
             grocery stores, delis, and cafes.
         </p>
-        <Donations />
+        <RecDonations />
       </div>
 
       <div className="footer__view">

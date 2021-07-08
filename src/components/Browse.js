@@ -12,7 +12,7 @@ const Browse = (props) => {
     evt.preventDefault();
     db.collection("Donations")
       .where("PostalCode", "==", zipcode)
-      // .orderBy("timestamp", "desc")
+      // .orderBy("Timestamp", "desc")
       .onSnapshot((snapshot) => {
         setDonations(
           snapshot.docs.map((doc) => ({
@@ -45,7 +45,7 @@ const Browse = (props) => {
         <button type="submit">Search</button>
       </form>
       <br />
-      <MapSearch />
+      <MapSearch donations={donations}/>
       <div className="search-results">
         <h3>Showing results:</h3>
         {donations.map((donation) => (

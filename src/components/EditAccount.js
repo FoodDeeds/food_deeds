@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
 import "semantic-ui-css/semantic.min.css";
-import { Form, Button } from "semantic-ui-react";
+import { Header, Form, Button } from "semantic-ui-react";
 import { db } from "../firebase";
 
 const EditAccount = ({ location }) => {
@@ -44,12 +44,16 @@ const EditAccount = ({ location }) => {
 
   return (
     <Form>
+      <Header size="medium" color="green" style={{ marginLeft: 40 }}>
+        Edit Account Information
+      </Header>
       <Form.Field>
         <label>Name</label>
         <input
           placeholder="Name"
           value={name}
           onChange={(evt) => setName(evt.target.value)}
+          style={{ width: 300 }}
         />
       </Form.Field>
       <Form.Field>
@@ -58,6 +62,7 @@ const EditAccount = ({ location }) => {
           placeholder="Email"
           value={email}
           onChange={(evt) => setEmail(evt.target.value)}
+          style={{ width: 300 }}
         />
       </Form.Field>
       <Form.Field>
@@ -66,6 +71,7 @@ const EditAccount = ({ location }) => {
           placeholder="Phone"
           value={phone}
           onChange={(evt) => setPhone(evt.target.value)}
+          style={{ width: 300 }}
         />
       </Form.Field>
       <Form.Field>
@@ -74,6 +80,7 @@ const EditAccount = ({ location }) => {
           placeholder="Password"
           value={password}
           onChange={(evt) => setPassword(evt.target.value)}
+          style={{ width: 300 }}
         />
       </Form.Field>
       <Form.Field>
@@ -82,6 +89,7 @@ const EditAccount = ({ location }) => {
           placeholder="Address"
           value={address}
           onChange={(evt) => setAddress(evt.target.value)}
+          style={{ width: 300 }}
         />
       </Form.Field>
       <Form.Field>
@@ -90,6 +98,7 @@ const EditAccount = ({ location }) => {
           placeholder="State"
           value={state}
           onChange={(evt) => setState(evt.target.value)}
+          style={{ width: 300 }}
         />
       </Form.Field>
       <Form.Field>
@@ -98,6 +107,7 @@ const EditAccount = ({ location }) => {
           placeholder="Zip Code"
           value={zipcode}
           onChange={(evt) => setZipcode(evt.target.value)}
+          style={{ width: 300 }}
         />
       </Form.Field>
       <Form.Field>
@@ -106,6 +116,7 @@ const EditAccount = ({ location }) => {
           placeholder="Type"
           value={type}
           onChange={(evt) => setType(evt.target.value)}
+          style={{ width: 300 }}
         />
       </Form.Field>
       <Form.Field>
@@ -114,9 +125,15 @@ const EditAccount = ({ location }) => {
           placeholder="Category"
           value={category}
           onChange={(evt) => setCategory(evt.target.value)}
+          style={{ width: 300 }}
         />
       </Form.Field>
-      <Button type="submit" onClick={handleClick}>
+      <Button
+        type="submit"
+        onClick={handleClick}
+        color="green"
+        style={{ marginLeft: 95, marginTop: 15 }}
+      >
         Submit
       </Button>
     </Form>

@@ -51,8 +51,6 @@ const PostDonation = (props) => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         setUserInfo(user);
-        // } else {
-        //   setUserInfo({});
       }
     });
   });

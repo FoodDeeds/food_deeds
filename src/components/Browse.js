@@ -6,12 +6,13 @@ const Browse = (props) => {
   const [category, setCategory] = useState("");
   const [zipcode, setZipcode] = useState("");
   const [donations, setDonations] = useState([]);
+  const [supplierInfo, setSupplierInfo] = useState({});
 
   const submit = (evt) => {
     evt.preventDefault();
     db.collection("Donations")
-      //   .where("PostalCode", "==", zipcode)
-      //   .orderBy("timestamp", "desc")
+      .where("PostalCode", "==", zipcode)
+      // .orderBy("timestamp", "desc")
       .onSnapshot((snapshot) => {
         setDonations(
           snapshot.docs.map((doc) => ({
@@ -22,6 +23,7 @@ const Browse = (props) => {
       });
   };
 
+  console.log(donations);
   return (
     <div className="browse">
       <form onSubmit={submit}>
@@ -47,7 +49,7 @@ const Browse = (props) => {
       <div className="search-results">
         <h3>Showing results:</h3>
         {donations.map((donation) => (
-          <div className="result">
+          <div className="result" key={donation.id}>
             <p>
               {donation.info.Address} <br />
               {donation.info.City}, {donation.info.State}{" "}

@@ -12,6 +12,7 @@ import PostDonation from "./components/PostDonation";
 import EditAccount from "./components/EditAccount";
 import Browse from "./components/Browse";
 import SingleSupplier from "./components/SingleSupplier";
+import Confirmation from "./components/Confirmation";
 
 /**
  * Header
@@ -36,6 +37,7 @@ const Routes = () => {
         <Route exact path="/donate" component={PostDonation} />
         <Route exact path="/browse" component={Browse} />
         <Route exact path="/supplier/:id" component={SingleSupplier} />
+        <Route exact path="/confirmation" component={Confirmation} />
       </Switch>
     </Router>
   );

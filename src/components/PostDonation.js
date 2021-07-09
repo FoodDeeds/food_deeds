@@ -79,10 +79,10 @@ const PostDonation = (props) => {
           // alert(error.message);
         },
         () => {
-          // upload complete function
+          // upload complete function...
           storage
             .ref("images")
-            .child(image.name)
+            .child(image.name) // Upload the file and metadata
             .getDownloadURL()
             .then((url) => {
               db.collection("Donations").add({
@@ -166,7 +166,7 @@ const PostDonation = (props) => {
               />
             <button
               className="button"
-              onChange={handleUpload}
+
             >
               Confirm Upload
             </button>

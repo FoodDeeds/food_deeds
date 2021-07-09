@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { auth, db, storage } from "../firebase";
-import './Post.css'
+import "./Post.css";
 import AddPhotoIcon from "@material-ui/icons/CameraAlt";
 
 const PostDonation = (props) => {
   const [userInfo, setUserInfo] = useState({});
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState("");
   const [quantity, setQuantity] = useState(0);
   const [pickupDate, setPickupDate] = useState("");
   const [pickupTime, setPickupTime] = useState("");
@@ -15,24 +14,26 @@ const PostDonation = (props) => {
   const [state, setState] = useState("");
   const [postalCode, setPostalCode] = useState("");
   const [progress, setProgress] = useState(0);
+  const [image, setImage] = useState("");
   const [url, setUrl] = useState("");
+  const [donationInfo, setDonationInfo] = useState({});
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
-        if (user) {
-            setUserInfo(user);
-            db.collection("SignedUpUsers")
-                .doc(user.uid)
-                .get()
-                .then((response) => {
-                    const data = response.data();
-                    setUserInfo(data);
-                });
-        } else {
-            setUserInfo({});
-        }
+      if (user) {
+        setUserInfo(user);
+        db.collection("SignedUpUsers")
+          .doc(user.uid)
+          .get()
+          .then((response) => {
+            const data = response.data();
+            setUserInfo(data);
+          });
+      } else {
+        setUserInfo({});
+      }
     });
-}, []);
+  }, []);
 
   // const newDonation = {
   //   Description: description,
@@ -51,19 +52,32 @@ const PostDonation = (props) => {
 
   const handleImage = (evt) => {
     evt.preventDefault();
-    if(evt.target.files[0]) {
+    if (evt.target.files[0]) {
       setImage(evt.target.files[0]);
-      console.log('image>>>>', image)
-      console.log('evt>>>>', evt.target.files);
+      console.log("image>>>>", image);
+      console.log("evt>>>>", evt.target.files);
       let selectedImg = URL.createObjectURL(evt.target.files[0]);
       let imagePreview = document.getElementById("image-preview");
       imagePreview.src = selectedImg;
       imagePreview.style.display = "block";
     }
-  }
+  };
+
+  // const handleUpload = (evt) => {
+  //   evt.preventDefault();
+  //   const ref = storage.ref(`images/${image.name}`);
+  //   const uploadTask = ref.put(image);
+  //   uploadTask.on("state_changed", () => {
+  //     ref.getDownloadURL()
+  //     .then((url) => {
+  //       setImage(null);
+  //       setUrl(url);
+  //     })
+  //   } )
+  // }
 
   const handleUpload = (evt) => {
-        evt.preventDefault();
+    evt.preventDefault();
     if (image) {
       const uploadTask = storage.ref(`images/${image.name}`).put(image);
 
@@ -78,7 +92,7 @@ const PostDonation = (props) => {
         },
         (error) => {
           // Error function...
-          console.log('error uploading picture', error);
+          console.log("error uploading picture", error);
           // alert(error.message);
         },
         () => {
@@ -86,42 +100,41 @@ const PostDonation = (props) => {
           storage
             .ref("images")
             .child(image.name) // Upload the file and metadata
-            .getDownloadURL()
-            db.collection("Donations").add({
-                postImageUrl: url,
-                Description: description,
-                Image: image,
-                Quantity: quantity,
-                PickupDate: pickupDate,
-                PickupTime: pickupTime,
-                Address: address,
-                City: city,
-                State: state,
-                PostalCode: postalCode,
-                Status: true,
-                PostingTime: new Date(),
-                supplierId: userInfo.uid,
+            .getDownloadURL();
+          db.collection("Donations")
+            .add({
+              postImageUrl: url,
+              Description: description,
+              Image: image,
+              Quantity: quantity,
+              PickupDate: pickupDate,
+              PickupTime: pickupTime,
+              Address: address,
+              City: city,
+              State: state,
+              PostalCode: postalCode,
+              Status: true,
+              PostingTime: new Date(),
+              supplierId: userInfo.uid,
             })
-            .then((url) => {
-              db.collection("Donations").add({
-
-              });
+            .then(() => {
+              setUrl(url);
+              setProgress(0);
+              setDescription("");
+              setImage(null);
+              setDescription("");
+              setImage("");
+              setQuantity("");
+              setPickupDate("");
+              setPickupTime("");
+              setAddress("");
+              setCity("");
+              setState("");
+              setPostalCode("");
+              let imagePreview = document.getElementById("image-preview");
+              imagePreview.style.display = "none";
+              props.history.push("/");
             });
-          setProgress(0);
-          setDescription("");
-          setImage(null);
-          setDescription("");
-          setImage("");
-          setQuantity("");
-          setPickupDate("");
-          setPickupTime("");
-          setAddress("");
-          setCity("");
-          setState("");
-          setPostalCode("");
-          let imagePreview = document.getElementById("image-preview");
-          imagePreview.style.display = "none";
-          props.history.push("/");
         }
       );
     }
@@ -155,6 +168,8 @@ const PostDonation = (props) => {
       }
     });
   });
+
+
   if (!userInfo.uid) {
     return (
       <div>
@@ -174,29 +189,24 @@ const PostDonation = (props) => {
             value={description}
           />
           <br />
-            <div className="imagePreview">
+          <div className="imagePreview">
             {/* can add onClick func inside img tag to remove image */}
             {/* img src={url} */}
             <img id="image-preview" alt="" />
-            </div>
-            <br />
-            <div className="image-upload">
-              <label htmlFor="file-input">
-                <AddPhotoIcon style={{cursor: "pointer"}}/>
-              </label>
-              <input
-                id="file-input"
-                type="file"
-                accept="image/*"
-                onChange={handleImage}
-              />
-            <button
-              className="button"
-
-            >
-              Confirm Upload
-            </button>
-            </div>
+          </div>
+          <br />
+          <div className="image-upload">
+            <label htmlFor="file-input">
+              <AddPhotoIcon style={{ cursor: "pointer" }} />
+            </label>
+            <input
+              id="file-input"
+              type="file"
+              accept="image/*"
+              onChange={handleImage}
+            />
+            <button className="button">Confirm Upload</button>
+          </div>
           <br />
           <label htmlFor="quantity">Quantity</label>
           <input

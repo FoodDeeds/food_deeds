@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { auth, db, storage } from "../firebase";
 import "./Post.css";
 import AddPhotoIcon from "@material-ui/icons/CameraAlt";
+import logo from "../images/Logo-2.png";
 
 const PostDonation = (props) => {
   const [userInfo, setUserInfo] = useState({});
@@ -9,26 +10,22 @@ const PostDonation = (props) => {
   const [quantity, setQuantity] = useState(0);
   const [pickupDate, setPickupDate] = useState("");
   const [pickupTime, setPickupTime] = useState("");
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [postalCode, setPostalCode] = useState("");
   const [progress, setProgress] = useState(0);
   const [image, setImage] = useState("");
-  const [url, setUrl] = useState("");
-
-  console.log("here is url!", url);
+  const [url, setUrl] = useState(logo);
 
   const handleImage = (evt) => {
-    evt.preventDefault();
-    if (evt.target.files[0]) {
-      setImage(evt.target.files[0]);
-      console.log("image>>>>", image);
-      console.log("evt>>>>", evt.target.files);
-      let selectedImg = URL.createObjectURL(evt.target.files[0]);
-      let imagePreview = document.getElementById("image-preview");
-      imagePreview.src = selectedImg;
-      imagePreview.style.display = "block";
+    const file = evt.target.files[0];
+
+    if (file) {
+      const fileType = file["type"];
+      const validImageTypes = ["image/gif", "image/jpeg", "image/png"];
+
+      if (validImageTypes.includes(fileType)) {
+        setImage(file);
+      } else {
+        console.log("image cannot upload");
+      }
     }
   };
 
@@ -60,43 +57,33 @@ const PostDonation = (props) => {
             .then((url) => {
               setUrl(url);
             });
-          db.collection("Donations")
-            .add({
-              postImageUrl: url,
-              Description: description,
-              Image: image,
-              Quantity: quantity,
-              PickupDate: pickupDate,
-              PickupTime: pickupTime,
-              Address: address,
-              City: city,
-              State: state,
-              PostalCode: postalCode,
-              Status: true,
-              PostingTime: new Date(),
-              supplierId: userInfo.uid,
-            })
-            .then(() => {
-              setUrl(null);
-              setProgress(0);
-              setDescription("");
-              setImage(null);
-              setDescription("");
-              setImage("");
-              setQuantity("");
-              setPickupDate("");
-              setPickupTime("");
-              setAddress("");
-              setCity("");
-              setState("");
-              setPostalCode("");
-              let imagePreview = document.getElementById("image-preview");
-              imagePreview.style.display = "none";
-              props.history.push("/");
-            });
         }
       );
     }
+    // console.log("image here!!", image);
+    db.collection("Donations")
+      .add({
+        postImageUrl: url,
+        Description: description,
+        Quantity: quantity,
+        PickupDate: pickupDate,
+        PickupTime: pickupTime,
+        Status: true,
+        PostingTime: new Date(),
+        supplierId: userInfo.uid,
+      })
+      .then(() => {
+        setUrl(null);
+        setProgress(0);
+        setDescription("");
+        setImage(null);
+        setDescription("");
+        setImage("");
+        setQuantity("");
+        setPickupDate("");
+        setPickupTime("");
+        props.history.push("/");
+      });
   };
 
   useEffect(() => {
@@ -130,8 +117,7 @@ const PostDonation = (props) => {
           <br />
           <div className="imagePreview">
             {/* can add onClick func inside img tag to remove image */}
-            {/* img src={url} */}
-            <img id="image-preview" alt="" />
+            {url ? <img src={url} alt="" /> : <img src={logo} alt="logo" />}
           </div>
           <br />
           <div className="image-upload">
@@ -172,38 +158,6 @@ const PostDonation = (props) => {
             required
             onChange={(evt) => setPickupTime(evt.target.value)}
             value={pickupTime}
-          />
-          <br />
-          <label htmlFor="address">Address</label>
-          <input
-            className="form__text"
-            required
-            onChange={(evt) => setAddress(evt.target.value)}
-            value={address}
-          />
-          <br />
-          <label htmlFor="city">City</label>
-          <input
-            className="form__text"
-            required
-            onChange={(evt) => setCity(evt.target.value)}
-            value={city}
-          />
-          <br />
-          <label htmlFor="state">State</label>
-          <input
-            className="form__text"
-            required
-            onChange={(evt) => setState(evt.target.value)}
-            value={state}
-          />
-          <br />
-          <label htmlFor="postalCode">Zip Code</label>
-          <input
-            className="form__text"
-            required
-            onChange={(evt) => setPostalCode(evt.target.value)}
-            value={postalCode}
           />
           <br />
           <button>Submit</button>

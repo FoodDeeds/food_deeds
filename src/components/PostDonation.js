@@ -15,8 +15,7 @@ const PostDonation = (props) => {
   const [state, setState] = useState("");
   const [postalCode, setPostalCode] = useState("");
   const [progress, setProgress] = useState(0);
-
-  console.log('userInfo>>>', userInfo)
+  const [url, setUrl] = useState("");
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -35,24 +34,27 @@ const PostDonation = (props) => {
     });
 }, []);
 
-  const newDonation = {
-    Description: description,
-    Image: image,
-    Quantity: quantity,
-    PickupDate: pickupDate,
-    PickupTime: pickupTime,
-    Address: address,
-    City: city,
-    State: state,
-    PostalCode: postalCode,
-    Status: true,
-    PostingTime: new Date(),
-    supplierId: userInfo.uid,
-  };
+  // const newDonation = {
+  //   Description: description,
+  //   Image: image,
+  //   Quantity: quantity,
+  //   PickupDate: pickupDate,
+  //   PickupTime: pickupTime,
+  //   Address: address,
+  //   City: city,
+  //   State: state,
+  //   PostalCode: postalCode,
+  //   Status: true,
+  //   PostingTime: new Date(),
+  //   supplierId: userInfo.uid,
+  // };
 
   const handleImage = (evt) => {
+    evt.preventDefault();
     if(evt.target.files[0]) {
       setImage(evt.target.files[0]);
+      console.log('image>>>>', image)
+      console.log('evt>>>>', evt.target.files);
       let selectedImg = URL.createObjectURL(evt.target.files[0]);
       let imagePreview = document.getElementById("image-preview");
       imagePreview.src = selectedImg;
@@ -60,7 +62,8 @@ const PostDonation = (props) => {
     }
   }
 
-  const handleUpload = () => {
+  const handleUpload = (evt) => {
+        evt.preventDefault();
     if (image) {
       const uploadTask = storage.ref(`images/${image.name}`).put(image);
 
@@ -84,42 +87,64 @@ const PostDonation = (props) => {
             .ref("images")
             .child(image.name) // Upload the file and metadata
             .getDownloadURL()
+            db.collection("Donations").add({
+                postImageUrl: url,
+                Description: description,
+                Image: image,
+                Quantity: quantity,
+                PickupDate: pickupDate,
+                PickupTime: pickupTime,
+                Address: address,
+                City: city,
+                State: state,
+                PostalCode: postalCode,
+                Status: true,
+                PostingTime: new Date(),
+                supplierId: userInfo.uid,
+            })
             .then((url) => {
               db.collection("Donations").add({
-                // timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                // Description 
-                postImageUrl: url,
-                // userName:
+
               });
             });
           setProgress(0);
           setDescription("");
           setImage(null);
-          var imagePreview = document.getElementById("image-preview");
+          setDescription("");
+          setImage("");
+          setQuantity("");
+          setPickupDate("");
+          setPickupTime("");
+          setAddress("");
+          setCity("");
+          setState("");
+          setPostalCode("");
+          let imagePreview = document.getElementById("image-preview");
           imagePreview.style.display = "none";
+          props.history.push("/");
         }
       );
     }
   };
 
-  const submit = (evt) => {
-    evt.preventDefault();
-    db.collection("Donations")
-      .add(newDonation)
-      .then(() => {
-        setDescription("");
-        setImage("");
-        setQuantity("");
-        setPickupDate("");
-        setPickupTime("");
-        setAddress("");
-        setCity("");
-        setState("");
-        setPostalCode("");
-        props.history.push("/account");
-      })
-      .catch((err) => console.log("Something went wrong", err));
-  };
+  // const submit = (evt) => {
+  //   evt.preventDefault();
+  //   db.collection("Donations")
+  //     .add(newDonation)
+  //     .then(() => {
+  //       setDescription("");
+  //       setImage("");
+  //       setQuantity("");
+  //       setPickupDate("");
+  //       setPickupTime("");
+  //       setAddress("");
+  //       setCity("");
+  //       setState("");
+  //       setPostalCode("");
+  //       props.history.push("/account");
+  //     })
+  //     .catch((err) => console.log("Something went wrong", err));
+  // };
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -140,7 +165,7 @@ const PostDonation = (props) => {
     return (
       <div className="form">
         <h2>Post a donation</h2>
-        <form onSubmit={submit}>
+        <form onSubmit={handleUpload}>
           <label htmlFor="description">Description</label>
           <input
             className="form__text"
@@ -151,6 +176,7 @@ const PostDonation = (props) => {
           <br />
             <div className="imagePreview">
             {/* can add onClick func inside img tag to remove image */}
+            {/* img src={url} */}
             <img id="image-preview" alt="" />
             </div>
             <br />

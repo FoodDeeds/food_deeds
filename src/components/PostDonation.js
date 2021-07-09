@@ -35,21 +35,6 @@ const PostDonation = (props) => {
     });
   }, []);
 
-  // const newDonation = {
-  //   Description: description,
-  //   Image: image,
-  //   Quantity: quantity,
-  //   PickupDate: pickupDate,
-  //   PickupTime: pickupTime,
-  //   Address: address,
-  //   City: city,
-  //   State: state,
-  //   PostalCode: postalCode,
-  //   Status: true,
-  //   PostingTime: new Date(),
-  //   supplierId: userInfo.uid,
-  // };
-
   const handleImage = (evt) => {
     evt.preventDefault();
     if (evt.target.files[0]) {
@@ -117,7 +102,7 @@ const PostDonation = (props) => {
               PostingTime: new Date(),
               supplierId: userInfo.uid,
             })
-            .then(() => {
+            .then((url) => {
               setUrl(url);
               setProgress(0);
               setDescription("");

@@ -28,7 +28,7 @@ export const SidebarItems = [
     },
     {
         title: "SEARCH",
-        path: "/map",
+        path: "/browse",
         icon: <SearchIcon />,
         cName: "menu__text"
     },

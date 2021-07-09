@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import { Button } from "semantic-ui-react";
+import { useHistory } from "react-router";
 
-const Confirmation = (props) => {
-  const [donationInfo, setDonationInfo] = useState({});
+const Confirmation = ({location}) => {
+  const supplierInfo = location.state.supplierInfo;
+  const donations = location.state.donations;
+  console.log("donations", donations)
+  const history = useHistory();
 
   const handleClick = () => {
     console.log("clicked release");
@@ -11,16 +15,20 @@ const Confirmation = (props) => {
   return (
     <div>
       <h2> Pickup Confirmed </h2>
-      <ul> Donation.PickupDate </ul>
-      <ul> Donation.Quantity</ul>
+      <ul> palceholder</ul>
+      <ul> {donations.Quantity}</ul>
       <br />
       <ul> Pick up time:</ul>
       <ul> Donation.PickupTime </ul>
       <br />
-      <ul> Supplier.Name </ul>
-      <ul> Supplier.Address </ul>
-      <ul> Supplier.City, Supplier.State, Supplier.Zipcode </ul>
-      <ul> Supplier.Phone </ul>
+      <ul> {supplierInfo.Name} </ul>
+      <ul> {supplierInfo.Address} </ul>
+      <ul>
+        {supplierInfo.City}
+        {supplierInfo.State},
+        {supplierInfo.Zipcode}
+      </ul>
+      <ul> {supplierInfo.Phone} </ul>
       <br />
 
       <Button color="green" onClick={handleClick}>Release</Button>

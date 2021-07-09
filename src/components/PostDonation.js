@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { auth, db } from "../firebase";
+import { auth, db, storage } from "../firebase";
 import './Post.css'
 import AddPhotoIcon from "@material-ui/icons/CameraAlt";
 
@@ -15,6 +15,25 @@ const PostDonation = (props) => {
   const [state, setState] = useState("");
   const [postalCode, setPostalCode] = useState("");
   const [progress, setProgress] = useState(0);
+
+  console.log('userInfo>>>', userInfo)
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+        if (user) {
+            setUserInfo(user);
+            db.collection("SignedUpUsers")
+                .doc(user.uid)
+                .get()
+                .then((response) => {
+                    const data = response.data();
+                    setUserInfo(data);
+                });
+        } else {
+            setUserInfo({});
+        }
+    });
+}, []);
 
   const newDonation = {
     Description: description,
@@ -41,12 +60,47 @@ const PostDonation = (props) => {
     }
   }
 
+  const handleUpload = () => {
+    if (image) {
+      const uploadTask = storage.ref(`images/${image.name}`).put(image);
 
-
-  // const removeImage = () => {
-  //   let imagePreview = document.getElementById('image-preview')
-  //   imagePreview.style.display = 'none';
-  // }
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          // progress 1%...100%
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          setProgress(progress);
+        },
+        (error) => {
+          // Error function...
+          console.log('error uploading picture', error);
+          // alert(error.message);
+        },
+        () => {
+          // upload complete function
+          storage
+            .ref("images")
+            .child(image.name)
+            .getDownloadURL()
+            .then((url) => {
+              db.collection("Donations").add({
+                // timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                // Description 
+                postImageUrl: url,
+                // userName:
+              });
+            });
+          setProgress(0);
+          setDescription("");
+          setImage(null);
+          var imagePreview = document.getElementById("image-preview");
+          imagePreview.style.display = "none";
+        }
+      );
+    }
+  };
 
   const submit = (evt) => {
     evt.preventDefault();
@@ -112,7 +166,7 @@ const PostDonation = (props) => {
               />
             <button
               className="button"
-              
+              onChange={handleUpload}
             >
               Confirm Upload
             </button>

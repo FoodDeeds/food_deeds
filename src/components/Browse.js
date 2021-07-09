@@ -45,7 +45,7 @@ const Browse = (props) => {
         <button type="submit">Search</button>
       </form>
       <br />
-      <MapSearch donations={donations}/>
+      <MapSearch donations={donations} />
       <div className="search-results">
         <h3>Showing results:</h3>
         {donations.map((donation) => (

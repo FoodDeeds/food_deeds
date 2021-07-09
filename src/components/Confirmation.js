@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Button } from "semantic-ui-react";
 import { useHistory } from "react-router";
 
-const Confirmation = ({location}) => {
+const Confirmation = ({ location }) => {
   const supplierInfo = location.state.supplierInfo;
-  const donations = location.state.donations;
-  console.log("donations", donations)
+  const donation = location.state.donation;
+  console.log("donation", donation);
   const history = useHistory();
 
   const handleClick = () => {
@@ -14,24 +14,24 @@ const Confirmation = ({location}) => {
 
   return (
     <div>
-      <h2> Pickup Confirmed </h2>
-      <ul> palceholder</ul>
-      <ul> {donations.Quantity}</ul>
+      <h2> Pick-up Confirmed </h2>
+      <p> Pick-up Date: {donation.info.PickupDate}</p>
+      <p> Quantity:{donation.info.Quantity} boxes</p>
       <br />
-      <ul> Pick up time:</ul>
-      <ul> Donation.PickupTime </ul>
+      <p> Pick-up time: {donation.info.PickupTime}</p>
       <br />
-      <ul> {supplierInfo.Name} </ul>
-      <ul> {supplierInfo.Address} </ul>
-      <ul>
+      <p> Supplier Name: {supplierInfo.Name} </p>
+      <p> Address: {supplierInfo.Address} </p>
+      <p>
         {supplierInfo.City}
-        {supplierInfo.State},
-        {supplierInfo.Zipcode}
-      </ul>
-      <ul> {supplierInfo.Phone} </ul>
+        {supplierInfo.State},{supplierInfo.Zipcode}
+      </p>
+      <p> Phone Number: {supplierInfo.Phone} </p>
       <br />
 
-      <Button color="green" onClick={handleClick}>Release</Button>
+      <Button color="green" onClick={handleClick}>
+        Release
+      </Button>
     </div>
   );
 };

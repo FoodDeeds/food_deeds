@@ -16,39 +16,8 @@ const PostDonation = (props) => {
   const [progress, setProgress] = useState(0);
   const [image, setImage] = useState("");
   const [url, setUrl] = useState("");
-  const [donationInfo, setDonationInfo] = useState({});
 
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUserInfo(user);
-        db.collection("SignedUpUsers")
-          .doc(user.uid)
-          .get()
-          .then((response) => {
-            const data = response.data();
-            setUserInfo(data);
-          });
-      } else {
-        setUserInfo({});
-      }
-    });
-  }, []);
-
-  // const newDonation = {
-  //   Description: description,
-  //   Image: image,
-  //   Quantity: quantity,
-  //   PickupDate: pickupDate,
-  //   PickupTime: pickupTime,
-  //   Address: address,
-  //   City: city,
-  //   State: state,
-  //   PostalCode: postalCode,
-  //   Status: true,
-  //   PostingTime: new Date(),
-  //   supplierId: userInfo.uid,
-  // };
+  console.log("here is url!", url);
 
   const handleImage = (evt) => {
     evt.preventDefault();
@@ -62,19 +31,6 @@ const PostDonation = (props) => {
       imagePreview.style.display = "block";
     }
   };
-
-  // const handleUpload = (evt) => {
-  //   evt.preventDefault();
-  //   const ref = storage.ref(`images/${image.name}`);
-  //   const uploadTask = ref.put(image);
-  //   uploadTask.on("state_changed", () => {
-  //     ref.getDownloadURL()
-  //     .then((url) => {
-  //       setImage(null);
-  //       setUrl(url);
-  //     })
-  //   } )
-  // }
 
   const handleUpload = (evt) => {
     evt.preventDefault();
@@ -100,7 +56,10 @@ const PostDonation = (props) => {
           storage
             .ref("images")
             .child(image.name) // Upload the file and metadata
-            .getDownloadURL();
+            .getDownloadURL()
+            .then((url) => {
+              setUrl(url);
+            });
           db.collection("Donations")
             .add({
               postImageUrl: url,
@@ -118,7 +77,7 @@ const PostDonation = (props) => {
               supplierId: userInfo.uid,
             })
             .then(() => {
-              setUrl(url);
+              setUrl(null);
               setProgress(0);
               setDescription("");
               setImage(null);
@@ -140,25 +99,6 @@ const PostDonation = (props) => {
     }
   };
 
-  // const submit = (evt) => {
-  //   evt.preventDefault();
-  //   db.collection("Donations")
-  //     .add(newDonation)
-  //     .then(() => {
-  //       setDescription("");
-  //       setImage("");
-  //       setQuantity("");
-  //       setPickupDate("");
-  //       setPickupTime("");
-  //       setAddress("");
-  //       setCity("");
-  //       setState("");
-  //       setPostalCode("");
-  //       props.history.push("/account");
-  //     })
-  //     .catch((err) => console.log("Something went wrong", err));
-  // };
-
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -168,7 +108,6 @@ const PostDonation = (props) => {
       }
     });
   });
-
 
   if (!userInfo.uid) {
     return (

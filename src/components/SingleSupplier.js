@@ -56,6 +56,7 @@ const SingleSupplier = (props) => {
               Pickup Time: {donation.info.PickupTime} <br />
               Pickup Date: {donation.info.PickupDate} <br />
               Quantity: {donation.info.Quantity} boxes
+              {console.log("donation>>>", donation)}
               <br />
               <button>Reserve</button>
             </p>

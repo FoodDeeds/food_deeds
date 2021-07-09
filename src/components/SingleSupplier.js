@@ -24,7 +24,7 @@ const SingleSupplier = (props) => {
           }))
         );
       });
-  }, []);
+  }, [props.match.params.id]);
 
   return (
     <div>

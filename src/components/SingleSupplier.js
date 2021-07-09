@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase";
+import { useHistory } from "react-router-dom";
 
 const SingleSupplier = (props) => {
-  console.log(props);
   const [supplierInfo, setSupplierInfo] = useState({});
   const [donations, setDonations] = useState([]);
+  const [confirmation, setConfirmation] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     db.collection("SignedUpUsers")
@@ -25,6 +27,18 @@ const SingleSupplier = (props) => {
         );
       });
   }, [props.match.params.id]);
+
+  const handleClick = () => {
+    console.log('clicked')
+    setConfirmation(true);
+    history.push({
+        pathname: "/confirmation",
+        state: {
+          donations,
+          supplierInfo
+        }
+    });
+};
 
   return (
     <div>
@@ -58,7 +72,7 @@ const SingleSupplier = (props) => {
               Quantity: {donation.info.Quantity} boxes
               {console.log("donation>>>", donation)}
               <br />
-              <button>Reserve</button>
+              <button onClick={handleClick} alt="">Reserve</button>
             </p>
           </div>
         ))}

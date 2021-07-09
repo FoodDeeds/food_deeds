@@ -4,7 +4,7 @@ import { db } from "../firebase";
 const SingleSupplier = (props) => {
   console.log(props);
   const [supplierInfo, setSupplierInfo] = useState({});
-  const [donations, setDonations] = useState({});
+  const [donations, setDonations] = useState([]);
 
   useEffect(() => {
     db.collection("SignedUpUsers")
@@ -26,7 +26,6 @@ const SingleSupplier = (props) => {
       });
   }, []);
 
-  console.log("donations", donations);
   return (
     <div>
       <div>
@@ -46,12 +45,22 @@ const SingleSupplier = (props) => {
       </div>
       <div>
         <h3>Available Donations</h3>
-        <div>
-          <ul id="date"> wkday, Month Day#, Year</ul>
-          <ul id="time"> Pick-up time from props </ul>
-          <ul id="quantity"> (quantity) boxes </ul>
-          <button> Reserve </button>
-        </div>
+        {console.log("donations", donations)}
+        {donations.map((donation) => (
+          <div className="result" key={donation.id}>
+            <p>
+              {donation.info.Address} <br />
+              {donation.info.City}, {donation.info.State}{" "}
+              {donation.info.PostalCode}
+              <br />
+              Pickup Time: {donation.info.PickupTime} <br />
+              Pickup Date: {donation.info.PickupDate} <br />
+              Quantity: {donation.info.Quantity} boxes
+              <br />
+              <button>Reserve</button>
+            </p>
+          </div>
+        ))}
       </div>
     </div>
   );

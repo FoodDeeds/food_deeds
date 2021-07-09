@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 const SingleSupplier = (props) => {
   const [supplierInfo, setSupplierInfo] = useState({});
   const [donations, setDonations] = useState([]);
+  const [selectedDonation, setSelectedDonation] = useState({});
   const [confirmation, setConfirmation] = useState(false);
   const history = useHistory();
 
@@ -28,17 +29,18 @@ const SingleSupplier = (props) => {
       });
   }, [props.match.params.id]);
 
-  const handleClick = () => {
-    console.log('clicked')
+  const handleClick = (donation) => {
+    console.log("clicked");
     setConfirmation(true);
+    setSelectedDonation(donation);
     history.push({
-        pathname: "/confirmation",
-        state: {
-          donations,
-          supplierInfo
-        }
+      pathname: "/confirmation",
+      state: {
+        donation,
+        supplierInfo,
+      },
     });
-};
+  };
 
   return (
     <div>
@@ -72,7 +74,9 @@ const SingleSupplier = (props) => {
               Quantity: {donation.info.Quantity} boxes
               {console.log("donation>>>", donation)}
               <br />
-              <button onClick={handleClick} alt="">Reserve</button>
+              <button onClick={() => handleClick(donation)} alt="">
+                Reserve
+              </button>
             </p>
           </div>
         ))}

@@ -1,5 +1,11 @@
 import React from 'react'
 
+/**
+ * user's icon, name
+ * post's image
+ * firebase: Description & Quantity
+ */
+
 const RecDonations = ()=> {
 
         return (

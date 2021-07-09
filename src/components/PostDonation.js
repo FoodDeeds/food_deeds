@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { auth, db } from "../firebase";
+import './Post.css'
+import AddPhotoIcon from "@material-ui/icons/CameraAlt";
 
 const PostDonation = (props) => {
   const [userInfo, setUserInfo] = useState({});
@@ -12,6 +14,7 @@ const PostDonation = (props) => {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [postalCode, setPostalCode] = useState("");
+  const [progress, setProgress] = useState(0);
 
   const newDonation = {
     Description: description,
@@ -27,6 +30,23 @@ const PostDonation = (props) => {
     PostingTime: new Date(),
     supplierId: userInfo.uid,
   };
+
+  const handleImage = (evt) => {
+    if(evt.target.files[0]) {
+      setImage(evt.target.files[0]);
+      let selectedImg = URL.createObjectURL(evt.target.files[0]);
+      let imagePreview = document.getElementById("image-preview");
+      imagePreview.src = selectedImg;
+      imagePreview.style.display = "block";
+    }
+  }
+
+
+
+  // const removeImage = () => {
+  //   let imagePreview = document.getElementById('image-preview')
+  //   imagePreview.style.display = 'none';
+  // }
 
   const submit = (evt) => {
     evt.preventDefault();
@@ -75,12 +95,28 @@ const PostDonation = (props) => {
             value={description}
           />
           <br />
-          <label htmlFor="image">Image</label>
-          <input
-            className="form__text"
-            onChange={(evt) => setImage(evt.target.value)}
-            value={image}
-          />
+            <div className="imagePreview">
+            {/* can add onClick func inside img tag to remove image */}
+            <img id="image-preview" alt="" />
+            </div>
+            <br />
+            <div className="image-upload">
+              <label htmlFor="file-input">
+                <AddPhotoIcon style={{cursor: "pointer"}}/>
+              </label>
+              <input
+                id="file-input"
+                type="file"
+                accept="image/*"
+                onChange={handleImage}
+              />
+            <button
+              className="button"
+              
+            >
+              Confirm Upload
+            </button>
+            </div>
           <br />
           <label htmlFor="quantity">Quantity</label>
           <input

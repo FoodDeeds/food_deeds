@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../firebase";
-import { Button, Segment, Icon, Image, Item, Label } from 'semantic-ui-react'
+import { Button, Item, } from 'semantic-ui-react'
 
 /**
  * user's icon, name

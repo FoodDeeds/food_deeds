@@ -35,7 +35,7 @@ const RecDonations = () => {
                 });
         });
     }, []);
-    console.log("supplier info data>>>>>", supplierInfo);
+    // console.log("supplier info data>>>>>", supplierInfo);
 
     console.log("Donations!!!", donations);
     return (
@@ -45,6 +45,7 @@ const RecDonations = () => {
                 <div className="result" key={donation.id}>
                     <p>
                         <img src={donation.info.postImageUrl} alt="" /> <br />
+                        {donation.info.supplierName} <br />
                         {donation.info.Description} <br />
                         {donation.info.City}, {donation.info.State}
                         {donation.info.PostalCode}

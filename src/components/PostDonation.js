@@ -24,6 +24,10 @@ const PostDonation = (props) => {
 
             if (validImageTypes.includes(fileType)) {
                 setImage(file);
+                const selectedImg = URL.createObjectURL(file);
+                const imagePreview = document.getElementById("image-preview");
+                imagePreview.src = selectedImg;
+                imagePreview.style.display = "block";
             } else {
                 console.log("image cannot upload");
             }
@@ -119,13 +123,9 @@ const PostDonation = (props) => {
                         value={description}
                     />
                     <br />
-                    {/* <div className="imagePreview">
-                        {url ? (
-                            <img src={url} alt="" />
-                        ) : (
-                            <img src={logo} alt="logo" />
-                        )}
-                    </div> */}
+                    <div className="imagePreview">
+                        <img id="image-preview" alt="" />
+                    </div>
                     <br />
                     <div className="image-upload">
                         <label htmlFor="file-input">

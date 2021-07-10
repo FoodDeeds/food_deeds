@@ -14,6 +14,23 @@ const PostDonation = (props) => {
     const [image, setImage] = useState("");
     const [url, setUrl] = useState("");
 
+    console.log("basic userInfo>>>", userInfo);
+
+    useEffect(() => {
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                setUserInfo(user);
+                db.collection("SignedUpUsers")
+                    .doc(user.uid)
+                    .get()
+                    .then((response) => {
+                        const data = response.data();
+                        setUserInfo(data);
+                    });
+            }
+        });
+    }, []);
+
     const handleImage = (evt) => {
         evt.preventDefault();
         const file = evt.target.files[0];
@@ -34,7 +51,7 @@ const PostDonation = (props) => {
         }
     };
 
-    console.log("image file>>>", image);
+    // console.log("image file>>>", image);
 
     const handleUpload = (evt) => {
         evt.preventDefault();
@@ -73,7 +90,8 @@ const PostDonation = (props) => {
                                     PickupTime: pickupTime,
                                     Status: true,
                                     PostingTime: new Date(),
-                                    supplierId: userInfo.uid
+                                    supplierId: userInfo.id,
+                                    supplierName: userInfo.Name
                                 })
                                 .then(() => {
                                     setUrl("");
@@ -94,17 +112,7 @@ const PostDonation = (props) => {
         // console.log("image here!!", image);
     };
 
-    useEffect(() => {
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                setUserInfo(user);
-                // } else {
-                //     setUserInfo({});
-            }
-        });
-    });
-
-    if (!userInfo.uid) {
+    if (!userInfo) {
         return (
             <div>
                 <h2>You have to log in</h2>

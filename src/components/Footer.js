@@ -7,54 +7,54 @@ import { auth } from "../firebase";
  * after logged in, show "Hello, Username"
  */
 export const Footer = () => {
-    const history = useHistory();
+  const history = useHistory();
 
-    const [currentUser, setCurrentUser] = useState("");
+  const [currentUser, setCurrentUser] = useState("");
 
-    useEffect(() => {
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                setCurrentUser(user);
-            } else {
-                console.log("Logged out");
-            }
-        });
-    }, []);
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setCurrentUser(user);
+      } else {
+        console.log("Logged out");
+      }
+    });
+  }, []);
 
-    const handleLogout = () => {
-        auth.signOut().then(() => {
-            history.push("/login");
-        });
-    };
+  const handleLogout = () => {
+    auth.signOut().then(() => {
+      history.push("/login");
+    });
+  };
 
-    // console.log(currentUser)
+  // console.log(currentUser)
 
-    return (
-        <>
-            <div className="footer__view">
-                {currentUser && (
-                    <div className="login__user">
-                        <p>Welcome back, {currentUser.email}</p>
-                        <br />
-                        <button className="logout__btn" onClick={handleLogout}>
-                            LOG OUT
-                        </button>
-                    </div>
-                )}
-                {!currentUser && (
-                    <div className="log__btn">
-                        <Link to="/login">
-                            <button>LOG IN</button>
-                        </Link>
+  return (
+    <>
+      <div className="footer__view">
+        {currentUser && (
+          <div className="login__user">
+            <p>Welcome back, {currentUser.email}</p>
+            <br />
+            <button className="logout__btn" onClick={handleLogout}>
+              LOG OUT
+            </button>
+          </div>
+        )}
+        {!currentUser && (
+          <div className="log__btn">
+            <Link to="/login">
+              <button>LOG IN</button>
+            </Link>
 
-                        <Link to="/signup">
-                            <button>SIGN UP</button>
-                        </Link>
-                    </div>
-                )}
-            </div>
-        </>
-    );
+            <Link to="/signup">
+              <button>SIGN UP</button>
+            </Link>
+          </div>
+        )}
+      </div>
+    </>
+  );
 };
 
 export default Footer;

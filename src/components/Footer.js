@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { Button } from 'semantic-ui-react'
 
 import { auth } from "../firebase";
 /**
@@ -36,19 +37,19 @@ export const Footer = () => {
                     <div className="login__user">
                         <p>Welcome back, {currentUser.email}</p>
                         <br />
-                        <button className="logout__btn" onClick={handleLogout}>
+                        <Button color ="green" className="logout__btn" onClick={handleLogout}>
                             LOG OUT
-                        </button>
+                        </Button>
                     </div>
                 )}
                 {!currentUser && (
                     <div className="log__btn">
                         <Link to="/login">
-                            <button>LOG IN</button>
+                            <Button color="green">LOG IN</Button>
                         </Link>
 
                         <Link to="/signup">
-                            <button>SIGN UP</button>
+                            <Button color="green">SIGN UP</Button>
                         </Link>
                     </div>
                 )}
@@ -58,3 +59,5 @@ export const Footer = () => {
 };
 
 export default Footer;
+
+

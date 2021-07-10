@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Grid, Icon, Item, Menu, Sidebar } from "semantic-ui-react";
-import { BrowserRouter as Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [sidebarVisible, setSidebarVisible] = useState(false);

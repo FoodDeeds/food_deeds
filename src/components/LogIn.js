@@ -23,16 +23,15 @@ const LogIn = (props) => {
   };
 
   return (
-    <div className="form">
-      <Form>
-
+    <div >
+      <Form style={{ marginLeft: 25, marginTop: 22 }}>
           <Form.Field
             label="Email"
             control="input"
             onSubmit={login}
             onChange={(evt) => setEmail(evt.target.value)}
             value={email}
-            style={{ width: 300 }}
+            style={{ width: 300}}
           />
           <Form.Field
             label="Password"
@@ -53,11 +52,12 @@ const LogIn = (props) => {
           <br/>
       </Form>
 
-      <p>Don't have an account?</p>
+      <p style={{marginLeft: 15}}>Don't have an account?</p>
       <Link to="signup">
         <Button
         basic color="grey"
         size="small"
+        style={{marginLeft: 20}}
         >
             REGISTER HERE
         </Button>
@@ -67,38 +67,3 @@ const LogIn = (props) => {
 };
 
 export default LogIn;
-
-// <br />
-// <h2>Login</h2>
-// <br />
-// <form autoComplete="off" className="form__group" onSubmit={login}>
-//   <label htmlFor="email">Email</label>
-//   <input
-//     type="email"
-//     className="form__text"
-//     required
-//     onChange={(evt) => setEmail(evt.target.value)}
-//     value={email}
-//   />
-//   <br />
-//   <label htmlFor="password">Password</label>
-//   <input
-//     type="password"
-//     className="form__text"
-//     required
-//     onChange={(evt) => setPassword(evt.target.value)}
-//     value={password}
-//   />
-//   <br />
-//   <button type="submit" className="primary__btn">
-//     LOGIN
-//   </button>
-// </form>
-// {error && <span className="error__msg">{error}</span>}
-// <br />
-// <span>
-//   Don't have an account?
-//   <Link to="signup">
-//     <button className="secondary__btn">REGISTER</button>
-//   </Link>
-// </span>

@@ -12,6 +12,7 @@ import EditAccount from "./components/EditAccount";
 import Browse from "./components/Browse";
 import SingleSupplier from "./components/SingleSupplier";
 import Confirmation from "./components/Confirmation";
+import Header from "./components/Header";
 
 /**
  * Header
@@ -21,6 +22,10 @@ import Confirmation from "./components/Confirmation";
 const Routes = () => {
   return (
     <Router>
+      <div>
+        <Header />
+      </div>
+
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/map" component={MapSearch} />

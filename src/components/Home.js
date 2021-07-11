@@ -3,6 +3,7 @@ import RecDonations from "./RecDonations";
 import Footer from "./Footer";
 import logo from "../images/Logo-2.png";
 
+
 const Home = () => {
   return (
     <div>

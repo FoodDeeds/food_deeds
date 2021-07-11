@@ -193,6 +193,7 @@ const Signup = (props) => {
             <option value="Wisconsin">WI</option>
             <option value="Wyoming">WY</option>
           </Form.Field>
+          {error && <span className="error__msg">{error}</span>}
           <Button
             control="button"
             onClick={signup}

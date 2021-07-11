@@ -26,7 +26,7 @@ const Header = () => {
           onMouseEnter={(e) => setSidebarVisible(true)}
           onMouseLeave={(e) => setSidebarVisible(false)}
           color="Standard"
-          style={{ height: 100 }}
+          style={{ height: "100%" }}
         >
           <Link to="/">
             <Menu.Item>
@@ -44,7 +44,7 @@ const Header = () => {
               </Item.Description>
             </Menu.Item>
           </Link>
-          <Link to="donate">
+          <Link to="/donate">
             <Menu.Item>
               <Icon name="write square" color="green" />
               <Item.Description style={{ color: "green" }}>
@@ -57,14 +57,6 @@ const Header = () => {
               <Icon name="search" color="green" />
               <Item.Description style={{ color: "green" }}>
                 Search
-              </Item.Description>
-            </Menu.Item>
-          </Link>
-          <Link to="/contact">
-            <Menu.Item>
-              <Icon name="write info circle" color="green" />
-              <Item.Description style={{ color: "green" }}>
-                Contact Us
               </Item.Description>
             </Menu.Item>
           </Link>

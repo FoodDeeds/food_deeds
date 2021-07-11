@@ -24,16 +24,6 @@ const RecDonations = () => {
           }))
         );
       });
-
-    donations.forEach((donation) => {
-      db.collection("SignedUpUsers")
-        .doc(donation.info.supplierId)
-        .get()
-        .then((response) => {
-          const data = response.data();
-          setSupplierInfo(data);
-        });
-    });
   }, []);
   // console.log("supplier info data>>>>>", supplierInfo);
 

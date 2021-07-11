@@ -16,21 +16,6 @@ const PostDonation = (props) => {
 
   console.log("basic userInfo>>>", userInfo);
 
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUserInfo(user);
-        db.collection("SignedUpUsers")
-          .doc(user.uid)
-          .get()
-          .then((response) => {
-            const data = response.data();
-            setUserInfo(data);
-          });
-      }
-    });
-  }, []);
-
   const handleImage = (evt) => {
     evt.preventDefault();
     const file = evt.target.files[0];
@@ -78,8 +63,8 @@ const PostDonation = (props) => {
             .getDownloadURL()
             .then((url) => {
               setUrl(url);
-              const searchAddress = userInfo.Address;
-              console.log(searchAddress);
+              // const searchAddress = userInfo.Address;
+              console.log("userInfo;", userInfo);
               db.collection("Donations")
                 .add({
                   postImageUrl: url,
@@ -91,6 +76,9 @@ const PostDonation = (props) => {
                   PostingTime: new Date(),
                   supplierId: userInfo.id,
                   supplierName: userInfo.Name,
+                  supplierAddress: userInfo.Address,
+                  supplierCity: userInfo.City,
+                  supplierZipCode: userInfo.Zipcode,
                 })
                 .then(() => {
                   setUrl("");

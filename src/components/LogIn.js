@@ -28,7 +28,6 @@ const LogIn = (props) => {
           <Form.Field
             label="Email"
             control="input"
-            onSubmit={login}
             onChange={(evt) => setEmail(evt.target.value)}
             value={email}
             style={{ width: 300}}

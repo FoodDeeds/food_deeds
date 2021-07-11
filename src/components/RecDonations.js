@@ -44,10 +44,10 @@ const RecDonations = () => {
       <h3>Currently Available For Pick-Up</h3>
       {donations.map((donation) => (
         <div className="result" key={donation.id}>
-          <Item.Group divided>
+          <Item.Group divided style={{marginLeft: 30}}>
           <Item >
             <br/>
-            <Item.Image src={donation.info.postImageUrl} alt="" />
+            <Item.Image src={donation.info.postImageUrl} alt="" style={{marginRight: 20, marginTop: 10}}/>
             <br />
             <Item.Content>
             <Item.Header as="a">{donation.info.supplierName}</ Item.Header>
@@ -62,7 +62,7 @@ const RecDonations = () => {
                         {donation.info.PostalCode} */}
             <br />
             </Item.Content>
-            <Button basic color="green">Reserve</Button>
+            <Button basic color="green" style={{width: 100, height: 30, marginRight: 20}}>Reserve</Button>
             </Item>
           </Item.Group>
         </div>

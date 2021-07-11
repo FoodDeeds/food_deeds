@@ -51,8 +51,6 @@ const PostDonation = (props) => {
     }
   };
 
-  // console.log("image file>>>", image);
-
   const handleUpload = (evt) => {
     evt.preventDefault();
     if (image) {
@@ -80,7 +78,8 @@ const PostDonation = (props) => {
             .getDownloadURL()
             .then((url) => {
               setUrl(url);
-              console.log("storage url>>>>>", url);
+              const searchAddress = userInfo.Address;
+              console.log(searchAddress);
               db.collection("Donations")
                 .add({
                   postImageUrl: url,
@@ -108,8 +107,32 @@ const PostDonation = (props) => {
             });
         }
       );
+    } else {
+      db.collection("Donations")
+        .add({
+          postImageUrl: null,
+          Description: description,
+          Quantity: quantity,
+          PickupDate: pickupDate,
+          PickupTime: pickupTime,
+          Status: true,
+          PostingTime: new Date(),
+          supplierId: userInfo.id,
+          supplierName: userInfo.Name,
+        })
+        .then(() => {
+          setUrl("");
+          setProgress(0);
+          setDescription("");
+          setImage(null);
+          setDescription("");
+          setImage("");
+          setQuantity("");
+          setPickupDate("");
+          setPickupTime("");
+          props.history.push("/");
+        });
     }
-    // console.log("image here!!", image);
   };
 
   if (!userInfo.id) {

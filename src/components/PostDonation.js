@@ -45,13 +45,15 @@ const PostDonation = (props) => {
 
   // console.log("combineAddress url", combineAddress);
 
-  // const getCoordinates = async () => {
-
-  // console.log(
-  //     "coordinate data fields>>>",
-  //     data.features[0].geometry.coordinates
-  // );
-  // };
+  const getCoordinates = async () => {
+    const { data } = await axios.get(combineAddress);
+    const coordinates = data.features[0].geometry.coordinates;
+    setCoordinates(coordinates);
+    console.log(
+      "coordinate data fields>>>",
+      data.features[0].geometry.coordinates
+    );
+  };
 
   const handleImage = (evt) => {
     evt.preventDefault();
@@ -75,7 +77,7 @@ const PostDonation = (props) => {
 
   const handleUpload = (evt) => {
     evt.preventDefault();
-
+    getCoordinates();
     if (image) {
       const uploadTask = storage.ref(`images/${image.name}`).put(image);
 
@@ -102,9 +104,6 @@ const PostDonation = (props) => {
             .then((url) => {
               setUrl(url);
               // console.log("userInfo;", userInfo);
-              const { data } = axios.get(combineAddress);
-              const coordinates = data.features[0].geometry.coordinates;
-              setCoordinates(coordinates);
               db.collection("Donations")
                 .add({
                   postImageUrl: url,
@@ -139,9 +138,6 @@ const PostDonation = (props) => {
         }
       );
     } else {
-      const { data } = axios.get(combineAddress);
-      const coordinates = data.features[0].geometry.coordinates;
-      setCoordinates(coordinates);
       db.collection("Donations")
         .add({
           postImageUrl: null,

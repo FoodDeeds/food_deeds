@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import Header from "./components/Header";
 import Home from "./components/Home";
 import MapSearch from "./components/MapSearch";
 import LogIn from "./components/LogIn";
@@ -13,6 +12,7 @@ import EditAccount from "./components/EditAccount";
 import Browse from "./components/Browse";
 import SingleSupplier from "./components/SingleSupplier";
 import Confirmation from "./components/Confirmation";
+import Header from "./components/Header";
 
 /**
  * Header
@@ -22,7 +22,7 @@ import Confirmation from "./components/Confirmation";
 const Routes = () => {
   return (
     <Router>
-      <div className="header">
+      <div>
         <Header />
       </div>
 

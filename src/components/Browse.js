@@ -6,7 +6,6 @@ const Browse = (props) => {
   const [category, setCategory] = useState("");
   const [zipcode, setZipcode] = useState("");
   const [donations, setDonations] = useState([]);
-  const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
     db.collection("Donations")
@@ -40,7 +39,8 @@ const Browse = (props) => {
       });
   };
 
-  console.log(donations);
+  console.log('donations after submit>>', donations);
+
   return (
     <div className="browse">
       <form onSubmit={submit}>

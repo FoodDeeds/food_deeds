@@ -14,6 +14,21 @@ const PostDonation = (props) => {
   const [image, setImage] = useState("");
   const [url, setUrl] = useState("");
 
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUserInfo(user);
+        db.collection("SignedUpUsers")
+          .doc(user.uid)
+          .get()
+          .then((response) => {
+            const data = response.data();
+            setUserInfo(data);
+          });
+      }
+    });
+  }, []);
+
   console.log("basic userInfo>>>", userInfo);
 
   const handleImage = (evt) => {
@@ -107,6 +122,9 @@ const PostDonation = (props) => {
           PostingTime: new Date(),
           supplierId: userInfo.id,
           supplierName: userInfo.Name,
+          supplierAddress: userInfo.Address,
+          supplierCity: userInfo.City,
+          supplierZipCode: userInfo.Zipcode,
         })
         .then(() => {
           setUrl("");

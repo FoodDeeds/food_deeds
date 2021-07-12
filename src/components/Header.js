@@ -94,6 +94,7 @@ const NavBar = () => {
               color="green"
               className="logout__btn"
               onClick={handleLogout}
+              style={{ marginBottom: 10, marginTop: 10 }}
             >
               LOG OUT
             </Button>

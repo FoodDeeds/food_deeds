@@ -55,14 +55,16 @@ const NavBar = () => {
               </Item.Description>
             </Menu.Item>
           </Link>
-          <Link to="/account">
-            <Menu.Item>
-              <Icon name="user circle" color="green" />
-              <Item.Description style={{ color: "green" }}>
-                My Account
-              </Item.Description>
-            </Menu.Item>
-          </Link>
+          {currentUser && (
+            <Link to="/account">
+              <Menu.Item>
+                <Icon name="user circle" color="green" />
+                <Item.Description style={{ color: "green" }}>
+                  My Account
+                </Item.Description>
+              </Menu.Item>
+            </Link>
+          )}
           <Link to="/donate">
             <Menu.Item>
               <Icon name="write square" color="green" />
@@ -87,7 +89,6 @@ const NavBar = () => {
               </Item.Description>
             </Menu.Item>
           </Link>
-
           {currentUser ? (
             <Button
               color="green"

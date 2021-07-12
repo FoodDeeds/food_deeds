@@ -77,7 +77,7 @@ const PostDonation = (props) => {
 
   const handleUpload = (evt) => {
     evt.preventDefault();
-    getCoordinates();
+    // getCoordinates();
     if (image) {
       const uploadTask = storage.ref(`images/${image.name}`).put(image);
 
@@ -102,7 +102,7 @@ const PostDonation = (props) => {
             .child(image.name) // Upload the file and metadata
             .getDownloadURL()
             .then((url) => {
-              setUrl(url);
+              setUrl(url).then(() => getCoordinates());
               // console.log("userInfo;", userInfo);
               db.collection("Donations")
                 .add({
@@ -180,7 +180,7 @@ const PostDonation = (props) => {
   } else {
     return (
       <div className="form">
-        <h2>Post a donation</h2>
+        <h3>Post A New Donation</h3>
         <form onSubmit={handleUpload}>
           <label htmlFor="description">Description</label>
           <input
@@ -214,7 +214,7 @@ const PostDonation = (props) => {
             onChange={(evt) => setQuantity(evt.target.value)}
             value={quantity}
           />
-          <h4>Please enter pickup information:</h4>
+          <h4>These items need to be picked up by:</h4>
           <br />
           <label htmlFor="pickupDate">Date</label>
           <input

@@ -19,6 +19,7 @@ const SingleSupplier = (props) => {
       });
     db.collection("Donations")
       .where("supplierId", "==", props.match.params.id)
+      .where("Status", "==", true)
       .onSnapshot((snapshot) => {
         setDonations(
           snapshot.docs.map((doc) => ({
@@ -33,6 +34,10 @@ const SingleSupplier = (props) => {
     console.log("clicked");
     setConfirmation(true);
     setSelectedDonation(donation);
+    console.log("donation", donation);
+    db.collection("Donations").doc(donation.id).update({
+      Status: false,
+    });
     history.push({
       pathname: "/confirmation",
       state: {

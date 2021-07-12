@@ -20,13 +20,13 @@ const Confirmation = ({ location }) => {
       <br />
       <p> Pick-up time: {donation.info.PickupTime}</p>
       <br />
-      <p> Supplier Name: {supplierInfo.Name} </p>
-      <p> Address: {supplierInfo.Address} </p>
+      <p> Supplier Name: {donation.info.supplierName} </p>
+      <p> Address: {donation.info.supplierAddress} </p>
       <p>
-        {supplierInfo.City}
-        {supplierInfo.State},{supplierInfo.Zipcode}
+        {donation.info.supplierCity}
+        {donation.info.supplierState},{donation.info.supplierZipCode}
       </p>
-      <p> Phone Number: {supplierInfo.Phone} </p>
+      {/* <p> Phone Number: {donation.Phone} </p> */}
       <br />
 
       <Button color="green" onClick={handleClick}>

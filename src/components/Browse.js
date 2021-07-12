@@ -90,7 +90,7 @@ const Browse = (props) => {
         </Form.Group>
       </Form>
       <br />
-      <MapSearch donations={donations} />
+      <MapSearch donations={donations} setDonations={setDonations} />
       <div className="search-results">
         <Header style={{ marginTop: 20 }}>Showing results:</Header>
         {donations.map((donation) => (

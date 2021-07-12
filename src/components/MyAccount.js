@@ -60,6 +60,7 @@ const MyAccount = () => {
                 </div>
             )}
         </div>
+        // pass in order history component in a separate div
     );
 };
 

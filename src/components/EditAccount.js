@@ -3,7 +3,6 @@ import { useHistory } from "react-router";
 import "semantic-ui-css/semantic.min.css";
 import { Header, Form, Button, Image, Label } from "semantic-ui-react";
 import { db, storage } from "../firebase";
-import AddPhotoIcon from "@material-ui/icons/CameraAlt";
 
 const EditAccount = ({ location }) => {
   const userInfo = location.state.userInfo;

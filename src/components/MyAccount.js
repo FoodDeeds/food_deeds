@@ -3,13 +3,12 @@ import { auth, db } from "../firebase";
 import "semantic-ui-css/semantic.min.css";
 import { Button, List, Image } from "semantic-ui-react";
 import EditAccount from "./EditAccount";
+import Reserved from "./Reserved";
 import { useHistory } from "react-router-dom";
 
 const MyAccount = () => {
   const [userInfo, setUserInfo] = useState({});
   const [editForm, setEditForm] = useState(false);
-  const [image, setImage] = useState("");
-  const [url, setUrl] = useState("");
   const history = useHistory();
 
   useEffect(() => {
@@ -92,6 +91,7 @@ const MyAccount = () => {
         </Button>
         </div>
       )}
+      <Reserved userInfo={userInfo} />
     </div>
   );
 

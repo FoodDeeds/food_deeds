@@ -15,6 +15,8 @@ const EditAccount = ({ location }) => {
   const [address, setAddress] = useState(userInfo.Address);
   const [zipcode, setZipcode] = useState(userInfo.Zipcode);
   const [state, setState] = useState(userInfo.State);
+  const [image, setImage] = useState("");
+  const [url, setUrl] = useState("");
   const history = useHistory();
 
   const handleUpdate = () => {
@@ -38,6 +40,27 @@ const EditAccount = ({ location }) => {
       });
   };
 
+  const handleImage = (evt) => {
+    evt.preventDefault();
+    const file = evt.target.files[0];
+
+    if (file) {
+      const fileType = file["type"];
+      const validImageTypes = ["image/gif", "image/jpeg", "image/png"];
+
+      if (validImageTypes.includes(fileType)) {
+        setImage(file);
+        const selectedImg = URL.createObjectURL(file);
+        const imagePreview = document.getElementById("image-preview");
+        imagePreview.src = selectedImg;
+        imagePreview.style.display = "block";
+      } else {
+        console.log("image cannot upload");
+      }
+    }
+  };
+
+
   const handleClick = () => {
     handleUpdate();
   };
@@ -47,6 +70,23 @@ const EditAccount = ({ location }) => {
       <Header size="medium" color="green" style={{ marginLeft: 40 }}>
         Edit Account Information
       </Header>
+      {!userInfo.Image ? (
+              <Form.Field loading >
+              <label style={{ marginLeft: 33}}
+                >Logo
+                </label>
+                <input
+                  id="file-input"
+                  placeholder="Image"
+                  value={image}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImage}
+                  style={{ marginLeft: 30, width: 300 }}
+                />
+              </Form.Field>
+      ) : <div> "Hello World"  </div>}
+
       <Form.Field>
         <label style={{ marginLeft: 33}}
         >Name

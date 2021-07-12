@@ -42,7 +42,6 @@ const EditAccount = ({ location }) => {
   };
 
   const handleUpdate = (evt) => {
-
     if (image) {
       const uploadTask = storage.ref(`images/${image.name}`).put(image);
 
@@ -58,71 +57,69 @@ const EditAccount = ({ location }) => {
         (error) => {
           console.log("Oh no! There was an error uploading your logo", error);
         },
-    () => {
-      storage
-      .ref("images")
-      .child(image.name)
-      .getDownloadURL()
-      .then((url) => {
-        setUrl(url);
-        db.collection("SignedUpUsers")
-        .doc(userInfo.id)
-        .update({
-          Image: url,
-          Type: type,
-          Category: category,
-          Name: name,
-          Phone: phone,
-          Email: email,
-          Password: password,
-          Address: address,
-          Zipcode: zipcode,
-          State: state,
-        })
-        .then(() => {
-          history.push({
-            pathname: "/account",
-          });
-        });
-      }
-    )
+        () => {
+          storage
+            .ref("images")
+            .child(image.name)
+            .getDownloadURL()
+            .then((url) => {
+              setUrl(url);
+              db.collection("SignedUpUsers")
+                .doc(userInfo.id)
+                .update({
+                  Image: url,
+                  Type: type,
+                  Category: category,
+                  Name: name,
+                  Phone: phone,
+                  Email: email,
+                  Password: password,
+                  Address: address,
+                  Zipcode: zipcode,
+                  State: state,
+                })
+                .then(() => {
+                  history.push({
+                    pathname: "/account",
+                  });
+                });
+            });
+        }
+      );
     }
-      )}
-}
-
+  };
 
   const handleClick = () => {
     handleUpdate();
   };
 
   return (
-    <Form style={{ marginTop: 25}} >
+    <Form style={{ marginTop: 25 }}>
       <Header size="medium" color="green" style={{ marginLeft: 40 }}>
         Edit Account Information
       </Header>
       {userInfo.Image ? (
-              <Form.Field >
-              <label style={{ marginLeft: 33}} className="image-upload"
-                >Logo
-                </label>
-                <div className="imagePreview">
-                        <Image id="image-preview" alt="" />
-                    </div>
-
-                    <input
-                        id="file-input"
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImage}
-                        style={{ marginLeft: 30, width: 300 }}
-                    />
-              </Form.Field>
-      ) : <div> "Hello World" </div>}
+        <Form.Field>
+          <label style={{ marginLeft: 33 }} className="image-upload">
+            Logo
+          </label>
+          <div className="imagePreview">
+            <Image id="image-preview" alt="" />
+          </div>
+          <input
+            id="file-input"
+            type="file"
+            accept="image/*"
+            onChange={handleImage}
+            style={{ marginLeft: 30, width: 300 }}
+          />
+        </Form.Field>
+      ) : (
+        <div> "Hello World" </div>
+      )}
 
       <Form.Field>
-        <label style={{ marginLeft: 33}}
-        >Name
-        </label>
+        <label style={{ marginLeft: 33 }}>Name</label>
         <input
           placeholder="Name"
           value={name}
@@ -131,9 +128,7 @@ const EditAccount = ({ location }) => {
         />
       </Form.Field>
       <Form.Field>
-        <label style={{ marginLeft: 33}}>
-          Email
-        </label>
+        <label style={{ marginLeft: 33 }}>Email</label>
         <input
           placeholder="Email"
           value={email}
@@ -142,9 +137,7 @@ const EditAccount = ({ location }) => {
         />
       </Form.Field>
       <Form.Field>
-        <label style={{ marginLeft: 33}}
-        >Phone
-        </label>
+        <label style={{ marginLeft: 33 }}>Phone</label>
         <input
           placeholder="Phone"
           value={phone}
@@ -153,9 +146,7 @@ const EditAccount = ({ location }) => {
         />
       </Form.Field>
       <Form.Field>
-        <label style={{ marginLeft: 33}}
-        >Password
-        </label>
+        <label style={{ marginLeft: 33 }}>Password</label>
         <input
           placeholder="Password"
           value={password}
@@ -164,9 +155,7 @@ const EditAccount = ({ location }) => {
         />
       </Form.Field>
       <Form.Field>
-        <label style={{ marginLeft: 33}}
-        >Address
-        </label>
+        <label style={{ marginLeft: 33 }}>Address</label>
         <input
           placeholder="Address"
           value={address}
@@ -175,9 +164,7 @@ const EditAccount = ({ location }) => {
         />
       </Form.Field>
       <Form.Field>
-        <label style={{ marginLeft: 33}}
-        >State
-        </label>
+        <label style={{ marginLeft: 33 }}>State</label>
         <input
           placeholder="State"
           value={state}
@@ -186,9 +173,7 @@ const EditAccount = ({ location }) => {
         />
       </Form.Field>
       <Form.Field>
-        <label style={{ marginLeft: 33}}
-        >Zip Code
-        </label>
+        <label style={{ marginLeft: 33 }}>Zip Code</label>
         <input
           placeholder="Zip Code"
           value={zipcode}
@@ -197,9 +182,7 @@ const EditAccount = ({ location }) => {
         />
       </Form.Field>
       <Form.Field>
-        <label style={{ marginLeft: 33}}
-        >Type
-        </label>
+        <label style={{ marginLeft: 33 }}>Type</label>
         <input
           placeholder="Type"
           value={type}
@@ -208,9 +191,7 @@ const EditAccount = ({ location }) => {
         />
       </Form.Field>
       <Form.Field>
-        <label style={{ marginLeft: 33}}
-        >Category
-        </label>
+        <label style={{ marginLeft: 33 }}>Category</label>
         <input
           placeholder="Category"
           value={category}
@@ -231,18 +212,3 @@ const EditAccount = ({ location }) => {
 };
 
 export default EditAccount;
-
-// db.collection("SignedUpUsers")
-// .doc(userInfo.id)
-// .update({
-//   Image: url,
-//   Type: type,
-//   Category: category,
-//   Name: name,
-//   Phone: phone,
-//   Email: email,
-//   Password: password,
-//   Address: address,
-//   Zipcode: zipcode,
-//   State: state,
-// })

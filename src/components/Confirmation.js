@@ -58,13 +58,13 @@ const Confirmation = ({ location }) => {
       <br />
       <p> Pick-up time: {donation.info.PickupTime}</p>
       <br />
-      <p> Supplier Name: {supplierInfo.Name} </p>
-      <p> Address: {supplierInfo.Address} </p>
+      <p> Supplier Name: {donation.info.supplierName} </p>
+      <p> Address: {donation.info.supplierAddress} </p>
       <p>
-        {supplierInfo.City}
-        {supplierInfo.State},{supplierInfo.Zipcode}
+        {donation.info.supplierCity}
+        {donation.info.supplierState},{donation.info.supplierZipcode}
       </p>
-      <p> Phone Number: {supplierInfo.Phone} </p>
+      {/* <p> Phone Number: {supplierInfo.Phone} </p> */}
       <br />
       {release === true ? (
         <Button color="red" onClick={handleRelease}>
@@ -75,6 +75,11 @@ const Confirmation = ({ location }) => {
           Reserve
         </Button>
       )}
+      <br />
+      <br />
+      <a href="/account">
+        <Button color="green">Go to My Account</Button>
+      </a>
     </div>
   );
 };

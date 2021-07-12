@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router";
 import "semantic-ui-css/semantic.min.css";
 import { Header, Form, Button } from "semantic-ui-react";
-import { db } from "../firebase";
+import { db, storage } from "../firebase";
 
 const EditAccount = ({ location }) => {
   const userInfo = location.state.userInfo;
@@ -17,28 +17,8 @@ const EditAccount = ({ location }) => {
   const [state, setState] = useState(userInfo.State);
   const [image, setImage] = useState("");
   const [url, setUrl] = useState("");
+  const [progress, setProgress] = useState(0);
   const history = useHistory();
-
-  const handleUpdate = () => {
-    db.collection("SignedUpUsers")
-      .doc(userInfo.id)
-      .update({
-        Type: type,
-        Category: category,
-        Name: name,
-        Phone: phone,
-        Email: email,
-        Password: password,
-        Address: address,
-        Zipcode: zipcode,
-        State: state,
-      })
-      .then((response) => {
-        history.push({
-          pathname: "/account",
-        });
-      });
-  };
 
   const handleImage = (evt) => {
     evt.preventDefault();
@@ -59,6 +39,55 @@ const EditAccount = ({ location }) => {
       }
     }
   };
+
+  const handleUpdate = (evt) => {
+    evt.preventDefault();
+    if (image) {
+      const uploadTask = storage.ref(`images/${image.name}`).put(image);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          // progress 1%...100%
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          setProgress(progress);
+        },
+        (error) => {
+          console.log("Oh no! There was an error uploading your logo", error);
+        },
+    () => {
+      storage
+      .ref("images")
+      .child(image.name)
+      .getDownloadURL()
+      .then((url) => {
+        setUrl(url);
+        db.collection("SignedUpUsers")
+        .doc(userInfo.id)
+        .update({
+          Image: url,
+          Type: type,
+          Category: category,
+          Name: name,
+          Phone: phone,
+          Email: email,
+          Password: password,
+          Address: address,
+          Zipcode: zipcode,
+          State: state,
+        })
+        .then(() => {
+          history.push({
+            pathname: "/account",
+          });
+        });
+      }
+    )
+    }
+      )}
+}
 
 
   const handleClick = () => {
@@ -85,7 +114,7 @@ const EditAccount = ({ location }) => {
                   style={{ marginLeft: 30, width: 300 }}
                 />
               </Form.Field>
-      ) : <div> "Hello World"  </div>}
+      ) : <div> "Hello World" </div>}
 
       <Form.Field>
         <label style={{ marginLeft: 33}}
@@ -199,3 +228,18 @@ const EditAccount = ({ location }) => {
 };
 
 export default EditAccount;
+
+// db.collection("SignedUpUsers")
+// .doc(userInfo.id)
+// .update({
+//   Image: url,
+//   Type: type,
+//   Category: category,
+//   Name: name,
+//   Phone: phone,
+//   Email: email,
+//   Password: password,
+//   Address: address,
+//   Zipcode: zipcode,
+//   State: state,
+// })

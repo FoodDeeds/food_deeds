@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
 import "semantic-ui-css/semantic.min.css";
-import { Header, Form, Button } from "semantic-ui-react";
+import { Header, Form, Button, Image } from "semantic-ui-react";
 import { db, storage } from "../firebase";
+import AddPhotoIcon from "@material-ui/icons/CameraAlt";
 
 const EditAccount = ({ location }) => {
   const userInfo = location.state.userInfo;
@@ -41,7 +42,7 @@ const EditAccount = ({ location }) => {
   };
 
   const handleUpdate = (evt) => {
-    evt.preventDefault();
+
     if (image) {
       const uploadTask = storage.ref(`images/${image.name}`).put(image);
 
@@ -95,24 +96,26 @@ const EditAccount = ({ location }) => {
   };
 
   return (
-    <Form style={{ marginTop: 25}}>
+    <Form style={{ marginTop: 25}} >
       <Header size="medium" color="green" style={{ marginLeft: 40 }}>
         Edit Account Information
       </Header>
-      {!userInfo.Image ? (
-              <Form.Field loading >
-              <label style={{ marginLeft: 33}}
+      {userInfo.Image ? (
+              <Form.Field >
+              <label style={{ marginLeft: 33}} className="image-upload"
                 >Logo
                 </label>
-                <input
-                  id="file-input"
-                  placeholder="Image"
-                  value={image}
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImage}
-                  style={{ marginLeft: 30, width: 300 }}
-                />
+                <div className="imagePreview">
+                        <Image id="image-preview" alt="" />
+                    </div>
+
+                    <input
+                        id="file-input"
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImage}
+                        style={{ marginLeft: 30, width: 300 }}
+                    />
               </Form.Field>
       ) : <div> "Hello World" </div>}
 

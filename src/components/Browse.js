@@ -1,12 +1,30 @@
 import React, { useState, useEffect } from "react";
 import MapSearch from "./MapSearch";
-import { db } from "../firebase";
+import { Button, Dropdown, Form, Header, Segment } from "semantic-ui-react";
+import { db, auth } from "../firebase";
+
 
 const Browse = (props) => {
   const [category, setCategory] = useState("");
   const [zipcode, setZipcode] = useState("");
   const [donations, setDonations] = useState([]);
-  const [supplierInfo, setSupplierInfo] = useState({});
+
+  useEffect(() => {
+    db.collection("Donations")
+      .where("PostalCode", "==", zipcode)
+      // .orderBy("Timestamp", "desc")
+      .onSnapshot((snapshot) => {
+        setDonations(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            info: doc.data(),
+          }))
+        );
+      });
+  }, [zipcode]);
+
+  // const searchAddress = donations.info.Address + donations.info.City;
+  console.log("searchAddress", donations);
 
   const submit = (evt) => {
     evt.preventDefault();
@@ -23,33 +41,62 @@ const Browse = (props) => {
       });
   };
 
+  const options = [
+    { key: 1, text: "All", value: "All" },
+    { key: 2, text: "Grocery", value: "Grocery" },
+    { key: 3, text: "Deli", value: "Deli" },
+    { key: 4, text: "Cafe", value: "Cafe" },
+  ];
   console.log(donations);
+
+  console.log('donations after submit>>', donations);
+
+
   return (
     <div className="browse">
-      <form onSubmit={submit}>
-        <label htmlFor="zipcode">Zipcode</label>
-        <input
-          type="text"
-          required
-          onChange={(evt) => setZipcode(evt.target.value)}
-        />
-        <select
-          name="category"
-          onChange={(evt) => setCategory(evt.target.value)}
-        >
-          <option value="All">All</option>
-          <option value="Grocery">Grocery Store</option>
-          <option value="Deli">Deli</option>
-          <option value="Cafe">Cafe</option>
-        </select>
-        <button type="submit">Search</button>
-      </form>
+      <Header style={{ marginBottom: -70, marginTop: 40 }}>
+        Search Available Food by Zip Code and Category:
+      </Header>
+      <Form onSubmit={submit}>
+        <Form.Group width="equal">
+          <input
+            type="text"
+            required
+            onChange={(evt) => setZipcode(evt.target.value)}
+            placeholder="Zip Code"
+            style={{
+              width: 200,
+              marginLeft: 10,
+              marginTop: 100,
+            }}
+          />
+          <Dropdown
+            clearable
+            options={options}
+            selection
+            placeholder="Category"
+            onChange={(evt) => setCategory(evt.target.value)}
+            style={{
+              marginLeft: 10,
+              marginTop: 100,
+            }}
+          />
+          <Button
+            type="submit"
+            basic
+            color="green"
+            style={{ width: 85, marginLeft: 20, marginTop: 100 }}
+          >
+            Search
+          </Button>
+        </Form.Group>
+      </Form>
       <br />
       <MapSearch donations={donations} />
       <div className="search-results">
-        <h3>Showing results:</h3>
+        <Header style={{ marginTop: 20 }}>Showing results:</Header>
         {donations.map((donation) => (
-          <div className="result" key={donation.id}>
+          <Segment className="result" key={donation.id} style={{ width: 300 }}>
             <p>
               {donation.info.Address} <br />
               {donation.info.City}, {donation.info.State}{" "}
@@ -59,9 +106,11 @@ const Browse = (props) => {
               Pickup Date: {donation.info.PickupDate} <br />
               Quantity: {donation.info.Quantity} boxes
               <br />
-              <button>Reserve</button>
+              <Button basic color="green" style={{ marginTop: 10 }}>
+                Reserve
+              </Button>
             </p>
-          </div>
+          </Segment>
         ))}
       </div>
     </div>

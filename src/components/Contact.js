@@ -1,29 +1,40 @@
-import React from 'react'
-import phone from "../images/phone-70-32.jpg";
-import email from "../images/email-2-32.jpg";
-import { Link } from "react-router-dom";
+import React from "react";
+import { List, Header } from "semantic-ui-react";
 
-const Contact = ()=> {
+const Contact = () => {
+  return (
+    <List>
+      <Header size="medium" style={{ marginTop: 30 }}>
+        Ready to help us fight food insecurity? Get in touch with Food Deeds
+        today.
+      </Header>
 
-        return (
-            <div>
-              <h3>
-                Ready to help us fight food insecurity? Get in touch with Food Deeds today.
-              </h3>
-              <p>
-                <img src={phone} alt="Phone" />
-                <p>1-800-GIV-FOOD</p>
-              </p>
-              <p>
-                <img src={email} alt="Email" />
-                <p>support@fooddeeds.com</p>
-              </p>
-              <Link to="/home">
-                Food Deeds FAQ
-              </Link>
-            </div>
-        )
+      <List.Item
+        icon="phone"
+        content="1-800-GIV-FOOD"
+        color="green"
+        style={{ marginLeft: 30 }}
+      />
+      <List.Item
+        icon="marker"
+        content="New York, NY"
+        color="green"
+        style={{ marginLeft: 30 }}
+      />
+      <List.Item
+        icon="mail"
+        content="support@fooddeeds.com"
+        color="green"
+        style={{ marginLeft: 30 }}
+      />
+      <List.Item
+        icon="linkify"
+        content={<a href="www.FoodDeeds.org">Food Deeds FAQ</a>}
+        color="green"
+        style={{ marginLeft: 30 }}
+      />
+    </List>
+  );
+};
 
-}
-
-export default Contact
+export default Contact;

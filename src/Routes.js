@@ -12,7 +12,7 @@ import EditAccount from "./components/EditAccount";
 import Browse from "./components/Browse";
 import SingleSupplier from "./components/SingleSupplier";
 import Confirmation from "./components/Confirmation";
-import Header from "./components/Header";
+import NavBar from "./components/NavBar";
 
 /**
  * Header
@@ -23,7 +23,7 @@ const Routes = () => {
   return (
     <Router>
       <div>
-        <Header />
+        <NavBar />
       </div>
 
       <Switch>

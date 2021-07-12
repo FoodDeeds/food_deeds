@@ -3,7 +3,6 @@ import MapSearch from "./MapSearch";
 import { Button, Dropdown, Form, Header, Segment } from "semantic-ui-react";
 import { db, auth } from "../firebase";
 
-
 const Browse = (props) => {
   const [category, setCategory] = useState("");
   const [zipcode, setZipcode] = useState("");
@@ -11,7 +10,7 @@ const Browse = (props) => {
 
   useEffect(() => {
     db.collection("Donations")
-      .where("PostalCode", "==", zipcode)
+      .where("supplierZipCode", "==", zipcode)
       // .orderBy("Timestamp", "desc")
       .onSnapshot((snapshot) => {
         setDonations(
@@ -29,7 +28,7 @@ const Browse = (props) => {
   const submit = (evt) => {
     evt.preventDefault();
     db.collection("Donations")
-      .where("PostalCode", "==", zipcode)
+      .where("supplierZipCode", "==", zipcode)
       // .orderBy("Timestamp", "desc")
       .onSnapshot((snapshot) => {
         setDonations(
@@ -49,8 +48,7 @@ const Browse = (props) => {
   ];
   console.log(donations);
 
-  console.log('donations after submit>>', donations);
-
+  console.log("donations after submit>>", donations);
 
   return (
     <div className="browse">
@@ -98,9 +96,9 @@ const Browse = (props) => {
         {donations.map((donation) => (
           <Segment className="result" key={donation.id} style={{ width: 300 }}>
             <p>
-              {donation.info.Address} <br />
-              {donation.info.City}, {donation.info.State}{" "}
-              {donation.info.PostalCode}
+              {donation.info.supplierAddress} <br />
+              {donation.info.supplierCity}, {donation.info.supplierState}{" "}
+              {donation.info.supplierZipCode}
               <br />
               Pickup Time: {donation.info.PickupTime} <br />
               Pickup Date: {donation.info.PickupDate} <br />

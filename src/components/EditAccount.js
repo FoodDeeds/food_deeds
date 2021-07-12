@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
 import "semantic-ui-css/semantic.min.css";
-import { Header, Form, Button, Image } from "semantic-ui-react";
+import { Header, Form, Button, Image, Label } from "semantic-ui-react";
 import { db, storage } from "../firebase";
 import AddPhotoIcon from "@material-ui/icons/CameraAlt";
 
@@ -98,10 +98,10 @@ const EditAccount = ({ location }) => {
       <Header size="medium" color="green" style={{ marginLeft: 40 }}>
         Edit Account Information
       </Header>
-      {userInfo.Image ? (
+      {!userInfo.Image ? (
         <Form.Field>
-          <label style={{ marginLeft: 33 }} className="image-upload">
-            Logo
+          <label className="image-upload" style={{ marginLeft: 33 }}>
+            Organization Logo
           </label>
           <div className="imagePreview">
             <Image id="image-preview" alt="" />
@@ -115,7 +115,28 @@ const EditAccount = ({ location }) => {
           />
         </Form.Field>
       ) : (
-        <div> "Hello World" </div>
+        <div>
+          <Form.Field>
+            <label className="image-upload" style={{ marginLeft: 33 }}>
+              Organization Logo
+            </label>
+            <div className="imagePreview">
+              <Image id="image-preview" alt="" />
+            </div>
+            <Image
+              src={userInfo.Image}
+              alt=""
+              style={{ marginRight: 20, marginTop: 10 }}
+            />
+            <input
+              id="file-input"
+              type="file"
+              accept="image/*"
+              onChange={handleImage}
+              style={{ marginLeft: 30, width: 300 }}
+            />
+          </Form.Field>
+        </div>
       )}
 
       <Form.Field>

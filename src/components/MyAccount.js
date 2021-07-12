@@ -81,15 +81,15 @@ const MyAccount = () => {
             <List.Header>Type:</List.Header>
             {userInfo.Type}
           </List.Item>
-          <List.Item>
+          <List.Item >
             <List.Header>Category:</List.Header>
             {userInfo.Category}
           </List.Item>
         </List>
-        <Button color="green" onClick={handleEdit}  style={{ marginLeft: 50, marginTop:15, marginBottom:30, width: 250 }}>
+        <Button color="green" onClick={handleEdit}  style={{ marginLeft: 50, marginTop:15, width: 250 }}>
                 Edit Info
         </Button>
-        </div>
+        </div >
       )}
       <Reserved userInfo={userInfo} />
     </div>

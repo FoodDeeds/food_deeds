@@ -38,7 +38,6 @@ const Reserved = (props) => {
           <Item.Group divided style={{ marginLeft: 30 }}>
             <Item>
               <br />
-              <br />
               <Item.Content>
                 <Item.Header as="a">{donation.info.supplierName}</Item.Header>
                 <Item.Meta>
@@ -51,6 +50,7 @@ const Reserved = (props) => {
                   {" "}
                   Description: {donation.info.Description}
                 </Item.Description>
+                <br />
               </Item.Content>
               <Button
                 basic

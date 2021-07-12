@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
 import "semantic-ui-css/semantic.min.css";
-import { Header, Form, Button } from "semantic-ui-react";
-import { db } from "../firebase";
+import { Header, Form, Button, Image, Label } from "semantic-ui-react";
+import { db, storage } from "../firebase";
+import AddPhotoIcon from "@material-ui/icons/CameraAlt";
 
 const EditAccount = ({ location }) => {
   const userInfo = location.state.userInfo;
@@ -17,28 +18,8 @@ const EditAccount = ({ location }) => {
   const [state, setState] = useState(userInfo.State);
   const [image, setImage] = useState("");
   const [url, setUrl] = useState("");
+  const [progress, setProgress] = useState(0);
   const history = useHistory();
-
-  const handleUpdate = () => {
-    db.collection("SignedUpUsers")
-      .doc(userInfo.id)
-      .update({
-        Type: type,
-        Category: category,
-        Name: name,
-        Phone: phone,
-        Email: email,
-        Password: password,
-        Address: address,
-        Zipcode: zipcode,
-        State: state,
-      })
-      .then((response) => {
-        history.push({
-          pathname: "/account",
-        });
-      });
-  };
 
   const handleImage = (evt) => {
     evt.preventDefault();
@@ -60,37 +41,106 @@ const EditAccount = ({ location }) => {
     }
   };
 
+  const handleUpdate = (evt) => {
+    if (image) {
+      const uploadTask = storage.ref(`images/${image.name}`).put(image);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          // progress 1%...100%
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          setProgress(progress);
+        },
+        (error) => {
+          console.log("Oh no! There was an error uploading your logo", error);
+        },
+        () => {
+          storage
+            .ref("images")
+            .child(image.name)
+            .getDownloadURL()
+            .then((url) => {
+              setUrl(url);
+              db.collection("SignedUpUsers")
+                .doc(userInfo.id)
+                .update({
+                  Image: url,
+                  Type: type,
+                  Category: category,
+                  Name: name,
+                  Phone: phone,
+                  Email: email,
+                  Password: password,
+                  Address: address,
+                  Zipcode: zipcode,
+                  State: state,
+                })
+                .then(() => {
+                  history.push({
+                    pathname: "/account",
+                  });
+                });
+            });
+        }
+      );
+    }
+  };
 
   const handleClick = () => {
     handleUpdate();
   };
 
   return (
-    <Form style={{ marginTop: 25}}>
+    <Form style={{ marginTop: 25 }}>
       <Header size="medium" color="green" style={{ marginLeft: 40 }}>
         Edit Account Information
       </Header>
       {!userInfo.Image ? (
-              <Form.Field loading >
-              <label style={{ marginLeft: 33}}
-                >Logo
-                </label>
-                <input
-                  id="file-input"
-                  placeholder="Image"
-                  value={image}
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImage}
-                  style={{ marginLeft: 30, width: 300 }}
-                />
-              </Form.Field>
-      ) : <div> "Hello World"  </div>}
+        <Form.Field>
+          <label className="image-upload" style={{ marginLeft: 33 }}>
+            Organization Logo
+          </label>
+          <div className="imagePreview">
+            <Image id="image-preview" alt="" />
+          </div>
+          <input
+            id="file-input"
+            type="file"
+            accept="image/*"
+            onChange={handleImage}
+            style={{ marginLeft: 30, width: 300 }}
+          />
+        </Form.Field>
+      ) : (
+        <div>
+          <Form.Field>
+            <label className="image-upload" style={{ marginLeft: 33 }}>
+              Organization Logo
+            </label>
+            <div className="imagePreview">
+              <Image id="image-preview" alt="" />
+            </div>
+            <Image
+              src={userInfo.Image}
+              alt=""
+              style={{ marginRight: 20, marginTop: 10 }}
+            />
+            <input
+              id="file-input"
+              type="file"
+              accept="image/*"
+              onChange={handleImage}
+              style={{ marginLeft: 30, width: 300 }}
+            />
+          </Form.Field>
+        </div>
+      )}
 
       <Form.Field>
-        <label style={{ marginLeft: 33}}
-        >Name
-        </label>
+        <label style={{ marginLeft: 33 }}>Name</label>
         <input
           placeholder="Name"
           value={name}
@@ -99,9 +149,7 @@ const EditAccount = ({ location }) => {
         />
       </Form.Field>
       <Form.Field>
-        <label style={{ marginLeft: 33}}>
-          Email
-        </label>
+        <label style={{ marginLeft: 33 }}>Email</label>
         <input
           placeholder="Email"
           value={email}
@@ -110,9 +158,7 @@ const EditAccount = ({ location }) => {
         />
       </Form.Field>
       <Form.Field>
-        <label style={{ marginLeft: 33}}
-        >Phone
-        </label>
+        <label style={{ marginLeft: 33 }}>Phone</label>
         <input
           placeholder="Phone"
           value={phone}
@@ -121,9 +167,7 @@ const EditAccount = ({ location }) => {
         />
       </Form.Field>
       <Form.Field>
-        <label style={{ marginLeft: 33}}
-        >Password
-        </label>
+        <label style={{ marginLeft: 33 }}>Password</label>
         <input
           placeholder="Password"
           value={password}
@@ -132,9 +176,7 @@ const EditAccount = ({ location }) => {
         />
       </Form.Field>
       <Form.Field>
-        <label style={{ marginLeft: 33}}
-        >Address
-        </label>
+        <label style={{ marginLeft: 33 }}>Address</label>
         <input
           placeholder="Address"
           value={address}
@@ -143,9 +185,7 @@ const EditAccount = ({ location }) => {
         />
       </Form.Field>
       <Form.Field>
-        <label style={{ marginLeft: 33}}
-        >State
-        </label>
+        <label style={{ marginLeft: 33 }}>State</label>
         <input
           placeholder="State"
           value={state}
@@ -154,9 +194,7 @@ const EditAccount = ({ location }) => {
         />
       </Form.Field>
       <Form.Field>
-        <label style={{ marginLeft: 33}}
-        >Zip Code
-        </label>
+        <label style={{ marginLeft: 33 }}>Zip Code</label>
         <input
           placeholder="Zip Code"
           value={zipcode}
@@ -165,9 +203,7 @@ const EditAccount = ({ location }) => {
         />
       </Form.Field>
       <Form.Field>
-        <label style={{ marginLeft: 33}}
-        >Type
-        </label>
+        <label style={{ marginLeft: 33 }}>Type</label>
         <input
           placeholder="Type"
           value={type}
@@ -176,9 +212,7 @@ const EditAccount = ({ location }) => {
         />
       </Form.Field>
       <Form.Field>
-        <label style={{ marginLeft: 33}}
-        >Category
-        </label>
+        <label style={{ marginLeft: 33 }}>Category</label>
         <input
           placeholder="Category"
           value={category}

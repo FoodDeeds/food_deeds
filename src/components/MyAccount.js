@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { auth, db } from "../firebase";
 import "semantic-ui-css/semantic.min.css";
-import { Button, List } from "semantic-ui-react";
+import { Button, List, Image } from "semantic-ui-react";
 import EditAccount from "./EditAccount";
 import { useHistory } from "react-router-dom";
 
 const MyAccount = () => {
   const [userInfo, setUserInfo] = useState({});
   const [editForm, setEditForm] = useState(false);
+  const [image, setImage] = useState("");
+  const [url, setUrl] = useState("");
   const history = useHistory();
 
   useEffect(() => {
@@ -46,7 +48,11 @@ const MyAccount = () => {
           <div>
         <List style={{ marginLeft: 30, width: 300 }}>
         <List.Item  style={{ width: 300 }}>
-        {userInfo.Image}
+        <Image
+                src={userInfo.Image}
+                alt=""
+                style={{ marginRight: 20, marginTop: 10 }}
+              />
           </List.Item>
           <List.Item  style={{ marginTop: 25 }}>
             <List.Header>Name:</List.Header>
@@ -81,7 +87,7 @@ const MyAccount = () => {
             {userInfo.Category}
           </List.Item>
         </List>
-        <Button color="green" onClick={handleEdit}  style={{ marginLeft: 30, marginTop:15, width: 250 }}>
+        <Button color="green" onClick={handleEdit}  style={{ marginLeft: 50, marginTop:15, marginBottom:30, width: 250 }}>
                 Edit Info
         </Button>
         </div>

@@ -43,96 +43,114 @@ const EditAccount = ({ location }) => {
   };
 
   return (
-    <Form>
+    <Form style={{ marginTop: 25}}>
       <Header size="medium" color="green" style={{ marginLeft: 40 }}>
         Edit Account Information
       </Header>
       <Form.Field>
-        <label>Name</label>
+        <label style={{ marginLeft: 33}}
+        >Name
+        </label>
         <input
           placeholder="Name"
           value={name}
           onChange={(evt) => setName(evt.target.value)}
-          style={{ width: 300 }}
+          style={{ marginLeft: 30, width: 300 }}
         />
       </Form.Field>
       <Form.Field>
-        <label>Email</label>
+        <label style={{ marginLeft: 33}}>
+          Email
+        </label>
         <input
           placeholder="Email"
           value={email}
           onChange={(evt) => setEmail(evt.target.value)}
-          style={{ width: 300 }}
+          style={{ marginLeft: 30, width: 300 }}
         />
       </Form.Field>
       <Form.Field>
-        <label>Phone</label>
+        <label style={{ marginLeft: 33}}
+        >Phone
+        </label>
         <input
           placeholder="Phone"
           value={phone}
           onChange={(evt) => setPhone(evt.target.value)}
-          style={{ width: 300 }}
+          style={{ marginLeft: 30, width: 300 }}
         />
       </Form.Field>
       <Form.Field>
-        <label>Password</label>
+        <label style={{ marginLeft: 33}}
+        >Password
+        </label>
         <input
           placeholder="Password"
           value={password}
           onChange={(evt) => setPassword(evt.target.value)}
-          style={{ width: 300 }}
+          style={{ marginLeft: 30, width: 300 }}
         />
       </Form.Field>
       <Form.Field>
-        <label>Address</label>
+        <label style={{ marginLeft: 33}}
+        >Address
+        </label>
         <input
           placeholder="Address"
           value={address}
           onChange={(evt) => setAddress(evt.target.value)}
-          style={{ width: 300 }}
+          style={{ marginLeft: 30, width: 300 }}
         />
       </Form.Field>
       <Form.Field>
-        <label>State</label>
+        <label style={{ marginLeft: 33}}
+        >State
+        </label>
         <input
           placeholder="State"
           value={state}
           onChange={(evt) => setState(evt.target.value)}
-          style={{ width: 300 }}
+          style={{ marginLeft: 30, width: 300 }}
         />
       </Form.Field>
       <Form.Field>
-        <label>Zip Code</label>
+        <label style={{ marginLeft: 33}}
+        >Zip Code
+        </label>
         <input
           placeholder="Zip Code"
           value={zipcode}
           onChange={(evt) => setZipcode(evt.target.value)}
-          style={{ width: 300 }}
+          style={{ marginLeft: 30, width: 300 }}
         />
       </Form.Field>
       <Form.Field>
-        <label>Type</label>
+        <label style={{ marginLeft: 33}}
+        >Type
+        </label>
         <input
           placeholder="Type"
           value={type}
           onChange={(evt) => setType(evt.target.value)}
-          style={{ width: 300 }}
+          style={{ marginLeft: 30, width: 300 }}
         />
       </Form.Field>
       <Form.Field>
-        <label>Category</label>
+        <label style={{ marginLeft: 33}}
+        >Category
+        </label>
         <input
           placeholder="Category"
           value={category}
           onChange={(evt) => setCategory(evt.target.value)}
-          style={{ width: 300 }}
+          style={{ marginLeft: 30, width: 300 }}
         />
       </Form.Field>
       <Button
         type="submit"
         onClick={handleClick}
         color="green"
-        style={{ marginLeft: 95, marginTop: 15 }}
+        style={{ marginLeft: 125, marginTop: 15, marginBottom: 25 }}
       >
         Submit
       </Button>

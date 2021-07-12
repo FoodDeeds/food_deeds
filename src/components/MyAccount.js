@@ -91,19 +91,3 @@ const MyAccount = () => {
 };
 
 export default MyAccount;
-
-// <div>
-// <img src={userInfo.Image} alt="logo" width="300" />
-// <p>Name: {userInfo.Name}</p>
-// <p>Email: {userInfo.Email}</p>
-// {/* <p>Password: {userInfo.Password}</p> */}
-// <p>Phone: {userInfo.Phone}</p>
-// <p>Address: {userInfo.Address}</p>
-// <p>State: {userInfo.State}</p>
-// <p>Zip Code: {userInfo.Zipcode}</p>
-// <p>Type: {userInfo.Type}</p>
-// <p>Category: {userInfo.Category}</p>
-// <Button color="green" onClick={handleEdit}>
-//   Edit
-// </Button>
-// </div>

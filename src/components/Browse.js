@@ -1,13 +1,30 @@
 import React, { useState, useEffect } from "react";
 import MapSearch from "./MapSearch";
-import { db } from "../firebase";
 import { Button, Dropdown, Form, Header, Segment } from "semantic-ui-react";
+import { db, auth } from "../firebase";
+
 
 const Browse = (props) => {
   const [category, setCategory] = useState("");
   const [zipcode, setZipcode] = useState("");
   const [donations, setDonations] = useState([]);
-  const [supplierInfo, setSupplierInfo] = useState({});
+
+  useEffect(() => {
+    db.collection("Donations")
+      .where("PostalCode", "==", zipcode)
+      // .orderBy("Timestamp", "desc")
+      .onSnapshot((snapshot) => {
+        setDonations(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            info: doc.data(),
+          }))
+        );
+      });
+  }, [zipcode]);
+
+  // const searchAddress = donations.info.Address + donations.info.City;
+  console.log("searchAddress", donations);
 
   const submit = (evt) => {
     evt.preventDefault();
@@ -23,6 +40,7 @@ const Browse = (props) => {
         );
       });
   };
+
   const options = [
     { key: 1, text: "All", value: "All" },
     { key: 2, text: "Grocery", value: "Grocery" },
@@ -30,6 +48,10 @@ const Browse = (props) => {
     { key: 4, text: "Cafe", value: "Cafe" },
   ];
   console.log(donations);
+
+  console.log('donations after submit>>', donations);
+
+
   return (
     <div className="browse">
       <Header style={{ marginBottom: -70, marginTop: 40 }}>

@@ -37,8 +37,8 @@ const MapSearch = (props) => {
   const [viewport, setViewport] = useState({
     latitude: 40.76526052397093,
     longitude: -74.02781638792513,
-    width: "100vw",
-    height: "100vh",
+    width: "36%",
+    height: 400,
     zoom: 12,
   });
   // const { donations } = props;

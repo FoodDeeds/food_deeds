@@ -22,9 +22,6 @@ const RecDonations = () => {
                 setCurrentUser(user);
             }
         });
-    }, []);
-
-    useEffect(() => {
         db.collection("Donations")
             .where("Status", "==", true)
             // .orderBy("Timestamp", "desc")
@@ -36,10 +33,6 @@ const RecDonations = () => {
                     }))
                 );
             });
-    }, []);
-    // console.log("supplier info data>>>>>", supplierInfo);
-
-    useEffect(() => {
         db.collection("Donations")
             .where("Status", "==", true)
             .onSnapshot((snapshot) => {

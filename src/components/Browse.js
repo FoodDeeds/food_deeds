@@ -20,6 +20,16 @@ const Browse = () => {
                 setCurrentUser(user);
             }
         });
+        db.collection("Donations")
+            .where("Status", "==", true)
+            .onSnapshot((snapshot) => {
+                setAllDonations(
+                    snapshot.docs.map((doc) => ({
+                        id: doc.id,
+                        info: doc.data()
+                    }))
+                );
+            });
     }, []);
 
     useEffect(() => {
@@ -36,19 +46,6 @@ const Browse = () => {
                 );
             });
     }, [zipcode]);
-
-    useEffect(() => {
-        db.collection("Donations")
-            .where("Status", "==", true)
-            .onSnapshot((snapshot) => {
-                setAllDonations(
-                    snapshot.docs.map((doc) => ({
-                        id: doc.id,
-                        info: doc.data()
-                    }))
-                );
-            });
-    }, []);
 
     const handleClick = (donation) => {
         setSelectedDonation(donation);

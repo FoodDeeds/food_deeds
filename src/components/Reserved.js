@@ -4,47 +4,72 @@ import { auth, db } from "../firebase";
 import { useHistory } from "react-router-dom";
 
 const Reserved = () => {
+  const [currentUser, setCurrentUser] = useState({});
   const [userInfo, setUserInfo] = useState({});
   const [donations, setDonations] = useState([]);
-  const [release, setRelease] = useState(true);
   const history = useHistory();
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
-      if(user) {
-        setUserInfo(user)
+      if (user) {
+        setCurrentUser(user);
       }
-    })
-  }, [])
+    });
+  }, []);
 
   useEffect(() => {
-    db.collection("Donations")
-    .where("Status", "==", false)
-    .where("recipientId", "==", `${userInfo.uid}`)
-      .onSnapshot((snapshot) => {
-        setDonations(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            info: doc.data(),
-          }))
-        );
+    db.collection("SignedUpUsers")
+      .doc(currentUser.uid)
+      .get()
+      .then((response) => {
+        const data = response.data();
+        setUserInfo(data);
       });
-  }, [userInfo.uid]);
+    if (userInfo.Type === "Recipient") {
+      db.collection("Donations")
+        .where("recipientId", "==", `${currentUser.uid}`)
+        .onSnapshot((snapshot) => {
+          setDonations(
+            snapshot.docs.map((doc) => ({
+              id: doc.id,
+              info: doc.data(),
+            }))
+          );
+        });
+    } else {
+      db.collection("Donations")
+        .where("supplierId", "==", `${currentUser.uid}`)
+        .onSnapshot((snapshot) => {
+          setDonations(
+            snapshot.docs.map((doc) => ({
+              id: doc.id,
+              info: doc.data(),
+            }))
+          );
+        });
+    }
+  }, [userInfo.Type]);
 
-  const handleRelease = (donation) => {
-   setRelease(false);
-   db.collection("Donations").doc(donation.id).set(
-     {
-       Status: true,
-       recipientId: null,
-     },
-     { merge: true }
-   );
+  const handleCancel = (donation) => {
+    db.collection("Donations").doc(donation.id).set(
+      {
+        Status: true,
+        recipientId: null,
+      },
+      { merge: true }
+    );
   };
 
   return (
     <div>
-      <h3>Currently Reserved Donations</h3>
+      {donations.length > 0 && userInfo.Type === "Recipient" ? (
+        <h3>Order History</h3>
+      ) : null}
+
+      {donations.length > 0 && userInfo.Type === "Supplier" ? (
+        <h3>Giving History</h3>
+      ) : null}
+
       {donations.map((donation) => (
         <div className="result" key={donation.id}>
           <Item.Group divided style={{ marginLeft: 30 }}>
@@ -66,8 +91,11 @@ const Reserved = () => {
               </Item.Content>
               <Button
                 basic
-                onClick={() => handleRelease(donation)}
-                color="green"
+                onClick={() => {
+                  if (window.confirm("Are you sure you want to cancel?"))
+                    handleCancel(donation);
+                }}
+                color="red"
                 style={{ width: 100, height: 30, marginRight: 20 }}
               >
                 Cancel
@@ -78,8 +106,6 @@ const Reserved = () => {
       ))}
     </div>
   );
-
-}
-
+};
 
 export default Reserved;

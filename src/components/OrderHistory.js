@@ -28,12 +28,19 @@ const OrderHistory = (props) => {
       { merge: true }
     );
   };
-
-  console.log(donations);
+  const totalQty = function () {
+    let total = 0;
+    for (let i = 0; i < donations.length; i++) {
+      let qty = donations[i].info.Quantity;
+      console.log(qty);
+      total += Number.parseInt(qty);
+    }
+    return total;
+  };
   return (
     <div>
       <h3>Order History</h3>
-
+      <p>You have rescued a total of {totalQty()} boxes of food. Way to go!</p>
       {donations.map((donation) => (
         <div className="result" key={donation.id}>
           <Item.Group divided style={{ marginLeft: 30 }}>

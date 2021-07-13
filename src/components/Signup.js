@@ -6,7 +6,7 @@ import { auth, db } from "../firebase";
 const Signup = (props) => {
   // need to add more fields
   const [type, setType] = useState("Supplier");
-  const [category, setCategory] = useState("Grocery");
+  const [category, setCategory] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -83,12 +83,16 @@ const Signup = (props) => {
           >
             {type === "Supplier" ? (
               <>
+              <option value="Option">Choose Category</option>
                 <option value="Grocery Store">Grocery Store</option>
                 <option value="Deli">Deli</option>
                 <option value="Cafe">Cafe</option>
               </>
             ) : (
-              <option value="Food Bank">Food Bank</option>
+              <>
+              <option value="Option">Choose Category</option>
+              <option value="Food bank">Food Bank</option>
+              </>
             )}
           </Form.Field>
           <Form.Field

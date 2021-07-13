@@ -81,9 +81,15 @@ const Signup = (props) => {
             onChange={(evt) => setCategory(evt.target.value)}
             style={{ width: 350 }}
           >
-            <option value="Grocery Store">Grocery Store</option>
-            <option value="Deli">Deli</option>
-            <option value="Cafe">Cafe</option>
+            {type === "Supplier" ? (
+              <>
+                <option value="Grocery Store">Grocery Store</option>
+                <option value="Deli">Deli</option>
+                <option value="Cafe">Cafe</option>
+              </>
+            ) : (
+              <option value="Food Bank">Food Bank</option>
+            )}
           </Form.Field>
           <Form.Field
             label="Name"

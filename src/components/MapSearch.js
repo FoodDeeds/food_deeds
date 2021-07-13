@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
 import { db } from "../firebase";
 import pin from "../images/marker.jpg";
-
 // import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 // import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 const REACT_APP_MAPBOX_TOKEN =

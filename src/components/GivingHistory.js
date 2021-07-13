@@ -19,6 +19,9 @@ const GivingHistory = (props) => {
       });
   }, [userInfo.id]);
 
+  const handleDelete = (donation) => {
+    db.collection("Donations").doc(donation.id).delete();
+  };
   const totalQty = function () {
     let total = 0;
     for (let i = 0; i < donations.length; i++) {
@@ -59,6 +62,17 @@ const GivingHistory = (props) => {
                 style={{ width: 100, height: 30, marginRight: 20 }}
               >
                 Edit
+              </Button>
+              <Button
+                basic
+                onClick={() => {
+                  if (window.confirm("Are you sure you want to delete this?"))
+                    handleDelete(donation);
+                }}
+                color="green"
+                style={{ width: 100, height: 30, marginRight: 20 }}
+              >
+                Delete
               </Button>
             </Item>
           </Item.Group>

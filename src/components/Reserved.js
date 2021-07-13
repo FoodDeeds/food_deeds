@@ -1,19 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { Button, Item } from "semantic-ui-react";
-import { db } from "../firebase";
+import { auth, db } from "../firebase";
 import { useHistory } from "react-router-dom";
 
-const Reserved = (props) => {
+const Reserved = () => {
   const [userInfo, setUserInfo] = useState({});
   const [donations, setDonations] = useState([]);
-  const [selectedDonation, setSelectedDonation] = useState({});
+  const [release, setRelease] = useState(true);
   const history = useHistory();
 
   useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if(user) {
+        setUserInfo(user)
+      }
+    })
+  }, [])
+
+  useEffect(() => {
     db.collection("Donations")
-      .where("Status", "==", false)
-     // .where("recipientId", "==", props.userInfo.id)
-      // .orderBy("Timestamp", "desc")
+    .where("Status", "==", false)
+    .where("recipientId", "==", `${userInfo.uid}`)
       .onSnapshot((snapshot) => {
         setDonations(
           snapshot.docs.map((doc) => ({
@@ -22,12 +29,17 @@ const Reserved = (props) => {
           }))
         );
       });
-  }, []);
+  }, [userInfo.uid]);
 
-  const handleClick = (donation) => {
-    console.log('clicked canceled')
-    setSelectedDonation(donation);
-    console.log('donation clicked', donation.info.supplierName)
+  const handleRelease = (donation) => {
+   setRelease(false);
+   db.collection("Donations").doc(donation.id).set(
+     {
+       Status: true,
+       recipientId: null,
+     },
+     { merge: true }
+   );
   };
 
   return (
@@ -54,7 +66,7 @@ const Reserved = (props) => {
               </Item.Content>
               <Button
                 basic
-                onClick={() => handleClick(donation)}
+                onClick={() => handleRelease(donation)}
                 color="green"
                 style={{ width: 100, height: 30, marginRight: 20 }}
               >

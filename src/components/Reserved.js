@@ -24,32 +24,36 @@ const Reserved = () => {
       .then((response) => {
         const data = response.data();
         setUserInfo(data);
+        console.log(userInfo);
+      })
+      .then(() => {
+        if (userInfo.Type === "Recipient") {
+          db.collection("Donations")
+            .where("recipientId", "==", `${currentUser.uid}`)
+            .onSnapshot((snapshot) => {
+              setDonations(
+                snapshot.docs.map((doc) => ({
+                  id: doc.id,
+                  info: doc.data(),
+                }))
+              );
+            });
+        } else {
+          db.collection("Donations")
+            .where("supplierId", "==", `${currentUser.uid}`)
+            .onSnapshot((snapshot) => {
+              setDonations(
+                snapshot.docs.map((doc) => ({
+                  id: doc.id,
+                  info: doc.data(),
+                }))
+              );
+            });
+        }
       });
-    if (userInfo.Type === "Recipient") {
-      db.collection("Donations")
-        .where("recipientId", "==", `${currentUser.uid}`)
-        .onSnapshot((snapshot) => {
-          setDonations(
-            snapshot.docs.map((doc) => ({
-              id: doc.id,
-              info: doc.data(),
-            }))
-          );
-        });
-    } else {
-      db.collection("Donations")
-        .where("supplierId", "==", `${currentUser.uid}`)
-        .onSnapshot((snapshot) => {
-          setDonations(
-            snapshot.docs.map((doc) => ({
-              id: doc.id,
-              info: doc.data(),
-            }))
-          );
-        });
-    }
-  }, [userInfo.Type]);
+  }, [currentUser.uid]);
 
+  // console.log(userInfo.Type);
   const handleCancel = (donation) => {
     db.collection("Donations").doc(donation.id).set(
       {
@@ -59,7 +63,6 @@ const Reserved = () => {
       { merge: true }
     );
   };
-
   return (
     <div>
       {donations.length > 0 && userInfo.Type === "Recipient" ? (
@@ -89,17 +92,27 @@ const Reserved = () => {
                 </Item.Description>
                 <br />
               </Item.Content>
-              <Button
-                basic
-                onClick={() => {
-                  if (window.confirm("Are you sure you want to cancel?"))
-                    handleCancel(donation);
-                }}
-                color="red"
-                style={{ width: 100, height: 30, marginRight: 20 }}
-              >
-                Cancel
-              </Button>
+              {userInfo.Type === "Recipient" ? (
+                <Button
+                  basic
+                  onClick={() => {
+                    if (window.confirm("Are you sure you want to cancel?"))
+                      handleCancel(donation);
+                  }}
+                  color="red"
+                  style={{ width: 100, height: 30, marginRight: 20 }}
+                >
+                  Cancel
+                </Button>
+              ) : (
+                <Button
+                  basic
+                  color="green"
+                  style={{ width: 100, height: 30, marginRight: 20 }}
+                >
+                  Edit
+                </Button>
+              )}
             </Item>
           </Item.Group>
         </div>

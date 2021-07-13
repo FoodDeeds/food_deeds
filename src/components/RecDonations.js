@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { db } from "../firebase";
+import { auth, db } from "../firebase";
 import { Button, Item } from "semantic-ui-react";
+import { useHistory } from "react-router-dom";
 
 /**
  * user's icon, name
@@ -10,69 +11,119 @@ import { Button, Item } from "semantic-ui-react";
  */
 
 const RecDonations = () => {
-  const [donations, setDonations] = useState([]);
-  const [supplierInfo, setSupplierInfo] = useState({});
+    const [currentUser, setCurrentUser] = useState("");
+    const [donations, setDonations] = useState([]);
+    const [supplierInfo, setSupplierInfo] = useState({});
+    const history = useHistory();
 
-  useEffect(() => {
-    db.collection("Donations")
-      .where("Status", "==", true)
-      // .orderBy("Timestamp", "desc")
-      .onSnapshot((snapshot) => {
-        setDonations(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            info: doc.data(),
-          }))
+    useEffect(() => {
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                setCurrentUser(user);
+            }
+        });
+    }, []);
+
+    useEffect(() => {
+        db.collection("Donations")
+            .where("Status", "==", true)
+            // .orderBy("Timestamp", "desc")
+            .onSnapshot((snapshot) => {
+                setDonations(
+                    snapshot.docs.map((doc) => ({
+                        id: doc.id,
+                        info: doc.data()
+                    }))
+                );
+            });
+    }, []);
+    // console.log("supplier info data>>>>>", supplierInfo);
+
+    useEffect(() => {
+        db.collection("Donations")
+            .where("Status", "==", true)
+            .onSnapshot((snapshot) => {
+                setDonations(
+                    snapshot.docs.map((doc) => ({
+                        id: doc.id,
+                        info: doc.data()
+                    }))
+                );
+            });
+    }, []);
+
+    const handleClick = (donation) => {
+        setDonations(donation);
+        console.log("donation in home", donation.id);
+        db.collection("Donations").doc(donation.id).set(
+            {
+                Status: false,
+                recipientId: currentUser.uid
+            },
+            { merge: true }
         );
-      });
-  }, []);
-  // console.log("supplier info data>>>>>", supplierInfo);
+        history.push({
+            pathname: "/confirmation",
+            state: {
+                donation,
+                supplierInfo
+            }
+        });
+    };
 
-  console.log("Donations!!!", donations);
-  return (
-    <div>
-      <h3>Currently Available For Pick-Up</h3>
-      {donations.map((donation) => (
-        <div className="result" key={donation.id}>
-          <Item.Group divided style={{ marginLeft: 30 }}>
-            <Item>
-              <br />
-              <Item.Image
-                src={donation.info.postImageUrl}
-                alt=""
-                style={{ marginRight: 20, marginTop: 10 }}
-              />
-              <br />
-              <Item.Content>
-                <Item.Header as="a">{donation.info.supplierName}</Item.Header>
-                <Item.Meta>
-                  Last Available Pick Up Time: <br />
-                  {donation.info.PickupTime} on {donation.info.PickupDate}{" "}
-                  <br />
-                </Item.Meta>
-                Quantity: {donation.info.Quantity} boxes
-                <Item.Description>
-                  {" "}
-                  Description: {donation.info.Description}
-                </Item.Description>
-                {/* removed city state zipcode from form, data needs to come from somewhere else */}
-                {/* {donation.info.City}, {donation.info.State}
+    console.log("Donations!!!", donations);
+
+    return (
+        <div>
+            <h3>Currently Available For Pick-Up</h3>
+            {donations.map((donation) => (
+                <div className="result" key={donation.id}>
+                    <Item.Group divided style={{ marginLeft: 30 }}>
+                        <Item>
+                            <br />
+                            <Item.Image
+                                src={donation.info.postImageUrl}
+                                alt=""
+                                style={{ marginRight: 20, marginTop: 10 }}
+                            />
+                            <br />
+                            <Item.Content>
+                                <Item.Header as="a">
+                                    {donation.info.supplierName}
+                                </Item.Header>
+                                <Item.Meta>
+                                    Last Available Pick Up Time: <br />
+                                    {donation.info.PickupTime} on{" "}
+                                    {donation.info.PickupDate} <br />
+                                </Item.Meta>
+                                Quantity: {donation.info.Quantity} boxes
+                                <Item.Description>
+                                    {" "}
+                                    Description: {donation.info.Description}
+                                </Item.Description>
+                                {/* removed city state zipcode from form, data needs to come from somewhere else */}
+                                {/* {donation.info.City}, {donation.info.State}
                         {donation.info.PostalCode} */}
-                <br />
-              </Item.Content>
-              <Button
-                basic
-                color="green"
-                style={{ width: 100, height: 30, marginRight: 20 }}
-              >
-                Reserve
-              </Button>
-            </Item>
-          </Item.Group>
+                                <br />
+                            </Item.Content>
+                            <Button
+                                basic
+                                color="green"
+                                style={{
+                                    width: 100,
+                                    height: 30,
+                                    marginRight: 20
+                                }}
+                                onClick={() => handleClick(donation)}
+                            >
+                                Reserve
+                            </Button>
+                        </Item>
+                    </Item.Group>
+                </div>
+            ))}
         </div>
-      ))}
-    </div>
-  );
+    );
 };
 
 export default RecDonations;

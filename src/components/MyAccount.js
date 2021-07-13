@@ -91,7 +91,7 @@ const MyAccount = () => {
         </Button>
         </div >
       )}
-      <Reserved userInfo={userInfo} />
+      <Reserved />
     </div>
   );
 

@@ -1,19 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { Button, Item } from "semantic-ui-react";
-import { db } from "../firebase";
+import { auth, db } from "../firebase";
 import { useHistory } from "react-router-dom";
 
-const Reserved = (props) => {
+const Reserved = () => {
   const [userInfo, setUserInfo] = useState({});
   const [donations, setDonations] = useState([]);
   const [selectedDonation, setSelectedDonation] = useState({});
   const history = useHistory();
 
   useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if(user) {
+        setUserInfo(user)
+      }
+    })
+  }, [])
+
+  useEffect(() => {
     db.collection("Donations")
-      .where("Status", "==", false)
-     // .where("recipientId", "==", props.userInfo.id)
-      // .orderBy("Timestamp", "desc")
+    .where("Status", "==", false)
+    .where("recipientId", "==", `${userInfo.uid}`)
       .onSnapshot((snapshot) => {
         setDonations(
           snapshot.docs.map((doc) => ({
@@ -22,7 +29,10 @@ const Reserved = (props) => {
           }))
         );
       });
-  }, []);
+  }, [userInfo.uid]);
+
+  console.log('[donations] ', donations)
+  console.log('[userinfo] ', userInfo.uid)
 
   const handleClick = (donation) => {
     console.log('clicked canceled')

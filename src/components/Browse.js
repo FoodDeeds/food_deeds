@@ -1,12 +1,26 @@
 import React, { useState, useEffect } from "react";
 import MapSearch from "./MapSearch";
 import { Button, Dropdown, Form, Header, Segment } from "semantic-ui-react";
-import { db, auth } from "../firebase";
+import { auth, db } from "../firebase";
+import { useHistory } from "react-router-dom";
 
 const Browse = (props) => {
+  const [supplierInfo, setSupplierInfo] = useState({});
   const [category, setCategory] = useState("");
   const [zipcode, setZipcode] = useState("");
   const [donations, setDonations] = useState([]);
+  const [selectedDonation, setSelectedDonation] = useState({});
+  const [confirmation, setConfirmation] = useState(false);
+  const [currentUser, setCurrentUser] = useState("");
+  const history = useHistory();
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setCurrentUser(user);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     db.collection("Donations")
@@ -21,6 +35,47 @@ const Browse = (props) => {
         );
       });
   }, [zipcode]);
+
+  useEffect(() => {
+    db.collection("SignedUpUsers")
+      .doc(props.match.params.id)
+      .get()
+      .then((response) => {
+        const data = response.data();
+        setSupplierInfo(data);
+      });
+    db.collection("Donations")
+      .where("Status", "==", true)
+      .onSnapshot((snapshot) => {
+        setDonations(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            info: doc.data(),
+          }))
+        );
+      });
+  }, []);
+
+  const handleClick = (donation) => {
+    console.log("clicked");
+    setConfirmation(true);
+    setSelectedDonation(donation);
+    console.log("donation", donation.id);
+    db.collection("Donations").doc(donation.id).set(
+      {
+        Status: false,
+        recipientId: currentUser.uid,
+      },
+      { merge: true }
+    );
+    history.push({
+      pathname: "/confirmation",
+      state: {
+        donation,
+        supplierInfo,
+      },
+    });
+  };
 
   // const searchAddress = donations.info.Address + donations.info.City;
   console.log("searchAddress", donations);
@@ -104,7 +159,12 @@ const Browse = (props) => {
               Pickup Date: {donation.info.PickupDate} <br />
               Quantity: {donation.info.Quantity} boxes
               <br />
-              <Button basic color="green" style={{ marginTop: 10 }}>
+              <Button
+                basic
+                color="green"
+                style={{ marginTop: 10 }}
+                onClick={() => handleClick(donation)}
+              >
                 Reserve
               </Button>
             </p>

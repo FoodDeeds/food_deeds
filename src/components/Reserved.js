@@ -32,7 +32,7 @@ const Reserved = (props) => {
 
   return (
     <div>
-      <h3>Currently Reserved</h3>
+      <h3>Currently Reserved Donations</h3>
       {donations.map((donation) => (
         <div className="result" key={donation.id}>
           <Item.Group divided style={{ marginLeft: 30 }}>

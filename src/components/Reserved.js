@@ -24,36 +24,37 @@ const Reserved = () => {
       .then((response) => {
         const data = response.data();
         setUserInfo(data);
-        console.log(userInfo);
-      })
-      .then(() => {
-        if (userInfo.Type === "Recipient") {
-          db.collection("Donations")
-            .where("recipientId", "==", `${currentUser.uid}`)
-            .onSnapshot((snapshot) => {
-              setDonations(
-                snapshot.docs.map((doc) => ({
-                  id: doc.id,
-                  info: doc.data(),
-                }))
-              );
-            });
-        } else {
-          db.collection("Donations")
-            .where("supplierId", "==", `${currentUser.uid}`)
-            .onSnapshot((snapshot) => {
-              setDonations(
-                snapshot.docs.map((doc) => ({
-                  id: doc.id,
-                  info: doc.data(),
-                }))
-              );
-            });
-        }
       });
   }, [currentUser.uid]);
 
-  // console.log(userInfo.Type);
+  useEffect(() => {
+    if (userInfo) {
+      if (userInfo.Type === "Recipient") {
+        db.collection("Donations")
+          .where("recipientId", "==", `${currentUser.uid}`)
+          .onSnapshot((snapshot) => {
+            setDonations(
+              snapshot.docs.map((doc) => ({
+                id: doc.id,
+                info: doc.data(),
+              }))
+            );
+          });
+      } else {
+        db.collection("Donations")
+          .where("supplierId", "==", `${currentUser.uid}`)
+          .onSnapshot((snapshot) => {
+            setDonations(
+              snapshot.docs.map((doc) => ({
+                id: doc.id,
+                info: doc.data(),
+              }))
+            );
+          });
+      }
+    }
+  }, [userInfo, currentUser.uid]);
+
   const handleCancel = (donation) => {
     db.collection("Donations").doc(donation.id).set(
       {

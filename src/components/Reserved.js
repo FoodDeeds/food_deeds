@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 const Reserved = () => {
   const [userInfo, setUserInfo] = useState({});
   const [donations, setDonations] = useState([]);
-  const [selectedDonation, setSelectedDonation] = useState({});
+  const [release, setRelease] = useState(true);
   const history = useHistory();
 
   useEffect(() => {
@@ -31,13 +31,15 @@ const Reserved = () => {
       });
   }, [userInfo.uid]);
 
-  console.log('[donations] ', donations)
-  console.log('[userinfo] ', userInfo.uid)
-
-  const handleClick = (donation) => {
-    console.log('clicked canceled')
-    setSelectedDonation(donation);
-    console.log('donation clicked', donation.info.supplierName)
+  const handleRelease = (donation) => {
+   setRelease(false);
+   db.collection("Donations").doc(donation.id).set(
+     {
+       Status: true,
+       recipientId: null,
+     },
+     { merge: true }
+   );
   };
 
   return (
@@ -64,7 +66,7 @@ const Reserved = () => {
               </Item.Content>
               <Button
                 basic
-                onClick={() => handleClick(donation)}
+                onClick={() => handleRelease(donation)}
                 color="green"
                 style={{ width: 100, height: 30, marginRight: 20 }}
               >

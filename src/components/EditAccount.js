@@ -11,7 +11,7 @@ const EditAccount = ({ location }) => {
   const [name, setName] = useState(userInfo.Name);
   const [phone, setPhone] = useState(userInfo.Phone);
   const [email, setEmail] = useState(userInfo.Email);
-  const [password, setPassword] = useState("******");
+  const [password, setPassword] = useState(userInfo.Password);
   const [address, setAddress] = useState(userInfo.Address);
   const [zipcode, setZipcode] = useState(userInfo.Zipcode);
   const [state, setState] = useState(userInfo.State);
@@ -170,6 +170,7 @@ const EditAccount = ({ location }) => {
         <input
           placeholder="Password"
           value={password}
+          type="password"
           onChange={(evt) => setPassword(evt.target.value)}
           style={{ marginLeft: 30, width: 300 }}
         />

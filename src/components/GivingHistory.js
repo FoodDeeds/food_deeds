@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Button, Item } from "semantic-ui-react";
 import { db } from "../firebase";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { green, lightGreen } from "@material-ui/core/colors";
 
 const GivingHistory = (props) => {
   const userInfo = props.userInfo;
@@ -19,9 +22,20 @@ const GivingHistory = (props) => {
       });
   }, [userInfo.id]);
 
-  const handleDelete = (donation) => {
-    db.collection("Donations").doc(donation.id).delete();
+  const handleCancel = (donation) => {
+    toast.configure();
+    const notify = () => {
+      toast("This donation has been cancelled.");
+    };
+    notify();
+    db.collection("Donations").doc(donation.id).set(
+      {
+        Status: null,
+      },
+      { merge: true }
+    );
   };
+
   const totalQty = function () {
     let total = 0;
     for (let i = 0; i < donations.length; i++) {
@@ -55,25 +69,39 @@ const GivingHistory = (props) => {
                 </Item.Description>
                 <br />
               </Item.Content>
-
-              <Button
-                basic
-                color="green"
-                style={{ width: 100, height: 30, marginRight: 20 }}
-              >
-                Edit
-              </Button>
-              <Button
-                basic
-                onClick={() => {
-                  if (window.confirm("Are you sure you want to delete this?"))
-                    handleDelete(donation);
-                }}
-                color="green"
-                style={{ width: 100, height: 30, marginRight: 20 }}
-              >
-                Delete
-              </Button>
+              {donation.info.Status === null ? (
+                <Button
+                  basic
+                  color="green"
+                  style={{ width: 100, height: 30, marginRight: 20 }}
+                >
+                  Cancelled
+                </Button>
+              ) : (
+                <div>
+                  <Button
+                    basic
+                    color="green"
+                    style={{ width: 100, height: 30, marginRight: 20 }}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    basic
+                    // onClick={() => {
+                    //   if (
+                    //     window.confirm("Are you sure you want to delete this?")
+                    //   )
+                    //     handleDelete(donation);
+                    // }}
+                    onClick={() => handleCancel(donation)}
+                    color="green"
+                    style={{ width: 100, height: 30, marginRight: 20 }}
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              )}
             </Item>
           </Item.Group>
         </div>

@@ -3,7 +3,7 @@ import axios from "axios";
 import { auth, db, storage } from "../firebase";
 import "./Post.css";
 import AddPhotoIcon from "@material-ui/icons/CameraAlt";
-import logo from "../images/Logo-2.png";
+import { Header, Form, Button, Image, Label } from "semantic-ui-react";
 
 const PostDonation = (props) => {
   const [userInfo, setUserInfo] = useState({});
@@ -31,7 +31,6 @@ const PostDonation = (props) => {
     });
   }, []);
 
-  // console.log("basic userInfo>>>", userInfo);
   console.log("coordinates upload", coordinates);
   const searchAddress =
     `${userInfo.Address}_${userInfo.City}_${userInfo.State}_${userInfo.Zipcode}` ||
@@ -186,67 +185,126 @@ const PostDonation = (props) => {
     );
   } else {
     return (
-      <div className="form">
-        <h3>Post A New Donation</h3>
-        <form onSubmit={handleUpload}>
-          <label htmlFor="description">Description</label>
+      <Form>
+        <Header as="h2" color="green" style={{ marginLeft: 35 }}>
+          Post A New Donation
+        </Header>
+        <Form.Field>
           <input
-            className="form__text"
             required
+            placeholder="Description"
             onChange={(evt) => setDescription(evt.target.value)}
             value={description}
+            style={{ marginLeft: 20, width: 350, marginRight:20 }}
           />
           <br />
+        </Form.Field>
+        <Form.Field>
+          <label className="image-upload" style={{ marginLeft: 20 }}>
+            Donation Image
+          </label>
           <div className="imagePreview">
-            <img id="image-preview" alt="" />
+            <Image id="image-preview" alt="" />
           </div>
-          <br />
-          <div className="image-upload">
-            <label htmlFor="file-input">
-              <AddPhotoIcon style={{ cursor: "pointer" }} />
-            </label>
-            <input
-              id="file-input"
-              type="file"
-              accept="image/*"
-              onChange={handleImage}
-            />
-            <span>Confirm Upload</span>
-          </div>
-          <br />
-          <label htmlFor="quantity">Quantity</label>
-          <input
-            className="form__text"
-            required
-            onChange={(evt) => setQuantity(evt.target.value)}
-            value={quantity}
+          <Image
+            placeholder="Donation Image"
+            alt=""
+            style={{ marginRight: 20, marginTop: 10 }}
           />
-          <h4>These items need to be picked up by:</h4>
-          <br />
-          <label htmlFor="pickupDate">Date</label>
+          <input
+            id="file-input"
+            type="file"
+            accept="image/*"
+            onChange={handleImage}
+            style={{ marginLeft: 20, width: 350, marginRight:20 }}
+          />
+        </Form.Field>
+        <Form.Field>
+          <label style={{ marginLeft: 20 }}>Quantity</label>
+          <input
+            placeholder="Number of Boxes"
+            value={quantity}
+            onChange={(evt) => setQuantity(evt.target.value)}
+            style={{ marginLeft: 20, width: 350, marginRight:30 }}
+          />
+        </Form.Field>
+        <Header as="h4" style={{ marginLeft: 30 }}>
+          {" "}
+          These items need to be picked up by:
+        </Header>
+        <Form.Field>
+          <label style={{ marginLeft: 30 }}>Date</label>
           <input
             type="date"
-            className="form__text"
             required
             onChange={(evt) => setPickupDate(evt.target.value)}
             value={pickupDate}
+            style={{ marginLeft: 20, width: 350, marginRight:20 }}
           />
           <br />
-          <label htmlFor="pickupTime">Time</label>
-          <input
-            type="time"
-            className="form__text"
-            required
-            onChange={(evt) => setPickupTime(evt.target.value)}
-            value={pickupTime}
-          />
-          <br />
-          <button>Submit</button>
-          <button>Cancel</button>
-        </form>
-      </div>
+        </Form.Field>
+      </Form>
     );
   }
 };
 
 export default PostDonation;
+
+// <div className="form">
+// <h3>Post A New Donation</h3>
+// <form onSubmit={handleUpload}>
+//   <label htmlFor="description">Description</label>
+//   <input
+//     required
+//     onChange={(evt) => setDescription(evt.target.value)}
+//     value={description}
+//   />
+//   <br />
+//   <div className="imagePreview">
+//     <img id="image-preview" alt="" />
+//   </div>
+//   <br />
+//   <div className="image-upload">
+//     <label htmlFor="file-input">
+//       <AddPhotoIcon style={{ cursor: "pointer" }} />
+//     </label>
+//     <input
+//       id="file-input"
+//       type="file"
+//       accept="image/*"
+//       onChange={handleImage}
+//     />
+//     <span>Confirm Upload</span>
+//   </div>
+//   <br />
+//   <label htmlFor="quantity">Quantity</label>
+//   <input
+//     className="form__text"
+//     required
+//     onChange={(evt) => setQuantity(evt.target.value)}
+//     value={quantity}
+//   />
+//   <h4>These items need to be picked up by:</h4>
+//   <br />
+//   <label htmlFor="pickupDate">Date</label>
+//   <input
+//     type="date"
+//     className="form__text"
+//     required
+//     onChange={(evt) => setPickupDate(evt.target.value)}
+//     value={pickupDate}
+//   />
+//   <br />
+//   <label htmlFor="pickupTime">Time</label>
+//   <input
+//     type="time"
+//     className="form__text"
+//     required
+//     onChange={(evt) => setPickupTime(evt.target.value)}
+//     value={pickupTime}
+//   />
+//   <br />
+//   <button>Submit</button>
+//   <button>Cancel</button>
+// </form>
+// </div>

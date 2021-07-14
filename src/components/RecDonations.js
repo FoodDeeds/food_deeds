@@ -3,7 +3,7 @@ import { auth, db } from "../firebase";
 import { Button, Item } from "semantic-ui-react";
 import { useHistory, Link } from "react-router-dom";
 
-import logo from "../images/Logo-3.png";
+import post from "../images/post-default.png";
 
 /**
  * user's icon, name
@@ -84,7 +84,7 @@ const RecDonations = () => {
                                 />
                             ) : (
                                 <Item.Image
-                                    src={logo}
+                                    src={post}
                                     alt=""
                                     style={{ marginRight: 20, marginTop: 10 }}
                                 />

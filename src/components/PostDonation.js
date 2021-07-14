@@ -30,7 +30,6 @@ const PostDonation = (props) => {
     });
   }, []);
 
-  console.log("coordinates upload", coordinates);
   const searchAddress =
     `${userInfo.Address}_${userInfo.City}_${userInfo.State}_${userInfo.Zipcode}` ||
     "";

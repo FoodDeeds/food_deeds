@@ -94,7 +94,7 @@ const RecDonations = () => {
                                 <Link
                                     to={`/supplier/${donation.info.supplierId}`}
                                 >
-                                    <Item.Header as="a">
+                                    <Item.Header>
                                         {donation.info.supplierName}
                                     </Item.Header>
                                 </Link>

@@ -42,6 +42,7 @@ const LogIn = (props) => {
                     name="password"
                     type="password"
                 />
+                {error && <span className="error__msg">{error}</span>}
                 <Button
                     control="button"
                     onClick={login}

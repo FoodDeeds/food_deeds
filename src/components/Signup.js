@@ -15,6 +15,7 @@ const Signup = (props) => {
     const [city, setCity] = useState("");
     const [zipcode, setZipcode] = useState("");
     const [state, setState] = useState("");
+    const [image, setImage] = useState("");
     const [error, setError] = useState("");
 
     const signup = (evt) => {
@@ -37,7 +38,8 @@ const Signup = (props) => {
                         Address: address,
                         Zipcode: zipcode,
                         City: city,
-                        State: state
+                        State: state,
+                        Image: image
                     })
                     .then(() => {
                         // after stored in db, empty fields and redirect to login
@@ -52,6 +54,7 @@ const Signup = (props) => {
                         setZipcode("");
                         setState("");
                         setError("");
+                        setImage("");
                         props.history.push("/login");
                     })
                     .catch((err) => setError(err.message));

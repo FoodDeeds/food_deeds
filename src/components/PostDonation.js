@@ -272,7 +272,7 @@ const PostDonation = (props) => {
         Submit
       </Button>
       <Button onClick={handleClick}>
-        Cancelq
+        Cancel
       </Button>
       </div>
     );

@@ -21,7 +21,7 @@ const Confirmation = ({ location }) => {
     });
   }, []);
 
-  const handleRelease = () => {
+  const handleCancel = () => {
     console.log("clicked release");
     setRelease(false);
     db.collection("Donations").doc(donation.id).set(
@@ -69,8 +69,8 @@ const Confirmation = ({ location }) => {
 
       <br />
       {release === true ? (
-        <Button color="red" onClick={handleRelease}>
-          Release
+        <Button color="red" onClick={handleCancel}>
+          Cancel
         </Button>
       ) : (
         <Button color="green" onClick={handleReserve}>

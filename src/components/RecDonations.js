@@ -93,7 +93,7 @@ const RecDonations = () => {
                 />
               )}
               <br />
-              <Item.Content style={{ marginRight: 70, marginTop: 10 }}>
+              <Item.Content style={{}}>
                 <Link to={`/supplier/${donation.info.supplierId}`}>
                   <Item.Header as="a">{donation.info.supplierName}</Item.Header>
                 </Link>

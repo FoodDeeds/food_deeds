@@ -3,6 +3,8 @@ import MapSearch from "./MapSearch";
 import { Button, Dropdown, Form, Header, Segment } from "semantic-ui-react";
 import { auth, db } from "../firebase";
 import { useHistory, Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Browse = () => {
   const [supplierInfo, setSupplierInfo] = useState({});
@@ -46,24 +48,34 @@ const Browse = () => {
         );
       });
   }, [zipcode]);
-
-  const handleClick = (donation) => {
-    setSelectedDonation(donation);
-    console.log("donation", donation.id);
-    db.collection("Donations").doc(donation.id).set(
-      {
-        Status: false,
-        recipientId: currentUser.uid,
-      },
-      { merge: true }
-    );
-    history.push({
-      pathname: "/confirmation",
-      state: {
-        donation,
-        supplierInfo,
-      },
+  toast.configure();
+  const showToast = () => {
+    toast("Please log in to reserve!", {
+      position: "top-center",
+      autoClose: 4000,
     });
+  };
+  const handleClick = (donation) => {
+    if (currentUser) {
+      setSelectedDonation(donation);
+      console.log("donation", donation.id);
+      db.collection("Donations").doc(donation.id).set(
+        {
+          Status: false,
+          recipientId: currentUser.uid,
+        },
+        { merge: true }
+      );
+      history.push({
+        pathname: "/confirmation",
+        state: {
+          donation,
+          supplierInfo,
+        },
+      });
+    } else {
+      showToast();
+    }
   };
 
   // const searchAddress = donations.info.Address + donations.info.City;
@@ -71,22 +83,41 @@ const Browse = () => {
 
   const submit = (evt) => {
     evt.preventDefault();
-    db.collection("Donations")
-      .where("supplierZipCode", "==", zipcode)
-      // .orderBy("Timestamp", "desc")
-      .onSnapshot((snapshot) => {
-        setDonations(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            info: doc.data(),
-          }))
-        );
-      });
+    if (!category || category === "All") {
+      db.collection("Donations")
+        .where("supplierZipCode", "==", zipcode)
+        // .orderBy("Timestamp", "desc")
+        .onSnapshot((snapshot) => {
+          setDonations(
+            snapshot.docs.map((doc) => ({
+              id: doc.id,
+              info: doc.data(),
+            }))
+          );
+        });
+    } else {
+      db.collection("Donations")
+        .where("supplierZipCode", "==", zipcode)
+        .where("supplierCategory", "==", category)
+        // .orderBy("Timestamp", "desc")
+        .onSnapshot((snapshot) => {
+          setDonations(
+            snapshot.docs.map((doc) => ({
+              id: doc.id,
+              info: doc.data(),
+            }))
+          );
+        });
+    }
   };
 
+  const handleCategory = async (evt, category) => {
+    setCategory(category.value);
+  };
+  console.log("here is category", category);
   const options = [
     { key: 1, text: "All", value: "All" },
-    { key: 2, text: "Grocery", value: "Grocery" },
+    { key: 2, text: "Grocery Store", value: "Grocery Store" },
     { key: 3, text: "Deli", value: "Deli" },
     { key: 4, text: "Cafe", value: "Cafe" },
   ];
@@ -117,7 +148,7 @@ const Browse = () => {
             options={options}
             selection
             placeholder="Category"
-            onChange={(evt) => setCategory(evt.target.value)}
+            onChange={handleCategory}
             style={{
               marginLeft: 10,
               marginTop: 100,

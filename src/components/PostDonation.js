@@ -54,8 +54,7 @@ const PostDonation = (props) => {
   const handleClick = (evt) => {
     evt.preventDefault();
     props.history.push("/");
-
-  }
+  };
 
   const handleImage = (evt) => {
     evt.preventDefault();
@@ -120,6 +119,7 @@ const PostDonation = (props) => {
                     supplierAddress: userInfo.Address,
                     supplierCity: userInfo.City,
                     supplierZipCode: userInfo.Zipcode,
+                    supplierCategory: userInfo.Category,
                     coordinates: coordinate,
                   })
                   .then(() => {
@@ -156,6 +156,7 @@ const PostDonation = (props) => {
             supplierAddress: userInfo.Address,
             supplierCity: userInfo.City,
             supplierZipCode: userInfo.Zipcode,
+            supplierCategory: userInfo.Category,
             coordinates: coordinate,
           })
           .then(() => {
@@ -185,88 +186,86 @@ const PostDonation = (props) => {
   } else {
     return (
       <div>
-      <Form>
-        <Header as="h2" color="green" style={{ marginLeft: 35 }}>
-          Post A New Donation
-        </Header>
-        <Form.Field>
-        <label style={{ marginLeft: 25  }}>Description</label>
-          <input
-            required
-            placeholder="Description"
-            onChange={(evt) => setDescription(evt.target.value)}
-            value={description}
-            style={{ marginLeft: 20, width: 350, marginRight: 20 }}
-          />
-          <br />
-        </Form.Field>
-        <Form.Field>
-          <label className="image-upload" style={{ marginLeft: 25 }}>
-            Donation Image
-          </label>
-          <div className="imagePreview">
-            <Image id="image-preview" alt="" />
-          </div>
-          <Image
-            placeholder="Donation Image"
-            alt=""
-            style={{ marginRight: 20, marginTop: 10 }}
-          />
-          <input
-            id="file-input"
-            type="file"
-            accept="image/*"
-            onChange={handleImage}
-            style={{ marginLeft: 20, width: 350, marginRight: 20 }}
-          />
-        </Form.Field>
-        <Form.Field>
-          <label style={{ marginLeft: 25 }}>Quantity</label>
-          <input
-            placeholder="Number of Boxes"
-            value={quantity}
-            onChange={(evt) => setQuantity(evt.target.value)}
-            style={{ marginLeft: 20, width: 350, marginRight: 30 }}
-          />
-        </Form.Field>
-        <Header as="h4" style={{ marginLeft: 30 }}>
-          {" "}
-          These items need to be picked up by:
-        </Header>
-        <Form.Field>
-          <label style={{ marginLeft: 25 }}>Date</label>
-          <input
-            type="date"
-            required
-            onChange={(evt) => setPickupDate(evt.target.value)}
-            value={pickupDate}
-            style={{ marginLeft: 20, width: 350, marginRight: 20}}
-          />
-          <br />
-        </Form.Field>
-        <Form.Field>
-        <label style={{ marginLeft: 25 }}>Time</label>
-          <input
-            type="time"
-            required
-            onChange={(evt) => setPickupTime(evt.target.value)}
-            value={pickupTime}
-            style={{ marginLeft: 20, width: 350, marginRight: 20}}
-          />
-        </Form.Field>
-      </Form>
-      <br/>
-      <Button
-      type="submit"
-      onClick={handleUpload}
-      color="green"
-      style={{ marginLeft: 90, marginTop: 15, marginBottom: 25 }}
-      >
-        Submit
-      </Button>
-      <Button onClick={handleClick}>
-        Cancel
-      </Button>
+        <Form>
+          <Header as="h2" color="green" style={{ marginLeft: 35 }}>
+            Post A New Donation
+          </Header>
+          <Form.Field>
+            <label style={{ marginLeft: 25 }}>Description</label>
+            <input
+              required
+              placeholder="Description"
+              onChange={(evt) => setDescription(evt.target.value)}
+              value={description}
+              style={{ marginLeft: 20, width: 350, marginRight: 20 }}
+            />
+            <br />
+          </Form.Field>
+          <Form.Field>
+            <label className="image-upload" style={{ marginLeft: 25 }}>
+              Donation Image
+            </label>
+            <div className="imagePreview">
+              <Image id="image-preview" alt="" />
+            </div>
+            <Image
+              placeholder="Donation Image"
+              alt=""
+              style={{ marginRight: 20, marginTop: 10 }}
+            />
+            <input
+              id="file-input"
+              type="file"
+              accept="image/*"
+              onChange={handleImage}
+              style={{ marginLeft: 20, width: 350, marginRight: 20 }}
+            />
+          </Form.Field>
+          <Form.Field>
+            <label style={{ marginLeft: 25 }}>Quantity</label>
+            <input
+              placeholder="Number of Boxes"
+              value={quantity}
+              onChange={(evt) => setQuantity(evt.target.value)}
+              style={{ marginLeft: 20, width: 350, marginRight: 30 }}
+            />
+          </Form.Field>
+          <Header as="h4" style={{ marginLeft: 30 }}>
+            {" "}
+            These items need to be picked up by:
+          </Header>
+          <Form.Field>
+            <label style={{ marginLeft: 25 }}>Date</label>
+            <input
+              type="date"
+              required
+              onChange={(evt) => setPickupDate(evt.target.value)}
+              value={pickupDate}
+              style={{ marginLeft: 20, width: 350, marginRight: 20 }}
+            />
+            <br />
+          </Form.Field>
+          <Form.Field>
+            <label style={{ marginLeft: 25 }}>Time</label>
+            <input
+              type="time"
+              required
+              onChange={(evt) => setPickupTime(evt.target.value)}
+              value={pickupTime}
+              style={{ marginLeft: 20, width: 350, marginRight: 20 }}
+            />
+          </Form.Field>
+        </Form>
+        <br />
+        <Button
+          type="submit"
+          onClick={handleUpload}
+          color="green"
+          style={{ marginLeft: 90, marginTop: 15, marginBottom: 25 }}
+        >
+          Submit
+        </Button>
+        <Button onClick={handleClick}>Cancel</Button>
       </div>
     );
   }

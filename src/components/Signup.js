@@ -20,8 +20,6 @@ const Signup = (props) => {
 
     const signup = (evt) => {
         evt.preventDefault();
-        // console.log("sigup Form submmitted");
-        // console.log(name, email, password, error);
         auth.createUserWithEmailAndPassword(email, password)
             .then((userCred) => {
                 db.collection("SignedUpUsers")

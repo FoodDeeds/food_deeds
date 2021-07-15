@@ -49,7 +49,6 @@ const RecDonations = () => {
 
     const handleClick = (donation) => {
         setDonations(donation);
-        console.log("donation in home", donation.id);
         db.collection("Donations").doc(donation.id).set(
             {
                 Status: false,
@@ -65,8 +64,6 @@ const RecDonations = () => {
             }
         });
     };
-
-    console.log("Donations!!!", donations);
 
     return (
         <div>

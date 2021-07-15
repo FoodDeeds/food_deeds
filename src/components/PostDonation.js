@@ -40,8 +40,6 @@ const PostDonation = (props) => {
   // baseURL + addressInfo + JSON access token + our Token
   const combineAddress = `${baseURL}/${addressInfo}.json?access_token=${REACT_APP_MAPBOX_TOKEN}`;
 
-  // console.log("combineAddress url", combineAddress);
-
   const getCoordinates = async () => {
     const { data } = await axios.get(combineAddress);
     const coordinates = data.features[0].geometry.coordinates;
@@ -107,7 +105,6 @@ const PostDonation = (props) => {
             .getDownloadURL()
             .then((url) => {
               setUrl(url);
-              // console.log("userInfo;", userInfo);
               getCoordinates().then((coordinate) => {
                 db.collection("Donations")
                   .add({
@@ -145,8 +142,6 @@ const PostDonation = (props) => {
       );
     } else {
       getCoordinates().then((coordinate) => {
-        // console.log("coordinate in else", coordinate);
-        // console.log("description inside else", description);
         db.collection("Donations")
           .add({
             postImageUrl: null,

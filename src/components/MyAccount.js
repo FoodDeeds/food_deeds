@@ -25,7 +25,6 @@ const MyAccount = () => {
           });
       } else {
         setUserInfo({});
-        console.log("Logged out");
       }
     });
   }, []);
@@ -39,7 +38,6 @@ const MyAccount = () => {
       },
     });
   };
-  console.log("userInfo", userInfo);
 
   return (
     <div>

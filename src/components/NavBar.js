@@ -14,14 +14,12 @@ import { Link, useHistory } from "react-router-dom";
 import { auth, db } from "../firebase";
 import logo from "../images/marker.jpg";
 
-const NavBar = () => {
+const NavBar = (props) => {
     const [sidebarVisible, setSidebarVisible] = useState(false);
     const [currentUser, setCurrentUser] = useState("");
     const [userInfo, setUserInfo] = useState({});
     const history = useHistory();
-
-    console.log("current user>>>", currentUser);
-
+    
     useEffect(() => {
         auth.onAuthStateChanged((user) => {
             if (user) {
@@ -37,11 +35,13 @@ const NavBar = () => {
                 console.log("Logged out");
             }
         });
-    }, []);
+    }, [currentUser]);
 
-    const handleLogout = () => {
+    const handleLogout = (evt) => {
+        evt.preventDefault();
         auth.signOut().then(() => {
-            history.push("/login");
+            setCurrentUser("");
+            history.push("/");
         });
     };
 

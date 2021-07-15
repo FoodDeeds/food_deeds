@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { auth, db, storage } from "../firebase";
 import "./Post.css";
-import AddPhotoIcon from "@material-ui/icons/CameraAlt";
 import { Header, Form, Button, Image, Label } from "semantic-ui-react";
 
 const PostDonation = (props) => {
@@ -31,7 +30,6 @@ const PostDonation = (props) => {
     });
   }, []);
 
-  console.log("coordinates upload", coordinates);
   const searchAddress =
     `${userInfo.Address}_${userInfo.City}_${userInfo.State}_${userInfo.Zipcode}` ||
     "";
@@ -41,8 +39,6 @@ const PostDonation = (props) => {
     "pk.eyJ1IjoiZm9vZGRlZWRzIiwiYSI6ImNrcW1vaGk2NzA5cTYydW16NnRoNWM1dHoifQ.Zrfb6NXBZ3mTeEUGdYgc6w";
   // baseURL + addressInfo + JSON access token + our Token
   const combineAddress = `${baseURL}/${addressInfo}.json?access_token=${REACT_APP_MAPBOX_TOKEN}`;
-
-  // console.log("combineAddress url", combineAddress);
 
   const getCoordinates = async () => {
     const { data } = await axios.get(combineAddress);
@@ -58,8 +54,7 @@ const PostDonation = (props) => {
   const handleClick = (evt) => {
     evt.preventDefault();
     props.history.push("/");
-
-  }
+  };
 
   const handleImage = (evt) => {
     evt.preventDefault();
@@ -109,7 +104,6 @@ const PostDonation = (props) => {
             .getDownloadURL()
             .then((url) => {
               setUrl(url);
-              // console.log("userInfo;", userInfo);
               getCoordinates().then((coordinate) => {
                 db.collection("Donations")
                   .add({
@@ -125,6 +119,7 @@ const PostDonation = (props) => {
                     supplierAddress: userInfo.Address,
                     supplierCity: userInfo.City,
                     supplierZipCode: userInfo.Zipcode,
+                    supplierCategory: userInfo.Category,
                     coordinates: coordinate,
                   })
                   .then(() => {
@@ -147,8 +142,6 @@ const PostDonation = (props) => {
       );
     } else {
       getCoordinates().then((coordinate) => {
-        // console.log("coordinate in else", coordinate);
-        // console.log("description inside else", description);
         db.collection("Donations")
           .add({
             postImageUrl: null,
@@ -163,6 +156,7 @@ const PostDonation = (props) => {
             supplierAddress: userInfo.Address,
             supplierCity: userInfo.City,
             supplierZipCode: userInfo.Zipcode,
+            supplierCategory: userInfo.Category,
             coordinates: coordinate,
           })
           .then(() => {
@@ -192,150 +186,89 @@ const PostDonation = (props) => {
   } else {
     return (
       <div>
-      <Form>
-        <Header as="h2" color="green" style={{ marginLeft: 35 }}>
-          Post A New Donation
-        </Header>
-        <Form.Field>
-        <label style={{ marginLeft: 25  }}>Description</label>
-          <input
-            required
-            placeholder="Description"
-            onChange={(evt) => setDescription(evt.target.value)}
-            value={description}
-            style={{ marginLeft: 20, width: 350, marginRight: 20 }}
-          />
-          <br />
-        </Form.Field>
-        <Form.Field>
-          <label className="image-upload" style={{ marginLeft: 25 }}>
-            Donation Image
-          </label>
-          <div className="imagePreview">
-            <Image id="image-preview" alt="" />
-          </div>
-          <Image
-            placeholder="Donation Image"
-            alt=""
-            style={{ marginRight: 20, marginTop: 10 }}
-          />
-          <input
-            id="file-input"
-            type="file"
-            accept="image/*"
-            onChange={handleImage}
-            style={{ marginLeft: 20, width: 350, marginRight: 20 }}
-          />
-        </Form.Field>
-        <Form.Field>
-          <label style={{ marginLeft: 25 }}>Quantity</label>
-          <input
-            placeholder="Number of Boxes"
-            value={quantity}
-            onChange={(evt) => setQuantity(evt.target.value)}
-            style={{ marginLeft: 20, width: 350, marginRight: 30 }}
-          />
-        </Form.Field>
-        <Header as="h4" style={{ marginLeft: 30 }}>
-          {" "}
-          These items need to be picked up by:
-        </Header>
-        <Form.Field>
-          <label style={{ marginLeft: 25 }}>Date</label>
-          <input
-            type="date"
-            required
-            onChange={(evt) => setPickupDate(evt.target.value)}
-            value={pickupDate}
-            style={{ marginLeft: 20, width: 350, marginRight: 20}}
-          />
-          <br />
-        </Form.Field>
-        <Form.Field>
-        <label style={{ marginLeft: 25 }}>Time</label>
-          <input
-            type="time"
-            required
-            onChange={(evt) => setPickupTime(evt.target.value)}
-            value={pickupTime}
-            style={{ marginLeft: 20, width: 350, marginRight: 20}}
-          />
-        </Form.Field>
-      </Form>
-      <br/>
-      <Button
-      type="submit"
-      onClick={handleUpload}
-      color="green"
-      style={{ marginLeft: 90, marginTop: 15, marginBottom: 25 }}
-      >
-        Submit
-      </Button>
-      <Button onClick={handleClick}>
-        Cancel
-      </Button>
+        <Form>
+          <Header as="h2" color="green" style={{ marginLeft: 35 }}>
+            Post A New Donation
+          </Header>
+          <Form.Field>
+            <label style={{ marginLeft: 25 }}>Description</label>
+            <input
+              required
+              placeholder="Description"
+              onChange={(evt) => setDescription(evt.target.value)}
+              value={description}
+              style={{ marginLeft: 20, width: 350, marginRight: 20 }}
+            />
+            <br />
+          </Form.Field>
+          <Form.Field>
+            <label className="image-upload" style={{ marginLeft: 25 }}>
+              Donation Image
+            </label>
+            <div className="imagePreview">
+              <Image id="image-preview" alt="" />
+            </div>
+            <Image
+              placeholder="Donation Image"
+              alt=""
+              style={{ marginRight: 20, marginTop: 10 }}
+            />
+            <input
+              id="file-input"
+              type="file"
+              accept="image/*"
+              onChange={handleImage}
+              style={{ marginLeft: 20, width: 350, marginRight: 20 }}
+            />
+          </Form.Field>
+          <Form.Field>
+            <label style={{ marginLeft: 25 }}>Quantity</label>
+            <input
+              placeholder="Number of Boxes"
+              value={quantity}
+              onChange={(evt) => setQuantity(evt.target.value)}
+              style={{ marginLeft: 20, width: 350, marginRight: 30 }}
+            />
+          </Form.Field>
+          <Header as="h4" style={{ marginLeft: 30 }}>
+            {" "}
+            These items need to be picked up by:
+          </Header>
+          <Form.Field>
+            <label style={{ marginLeft: 25 }}>Date</label>
+            <input
+              type="date"
+              required
+              onChange={(evt) => setPickupDate(evt.target.value)}
+              value={pickupDate}
+              style={{ marginLeft: 20, width: 350, marginRight: 20 }}
+            />
+            <br />
+          </Form.Field>
+          <Form.Field>
+            <label style={{ marginLeft: 25 }}>Time</label>
+            <input
+              type="time"
+              required
+              onChange={(evt) => setPickupTime(evt.target.value)}
+              value={pickupTime}
+              style={{ marginLeft: 20, width: 350, marginRight: 20 }}
+            />
+          </Form.Field>
+        </Form>
+        <br />
+        <Button
+          type="submit"
+          onClick={handleUpload}
+          color="green"
+          style={{ marginLeft: 90, marginTop: 15, marginBottom: 25 }}
+        >
+          Submit
+        </Button>
+        <Button onClick={handleClick}>Cancel</Button>
       </div>
     );
   }
 };
 
 export default PostDonation;
-
-// <div className="form">
-// <h3>Post A New Donation</h3>
-// <form onSubmit={handleUpload}>
-//   <label htmlFor="description">Description</label>
-//   <input
-//     required
-//     onChange={(evt) => setDescription(evt.target.value)}
-//     value={description}
-//   />
-//   <br />
-//   <div className="imagePreview">
-//     <img id="image-preview" alt="" />
-//   </div>
-//   <br />
-//   <div className="image-upload">
-//     <label htmlFor="file-input">
-//       <AddPhotoIcon style={{ cursor: "pointer" }} />
-//     </label>
-//     <input
-//       id="file-input"
-//       type="file"
-//       accept="image/*"
-//       onChange={handleImage}
-//     />
-//     <span>Confirm Upload</span>
-//   </div>
-//   <br />
-//   <label htmlFor="quantity">Quantity</label>
-//   <input
-//     className="form__text"
-//     required
-//     onChange={(evt) => setQuantity(evt.target.value)}
-//     value={quantity}
-//   />
-//   <h4>These items need to be picked up by:</h4>
-//   <br />
-//   <label htmlFor="pickupDate">Date</label>
-//   <input
-//     type="date"
-//     className="form__text"
-//     required
-//     onChange={(evt) => setPickupDate(evt.target.value)}
-//     value={pickupDate}
-//   />
-//   <br />
-//   <label htmlFor="pickupTime">Time</label>
-//   <input
-//     type="time"
-//     className="form__text"
-//     required
-//     onChange={(evt) => setPickupTime(evt.target.value)}
-//     value={pickupTime}
-//   />
-//   <br />
-//   <button>Submit</button>
-//   <button>Cancel</button>
-// </form>
-// </div>

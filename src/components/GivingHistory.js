@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Button, Item } from "semantic-ui-react";
 import { db } from "../firebase";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { green, lightGreen } from "@material-ui/core/colors";
 
+import { useHistory } from "react-router-dom";
+
+
 const GivingHistory = (props) => {
   const userInfo = props.userInfo;
   const [donations, setDonations] = useState([]);
-  const [pastDonations, setPastDonations] = useState([]);
+
+  const history = useHistory();
 
   useEffect(() => {
     db.collection("Donations")
@@ -21,18 +26,9 @@ const GivingHistory = (props) => {
           }))
         );
       });
-    // Need to change PickupTime to TimeStamp
-    // db.collection("Donations")
-    //   .where("PostingTime", "<", new Date("2021-07-10"))
-    //   .onSnapshot((snapshot) => {
-    //     setPastDonations(
-    //       snapshot.docs.map((doc) => ({
-    //         id: doc.id,
-    //         info: doc.data(),
-    //       }))
-    //     );
-    //   });
+  
   }, [userInfo.id]);
+
 
   const handleCancel = (donation) => {
     toast.configure();
@@ -46,7 +42,17 @@ const GivingHistory = (props) => {
       },
       { merge: true }
     );
+
+  const handleEdit = (donation) => {
+    history.push({
+      pathname: "/donationedit",
+      state: {
+        donation,
+        userInfo
+      },
+    });
   };
+
 
   const totalQty = function () {
     let total = 0;
@@ -82,10 +88,11 @@ const GivingHistory = (props) => {
                 </Item.Description>
                 <br />
               </Item.Content>
+
               {donation.info.Status === null ? (
                 <Button
                   basic
-                  color="green"
+                  color="red"
                   style={{ width: 100, height: 30, marginRight: 20 }}
                 >
                   Cancelled
@@ -101,12 +108,7 @@ const GivingHistory = (props) => {
                   </Button>
                   <Button
                     basic
-                    // onClick={() => {
-                    //   if (
-                    //     window.confirm("Are you sure you want to delete this?")
-                    //   )
-                    //     handleDelete(donation);
-                    // }}
+                    
                     onClick={() => handleCancel(donation)}
                     color="green"
                     style={{ width: 100, height: 30, marginRight: 20 }}
@@ -115,6 +117,7 @@ const GivingHistory = (props) => {
                   </Button>
                 </div>
               )}
+
             </Item>
           </Item.Group>
         </div>

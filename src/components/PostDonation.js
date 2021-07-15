@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { auth, db, storage } from "../firebase";
 import "./Post.css";
-import AddPhotoIcon from "@material-ui/icons/CameraAlt";
 import { Header, Form, Button, Image, Label } from "semantic-ui-react";
 
 const PostDonation = (props) => {
@@ -31,7 +30,6 @@ const PostDonation = (props) => {
     });
   }, []);
 
-  console.log("coordinates upload", coordinates);
   const searchAddress =
     `${userInfo.Address}_${userInfo.City}_${userInfo.State}_${userInfo.Zipcode}` ||
     "";
@@ -280,62 +278,3 @@ const PostDonation = (props) => {
 };
 
 export default PostDonation;
-
-// <div className="form">
-// <h3>Post A New Donation</h3>
-// <form onSubmit={handleUpload}>
-//   <label htmlFor="description">Description</label>
-//   <input
-//     required
-//     onChange={(evt) => setDescription(evt.target.value)}
-//     value={description}
-//   />
-//   <br />
-//   <div className="imagePreview">
-//     <img id="image-preview" alt="" />
-//   </div>
-//   <br />
-//   <div className="image-upload">
-//     <label htmlFor="file-input">
-//       <AddPhotoIcon style={{ cursor: "pointer" }} />
-//     </label>
-//     <input
-//       id="file-input"
-//       type="file"
-//       accept="image/*"
-//       onChange={handleImage}
-//     />
-//     <span>Confirm Upload</span>
-//   </div>
-//   <br />
-//   <label htmlFor="quantity">Quantity</label>
-//   <input
-//     className="form__text"
-//     required
-//     onChange={(evt) => setQuantity(evt.target.value)}
-//     value={quantity}
-//   />
-//   <h4>These items need to be picked up by:</h4>
-//   <br />
-//   <label htmlFor="pickupDate">Date</label>
-//   <input
-//     type="date"
-//     className="form__text"
-//     required
-//     onChange={(evt) => setPickupDate(evt.target.value)}
-//     value={pickupDate}
-//   />
-//   <br />
-//   <label htmlFor="pickupTime">Time</label>
-//   <input
-//     type="time"
-//     className="form__text"
-//     required
-//     onChange={(evt) => setPickupTime(evt.target.value)}
-//     value={pickupTime}
-//   />
-//   <br />
-//   <button>Submit</button>
-//   <button>Cancel</button>
-// </form>
-// </div>

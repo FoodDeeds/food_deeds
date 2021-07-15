@@ -13,6 +13,7 @@ import Browse from "./components/Browse";
 import SingleSupplier from "./components/SingleSupplier";
 import Confirmation from "./components/Confirmation";
 import NavBar from "./components/NavBar";
+import EditDonation from "./components/EditDonation";
 
 /**
  * Header
@@ -27,6 +28,7 @@ const Routes = () => {
       </div>
 
       <Switch>
+        <Route path="/donationedit" component={EditDonation} />
         <Route exact path="/" component={Home} />
         <Route exact path="/map" component={MapSearch} />
         <Route exact path="/login" component={LogIn} />

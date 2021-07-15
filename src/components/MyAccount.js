@@ -39,7 +39,6 @@ const MyAccount = () => {
       },
     });
   };
-  console.log("userInfo", userInfo);
 
   return (
     <div>

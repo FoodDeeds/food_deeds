@@ -13,7 +13,7 @@ const EditDonation = ({ location }) => {
   const [pickupTime, setPickupTime] = useState(donation.info.PickupTime);
   const history = useHistory();
 
-  const handleUpdate = (evt) => {
+  const handleUpdate = () => {
     db.collection("Donations")
       .doc(donation.id)
       .set({
@@ -29,6 +29,12 @@ const EditDonation = ({ location }) => {
           pathname: "/account"
         })
       })
+  }
+
+  const handleClick = () => {
+    history.push({
+      pathname: "/account"
+    })
   }
 
   return (
@@ -83,7 +89,7 @@ const EditDonation = ({ location }) => {
       </Button>
       <Button
         type="submit"
-        // onClick={handleClick}
+        onClick={handleClick}
         color="green"
         style={{ marginLeft: 10, marginTop: 15, marginBottom: 25 }}
       >

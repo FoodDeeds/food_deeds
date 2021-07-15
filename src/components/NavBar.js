@@ -130,7 +130,7 @@ const NavBar = (props) => {
                 </Item.Description>
               </Menu.Item>
             </Link>
-            {userInfo && (
+            {currentUser && (
               <Link to="/account">
                 <Menu.Item>
                   <Icon name="user circle" color="green" />

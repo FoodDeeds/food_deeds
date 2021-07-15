@@ -40,7 +40,7 @@ const RecDonations = () => {
         );
       });
   }, []);
-  
+
   toast.configure();
   const showToast = () => {
     toast("Please log in to reserve!", {
@@ -48,11 +48,11 @@ const RecDonations = () => {
       autoClose: 4000,
     });
   };
-  
-  const handleClick = (donation) => {
+
+  const handleClick = async (donation) => {
     if (currentUser) {
       setDonations(donation);
-      db.collection("Donations").doc(donation.id).set(
+      await db.collection("Donations").doc(donation.id).set(
         {
           Status: false,
           recipientId: currentUser.uid,

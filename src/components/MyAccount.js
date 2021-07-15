@@ -91,7 +91,7 @@ const MyAccount = () => {
             onClick={handleEdit}
             style={{ marginLeft: 50, marginTop: 15, width: 250 }}
           >
-            Edit Accounts
+            Edit Account
           </Button>
         </div>
       )}

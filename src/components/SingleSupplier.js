@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Button, Header, Segment } from "semantic-ui-react";
 import { auth, db } from "../firebase";
 import { useHistory } from "react-router-dom";
-import { Header, Item, Segment } from "semantic-ui-react";
-import { Button } from "semantic-ui-react";
-import logo from "../images/Logo-2.png";
+import { Item } from "semantic-ui-react";
+import defaultIcon from "../images/Logo-2.png";
 
 const SingleSupplier = (props) => {
   const [supplierInfo, setSupplierInfo] = useState({});
@@ -14,7 +13,6 @@ const SingleSupplier = (props) => {
   const [currentUser, setCurrentUser] = useState("");
   const [userInfo, setUserInfo] = useState({});
   const history = useHistory();
-
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -26,11 +24,9 @@ const SingleSupplier = (props) => {
             const data = response.data();
             setUserInfo(data);
           });
-
       }
     });
   }, []);
-
   useEffect(() => {
     db.collection("SignedUpUsers")
       .doc(props.match.params.id)
@@ -54,9 +50,9 @@ const SingleSupplier = (props) => {
 
   const handleBack = () => {
     history.push({
-      pathname: "/"
-    })
-  }
+      pathname: "/",
+    });
+  };
 
   const handleClick = (donation) => {
     setConfirmation(true);
@@ -76,7 +72,6 @@ const SingleSupplier = (props) => {
       },
     });
   };
-
   return (
     <div
       style={{
@@ -85,7 +80,6 @@ const SingleSupplier = (props) => {
         paddingLeft: "1%",
       }}
     >
-    <div>
       <div className="supplier-logo">
         {supplierInfo.Image ? (
           <Item.Image
@@ -95,17 +89,13 @@ const SingleSupplier = (props) => {
           />
         ) : (
           <Item.Image
-            src={logo}
+            src={defaultIcon}
             alt=""
             style={{ marginRight: 20, marginTop: 10 }}
           />
         )}
       </div>
-
       <div style={{ marginTop: 20 }}>
-
-      <div>
-
         <h2>{supplierInfo.Name}</h2>
         <p>
           {supplierInfo.Address}
@@ -115,6 +105,13 @@ const SingleSupplier = (props) => {
         <p>{supplierInfo.Phone}</p>
       </div>
       <div>
+        <Button
+          type="submit"
+          onClick={handleBack}
+          style={{ marginLeft: 10, color: "white" }}
+        >
+          Back to Home
+        </Button>
         <Header size="medium" style={{ marginTop: 10, marginRight: -10 }}>
           Available Donations
         </Header>
@@ -134,50 +131,10 @@ const SingleSupplier = (props) => {
             >
               Reserve
             </Button>
-        <p>
-          {supplierInfo.Email}
-          <br />
-          {supplierInfo.Phone}
-        </p>
-        <br />
-      </div>
-      <Button
-            type="submit"
-            onClick={handleBack}
-            style={{ marginLeft: 10, color: "white" }}
-          >
-            Back to Home
-          </Button>
-      <div>
-        <Header style={{ marginTop: 20 }}>Available Donations</Header>
-        {donations.map((donation) => (
-          <Segment className="result" key={donation.id} style={{ width: 300 }}>
-            <p>
-              {donation.info.Description} <br />
-              Pickup Time: {donation.info.PickupTime} <br />
-              Pickup Date: {donation.info.PickupDate} <br />
-              Quantity: {donation.info.Quantity} boxes
-              {userInfo.Type === "Recipient" || !userInfo.Type ? (
-                <Button
-                  basic
-                  color="green"
-                  style={{
-                    width: 100,
-                    height: 30,
-                    marginRight: 20,
-                  }}
-                  onClick={() => handleClick(donation)}
-                >
-                  Reserve
-                </Button>
-              ) : null}
-              <br />
-            </p>
           </Segment>
         ))}
       </div>
     </div>
   );
 };
-
 export default SingleSupplier;

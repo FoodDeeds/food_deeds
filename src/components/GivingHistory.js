@@ -8,7 +8,6 @@ import { green, lightGreen } from "@material-ui/core/colors";
 
 import { useHistory } from "react-router-dom";
 
-
 const GivingHistory = (props) => {
   const userInfo = props.userInfo;
   const [donations, setDonations] = useState([]);
@@ -26,9 +25,7 @@ const GivingHistory = (props) => {
           }))
         );
       });
-  
   }, [userInfo.id]);
-
 
   const handleCancel = (donation) => {
     toast.configure();
@@ -42,17 +39,17 @@ const GivingHistory = (props) => {
       },
       { merge: true }
     );
+  };
 
   const handleEdit = (donation) => {
     history.push({
       pathname: "/donationedit",
       state: {
         donation,
-        userInfo
+        userInfo,
       },
     });
   };
-
 
   const totalQty = function () {
     let total = 0;
@@ -102,13 +99,13 @@ const GivingHistory = (props) => {
                   <Button
                     basic
                     color="green"
+                    onClick={() => handleEdit(donation)}
                     style={{ width: 100, height: 30, marginRight: 20 }}
                   >
                     Edit
                   </Button>
                   <Button
                     basic
-                    
                     onClick={() => handleCancel(donation)}
                     color="green"
                     style={{ width: 100, height: 30, marginRight: 20 }}
@@ -117,7 +114,6 @@ const GivingHistory = (props) => {
                   </Button>
                 </div>
               )}
-
             </Item>
           </Item.Group>
         </div>

@@ -62,10 +62,18 @@ const NavBar = (props) => {
                 marginBottom: 10,
               }}
             />
-            <Link to="/">
+            <Link
+              to="/"
+              style={{
+                display: "flex",
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <Header
                 color="green"
-                style={{ marginLeft: 600, marginTop: 15 }}
+                style={{ marginTop: 10, marginLeft: -50 }}
                 size="huge"
               >
                 <Image
@@ -130,7 +138,7 @@ const NavBar = (props) => {
                 </Item.Description>
               </Menu.Item>
             </Link>
-            {userInfo && (
+            {currentUser && (
               <Link to="/account">
                 <Menu.Item>
                   <Icon name="user circle" color="green" />

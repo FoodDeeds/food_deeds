@@ -43,7 +43,6 @@ const NavBar = (props) => {
       history.push("/");
     });
   };
-  console.log("user info", userInfo);
 
   return (
     <Sticky>

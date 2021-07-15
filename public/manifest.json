@@ -10,9 +10,24 @@
     "description": "Each year, 40% of all edible food in the US is thrown away while 1 in 10 households struggles with food insecurity. At FoodDeeds we strive to bridge the gap and connect food banks with excess products from grocery stores, delis, and cafes.",
     "icons": [
         {
-            "src": "/icon/Logo-3.png",
+            "src": "/icon/Logo-512.png",
             "type": "image/png",
             "sizes": "512x512"
+        },
+        {
+            "src": "/icon/Logo-48.png",
+            "type": "image/png",
+            "sizes": "48x48"
+        },
+        {
+            "src": "/icon/Logo-96.png",
+            "type": "image/png",
+            "sizes": "96x96"
+        },
+        {
+            "src": "/icon/Logo-192.png",
+            "type": "image/png",
+            "sizes": "192x192"
         }
     ]
 }

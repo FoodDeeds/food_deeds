@@ -3,6 +3,8 @@ import MapSearch from "./MapSearch";
 import { Button, Dropdown, Form, Header, Segment } from "semantic-ui-react";
 import { auth, db } from "../firebase";
 import { useHistory, Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Browse = () => {
   const [supplierInfo, setSupplierInfo] = useState({});
@@ -46,24 +48,34 @@ const Browse = () => {
         );
       });
   }, [zipcode]);
-
-  const handleClick = (donation) => {
-    setSelectedDonation(donation);
-    console.log("donation", donation.id);
-    db.collection("Donations").doc(donation.id).set(
-      {
-        Status: false,
-        recipientId: currentUser.uid,
-      },
-      { merge: true }
-    );
-    history.push({
-      pathname: "/confirmation",
-      state: {
-        donation,
-        supplierInfo,
-      },
+  toast.configure();
+  const showToast = () => {
+    toast("Please log in to reserve!", {
+      position: "top-center",
+      autoClose: 4000,
     });
+  };
+  const handleClick = (donation) => {
+    if (currentUser) {
+      setSelectedDonation(donation);
+      console.log("donation", donation.id);
+      db.collection("Donations").doc(donation.id).set(
+        {
+          Status: false,
+          recipientId: currentUser.uid,
+        },
+        { merge: true }
+      );
+      history.push({
+        pathname: "/confirmation",
+        state: {
+          donation,
+          supplierInfo,
+        },
+      });
+    } else {
+      showToast();
+    }
   };
 
   // const searchAddress = donations.info.Address + donations.info.City;

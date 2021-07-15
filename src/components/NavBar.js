@@ -17,14 +17,13 @@ import icon from "../images/post-default.png";
 
 const NavBar = (props) => {
   const [sidebarVisible, setSidebarVisible] = useState(false);
-  const [currentUser, setCurrentUser] = useState("");
   const [userInfo, setUserInfo] = useState({});
   const history = useHistory();
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
-        setCurrentUser(user);
+        setUserInfo(user);
         db.collection("SignedUpUsers")
           .doc(user.uid)
           .get()
@@ -32,19 +31,18 @@ const NavBar = (props) => {
             const data = response.data();
             setUserInfo(data);
           });
-      } else {
-        console.log("Logged out");
       }
     });
-  }, [currentUser]);
+  }, []);
 
   const handleLogout = (evt) => {
     evt.preventDefault();
     auth.signOut().then(() => {
-      setCurrentUser("");
+      setUserInfo("");
       history.push("/");
     });
   };
+  console.log("user info", userInfo);
 
   return (
     <Sticky>
@@ -93,7 +91,7 @@ const NavBar = (props) => {
             color="Standard"
             style={{ height: "100%" }}
           >
-            {currentUser && (
+            {userInfo && (
               <Menu.Item>
                 <Item.Description style={{ color: "green" }}>
                   {userInfo.Image ? (
@@ -131,7 +129,7 @@ const NavBar = (props) => {
                 </Item.Description>
               </Menu.Item>
             </Link>
-            {currentUser && (
+            {userInfo && (
               <Link to="/account">
                 <Menu.Item>
                   <Icon name="user circle" color="green" />
@@ -167,7 +165,7 @@ const NavBar = (props) => {
                 </Item.Description>
               </Menu.Item>
             </Link>
-            {currentUser ? (
+            {userInfo ? (
               <Button
                 color="green"
                 className="logout__btn"

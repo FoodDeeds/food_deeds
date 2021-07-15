@@ -13,8 +13,6 @@ const SingleSupplier = (props) => {
     const [currentUser, setCurrentUser] = useState("");
     const history = useHistory();
 
-    console.log("single supplier info>>>", supplierInfo);
-
     useEffect(() => {
         auth.onAuthStateChanged((user) => {
             if (user) {

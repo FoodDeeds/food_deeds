@@ -31,7 +31,7 @@ const MapSearch = (props) => {
         }
     }, [donations]);
 
-    console.log("donations in map search", donations);
+    // console.log("donations in map search", donations);
 
     return (
         <div>
@@ -50,7 +50,6 @@ const MapSearch = (props) => {
                               latitude={donation.info.coordinates[1]}
                               longitude={donation.info.coordinates[0]}
                           >
-                              {console.log("donation", donation.id)}
                               <button>
                                   <img
                                       src={pin}

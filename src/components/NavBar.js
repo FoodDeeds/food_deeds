@@ -19,9 +19,7 @@ const NavBar = (props) => {
     const [currentUser, setCurrentUser] = useState("");
     const [userInfo, setUserInfo] = useState({});
     const history = useHistory();
-
-    console.log("current user>>>", currentUser);
-
+    
     useEffect(() => {
         auth.onAuthStateChanged((user) => {
             if (user) {

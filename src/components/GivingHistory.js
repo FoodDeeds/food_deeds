@@ -25,8 +25,7 @@ const GivingHistory = (props) => {
     history.push({
       pathname: "/donationedit",
       state: {
-        donation,
-        userInfo
+        donation
       },
     });
   };

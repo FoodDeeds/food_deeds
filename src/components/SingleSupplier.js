@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "semantic-ui-react";
+import { Button, Header, Segment } from "semantic-ui-react";
 import { auth, db } from "../firebase";
 import { useHistory } from "react-router-dom";
 import { Item } from "semantic-ui-react";
@@ -94,14 +94,19 @@ const SingleSupplier = (props) => {
           <br />
           {supplierInfo.City}, {supplierInfo.State}, {supplierInfo.Zipcode}
         </p>
-        <p>{supplierInfo.Phone}</p>
+        <p>
+          {supplierInfo.Email}
+          <br />
+          {supplierInfo.Phone}
+        </p>
         <br />
       </div>
       <div>
-        <h3>Available Donations</h3>
+        <Header style={{ marginTop: 20 }}>Available Donations</Header>
         {donations.map((donation) => (
-          <div className="result" key={donation.id}>
+          <Segment className="result" key={donation.id} style={{ width: 300 }}>
             <p>
+              {donation.info.Description} <br />
               Pickup Time: {donation.info.PickupTime} <br />
               Pickup Date: {donation.info.PickupDate} <br />
               Quantity: {donation.info.Quantity} boxes
@@ -120,12 +125,10 @@ const SingleSupplier = (props) => {
                 >
                   Reserve
                 </Button>
-              ) : (
-                ""
-              )}
+              ) : null}
               <br />
             </p>
-          </div>
+          </Segment>
         ))}
       </div>
     </div>

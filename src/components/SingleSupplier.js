@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Button, Header, Segment } from "semantic-ui-react";
 import { auth, db } from "../firebase";
 import { useHistory } from "react-router-dom";
-import { Item } from "semantic-ui-react";
-
+import { Header, Item, Segment } from "semantic-ui-react";
+import { Button } from "semantic-ui-react";
 import logo from "../images/Logo-2.png";
 
 const SingleSupplier = (props) => {
@@ -26,6 +26,7 @@ const SingleSupplier = (props) => {
             const data = response.data();
             setUserInfo(data);
           });
+
       }
     });
   }, []);
@@ -77,6 +78,13 @@ const SingleSupplier = (props) => {
   };
 
   return (
+    <div
+      style={{
+        marginTop: "1%",
+        paddingRight: "1%",
+        paddingLeft: "1%",
+      }}
+    >
     <div>
       <div className="supplier-logo">
         {supplierInfo.Image ? (
@@ -93,13 +101,39 @@ const SingleSupplier = (props) => {
           />
         )}
       </div>
+
+      <div style={{ marginTop: 20 }}>
+
       <div>
+
         <h2>{supplierInfo.Name}</h2>
         <p>
           {supplierInfo.Address}
           <br />
           {supplierInfo.City}, {supplierInfo.State}, {supplierInfo.Zipcode}
         </p>
+        <p>{supplierInfo.Phone}</p>
+      </div>
+      <div>
+        <Header size="medium" style={{ marginTop: 10, marginRight: -10 }}>
+          Available Donations
+        </Header>
+        {donations.map((donation) => (
+          <Segment style={{ width: 250, height: 150 }}>
+            <Item.Description>
+              Pickup Time: {donation.info.PickupTime} <br />
+              Pickup Date: {donation.info.PickupDate} <br />
+              Quantity: {donation.info.Quantity} boxes <br />
+            </Item.Description>
+            <Button
+              basic
+              color="green"
+              style={{ marginTop: 20 }}
+              onClick={() => handleClick(donation)}
+              alt=""
+            >
+              Reserve
+            </Button>
         <p>
           {supplierInfo.Email}
           <br />

@@ -71,22 +71,41 @@ const Browse = () => {
 
   const submit = (evt) => {
     evt.preventDefault();
-    db.collection("Donations")
-      .where("supplierZipCode", "==", zipcode)
-      // .orderBy("Timestamp", "desc")
-      .onSnapshot((snapshot) => {
-        setDonations(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            info: doc.data(),
-          }))
-        );
-      });
+    if (!category || category === "All") {
+      db.collection("Donations")
+        .where("supplierZipCode", "==", zipcode)
+        // .orderBy("Timestamp", "desc")
+        .onSnapshot((snapshot) => {
+          setDonations(
+            snapshot.docs.map((doc) => ({
+              id: doc.id,
+              info: doc.data(),
+            }))
+          );
+        });
+    } else {
+      db.collection("Donations")
+        .where("supplierZipCode", "==", zipcode)
+        .where("supplierCategory", "==", category)
+        // .orderBy("Timestamp", "desc")
+        .onSnapshot((snapshot) => {
+          setDonations(
+            snapshot.docs.map((doc) => ({
+              id: doc.id,
+              info: doc.data(),
+            }))
+          );
+        });
+    }
   };
 
+  const handleCategory = async (evt, category) => {
+    setCategory(category.value);
+  };
+  console.log("here is category", category);
   const options = [
     { key: 1, text: "All", value: "All" },
-    { key: 2, text: "Grocery", value: "Grocery" },
+    { key: 2, text: "Grocery Store", value: "Grocery Store" },
     { key: 3, text: "Deli", value: "Deli" },
     { key: 4, text: "Cafe", value: "Cafe" },
   ];
@@ -117,7 +136,7 @@ const Browse = () => {
             options={options}
             selection
             placeholder="Category"
-            onChange={(evt) => setCategory(evt.target.value)}
+            onChange={handleCategory}
             style={{
               marginLeft: 10,
               marginTop: 100,

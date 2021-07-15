@@ -4,7 +4,7 @@
 
 ## <a href=""> Demo Video on YouTube </a>
 
-## <a href=""> Deployed on Firebase </a>
+## <a href="https://capstone-fooddeeds.web.app"> Deployed on Firebase </a>
 
 1. screenshots of app overview?
 

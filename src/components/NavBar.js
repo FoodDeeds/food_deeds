@@ -13,7 +13,7 @@ import {
 import { Link, useHistory } from "react-router-dom";
 import { auth, db } from "../firebase";
 import logo from "../images/marker.jpg";
-import icon from "../images/post-default.png";
+import welcomeIcon from "../images/post-default.png";
 
 const NavBar = (props) => {
   const [sidebarVisible, setSidebarVisible] = useState(false);
@@ -115,7 +115,7 @@ const NavBar = (props) => {
                     />
                   ) : (
                     <Image
-                      src={icon}
+                      src={welcomeIcon}
                       alt=""
                       style={{
                         width: 50,

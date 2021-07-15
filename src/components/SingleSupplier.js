@@ -51,6 +51,12 @@ const SingleSupplier = (props) => {
       });
   }, [props.match.params.id]);
 
+  const handleBack = () => {
+    history.push({
+      pathname: "/"
+    })
+  }
+
   const handleClick = (donation) => {
     setConfirmation(true);
     setSelectedDonation(donation);
@@ -101,6 +107,13 @@ const SingleSupplier = (props) => {
         </p>
         <br />
       </div>
+      <Button
+            type="submit"
+            onClick={handleBack}
+            style={{ marginLeft: 10, color: "white" }}
+          >
+            Back to Home
+          </Button>
       <div>
         <Header style={{ marginTop: 20 }}>Available Donations</Header>
         {donations.map((donation) => (
@@ -110,8 +123,6 @@ const SingleSupplier = (props) => {
               Pickup Time: {donation.info.PickupTime} <br />
               Pickup Date: {donation.info.PickupDate} <br />
               Quantity: {donation.info.Quantity} boxes
-              <br />
-              <br />
               {userInfo.Type === "Recipient" || !userInfo.Type ? (
                 <Button
                   basic

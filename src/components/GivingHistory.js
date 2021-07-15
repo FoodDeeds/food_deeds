@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Button, Item } from "semantic-ui-react";
 import { db } from "../firebase";
+import { useHistory } from "react-router-dom";
 
 const GivingHistory = (props) => {
   const userInfo = props.userInfo;
   const [donations, setDonations] = useState([]);
+  const history = useHistory();
 
   useEffect(() => {
     db.collection("Donations")
@@ -18,6 +20,16 @@ const GivingHistory = (props) => {
         );
       });
   }, [userInfo.id]);
+
+  const handleEdit = (donation) => {
+    history.push({
+      pathname: "/donationedit",
+      state: {
+        donation,
+        userInfo
+      },
+    });
+  };
 
   const handleDelete = (donation) => {
     db.collection("Donations").doc(donation.id).delete();
@@ -57,9 +69,11 @@ const GivingHistory = (props) => {
               </Item.Content>
 
               <Button
+                donation={donation}
                 basic
                 color="green"
                 style={{ width: 100, height: 30, marginRight: 20 }}
+                onClick={() => handleEdit(donation)}
               >
                 Edit
               </Button>

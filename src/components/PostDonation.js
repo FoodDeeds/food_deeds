@@ -44,10 +44,6 @@ const PostDonation = (props) => {
     const { data } = await axios.get(combineAddress);
     const coordinates = data.features[0].geometry.coordinates;
     setCoordinates(coordinates);
-    console.log(
-      "coordinate data fields>>>",
-      data.features[0].geometry.coordinates
-    );
     return coordinates;
   };
 
@@ -132,8 +128,6 @@ const PostDonation = (props) => {
                     setQuantity("");
                     setPickupDate("");
                     setPickupTime("");
-                    // setUserInfo({});
-                    // setCoordinates([]);
                     props.history.push("/");
                   });
               });
@@ -169,8 +163,6 @@ const PostDonation = (props) => {
             setQuantity("");
             setPickupDate("");
             setPickupTime("");
-            // setUserInfo({});
-            // setCoordinates([]);
             props.history.push("/");
           });
       });
@@ -222,13 +214,13 @@ const PostDonation = (props) => {
             />
           </Form.Field>
           <Form.Field>
-            <label style={{ marginLeft: 25 }}>Quantity</label>
+            <label style={{ marginLeft: 25 }}>Quantity (in boxes)</label>
             <input
               placeholder="Number of Boxes"
               value={quantity}
               onChange={(evt) => setQuantity(evt.target.value)}
               style={{ marginLeft: 20, width: 350, marginRight: 30 }}
-            />
+            />{" "}
           </Form.Field>
           <Header as="h4" style={{ marginLeft: 30 }}>
             {" "}

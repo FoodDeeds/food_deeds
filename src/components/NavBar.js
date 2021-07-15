@@ -18,12 +18,13 @@ import icon from "../images/post-default.png";
 const NavBar = (props) => {
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const [userInfo, setUserInfo] = useState({});
+  const [currentUser, setCurrentUser] = useState("");
   const history = useHistory();
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
-        setUserInfo(user);
+        setCurrentUser(user);
         db.collection("SignedUpUsers")
           .doc(user.uid)
           .get()
@@ -38,7 +39,7 @@ const NavBar = (props) => {
   const handleLogout = (evt) => {
     evt.preventDefault();
     auth.signOut().then(() => {
-      setUserInfo("");
+      setCurrentUser("");
       history.push("/");
     });
   };
@@ -91,7 +92,7 @@ const NavBar = (props) => {
             color="Standard"
             style={{ height: "100%" }}
           >
-            {userInfo && (
+            {currentUser && (
               <Menu.Item>
                 <Item.Description style={{ color: "green" }}>
                   {userInfo.Image ? (
@@ -165,7 +166,7 @@ const NavBar = (props) => {
                 </Item.Description>
               </Menu.Item>
             </Link>
-            {userInfo ? (
+            {currentUser ? (
               <Button
                 color="green"
                 className="logout__btn"

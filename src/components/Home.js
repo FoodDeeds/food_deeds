@@ -1,8 +1,6 @@
 import React from "react";
 import RecDonations from "./RecDonations";
-import Footer from "./Footer";
 import logo from "../images/Logo-2.png";
-
 
 const Home = () => {
   return (
@@ -16,7 +14,6 @@ const Home = () => {
         stores, delis, and cafes.
       </p>
       <RecDonations />
-      <Footer />
     </div>
   );
 };

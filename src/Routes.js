@@ -15,11 +15,6 @@ import Confirmation from "./components/Confirmation";
 import NavBar from "./components/NavBar";
 import EditDonation from "./components/EditDonation";
 
-/**
- * Header
- * Route paths
- * Footer
- */
 const Routes = () => {
   return (
     <Router>

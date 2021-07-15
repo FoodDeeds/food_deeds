@@ -4,7 +4,13 @@ import logo from "../images/Logo-2.png";
 
 const Home = () => {
   return (
-    <div>
+    <div
+      style={{
+        marginTop: "1%",
+        paddingRight: "10%",
+        paddingLeft: "10%",
+      }}
+    >
       <img src={logo} alt="Logo" />
       <h3>About Us</h3>
       <p>

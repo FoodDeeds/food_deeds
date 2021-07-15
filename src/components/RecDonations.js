@@ -40,7 +40,7 @@ const RecDonations = () => {
         );
       });
   }, []);
-  
+
   toast.configure();
   const showToast = () => {
     toast("Please log in to reserve!", {
@@ -48,7 +48,7 @@ const RecDonations = () => {
       autoClose: 4000,
     });
   };
-  
+
   const handleClick = (donation) => {
     if (currentUser) {
       setDonations(donation);
@@ -83,17 +83,17 @@ const RecDonations = () => {
                 <Item.Image
                   src={donation.info.postImageUrl}
                   alt=""
-                  style={{ marginRight: 20, marginTop: 10 }}
+                  style={{ marginRight: 70, marginTop: 10 }}
                 />
               ) : (
                 <Item.Image
                   src={post}
                   alt=""
-                  style={{ marginRight: 20, marginTop: 10 }}
+                  style={{ marginRight: 70, marginTop: 10 }}
                 />
               )}
               <br />
-              <Item.Content>
+              <Item.Content style={{ marginRight: 70, marginTop: 10 }}>
                 <Link to={`/supplier/${donation.info.supplierId}`}>
                   <Item.Header as="a">{donation.info.supplierName}</Item.Header>
                 </Link>
@@ -117,7 +117,7 @@ const RecDonations = () => {
                 color="green"
                 style={{
                   width: 100,
-                  height: 30,
+                  height: 40,
                   marginRight: 20,
                 }}
                 onClick={() => handleClick(donation)}

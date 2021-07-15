@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Button, Header, Segment } from "semantic-ui-react";
+import { Button, Header, Segment, Item } from "semantic-ui-react";
 import { auth, db } from "../firebase";
 import { useHistory } from "react-router-dom";
-import { Item } from "semantic-ui-react";
 
 import logo from "../images/Logo-2.png";
 

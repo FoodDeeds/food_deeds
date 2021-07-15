@@ -3,6 +3,8 @@ import { Button, Header, Segment, Item } from "semantic-ui-react";
 import { auth, db } from "../firebase";
 import { useHistory } from "react-router-dom";
 import logo from "../images/Logo-2.png";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SingleSupplier = (props) => {
   const [supplierInfo, setSupplierInfo] = useState({});
@@ -49,6 +51,13 @@ const SingleSupplier = (props) => {
         );
       });
   }, [props.match.params.id]);
+  toast.configure();
+  const showToast = () => {
+    toast("Please log in to reserve!", {
+      position: "top-center",
+      autoClose: 4000,
+    });
+  };
 
   const handleBack = () => {
     history.push({
@@ -57,22 +66,26 @@ const SingleSupplier = (props) => {
   }
 
   const handleClick = (donation) => {
-    setConfirmation(true);
-    setSelectedDonation(donation);
-    db.collection("Donations").doc(donation.id).set(
-      {
-        Status: false,
-        recipientId: currentUser.uid,
-      },
-      { merge: true }
-    );
-    history.push({
-      pathname: "/confirmation",
-      state: {
-        donation,
-        supplierInfo,
-      },
-    });
+    if (currentUser) {
+      setConfirmation(true);
+      setSelectedDonation(donation);
+      db.collection("Donations").doc(donation.id).set(
+        {
+          Status: false,
+          recipientId: currentUser.uid,
+        },
+        { merge: true }
+      );
+      history.push({
+        pathname: "/confirmation",
+        state: {
+          donation,
+          supplierInfo,
+        },
+      });
+    } else {
+      showToast();
+    }
   };
 
   return (

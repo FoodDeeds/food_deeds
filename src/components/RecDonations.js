@@ -6,13 +6,6 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import post from "../images/post-default.png";
 
-/**
- * user's icon, name
- * post's image
- * firebase: Description & Quantity
- * Pass them as props by PostDonation (parent)
- */
-
 const RecDonations = () => {
   const [currentUser, setCurrentUser] = useState("");
   const [donations, setDonations] = useState([]);
@@ -47,6 +40,7 @@ const RecDonations = () => {
         );
       });
   }, []);
+  
   toast.configure();
   const showToast = () => {
     toast("Please log in to reserve!", {
@@ -54,10 +48,10 @@ const RecDonations = () => {
       autoClose: 4000,
     });
   };
+  
   const handleClick = (donation) => {
     if (currentUser) {
       setDonations(donation);
-      console.log("donation in home", donation.id);
       db.collection("Donations").doc(donation.id).set(
         {
           Status: false,
@@ -76,8 +70,6 @@ const RecDonations = () => {
       showToast();
     }
   };
-
-  console.log("Donations!!!", donations);
 
   return (
     <div>

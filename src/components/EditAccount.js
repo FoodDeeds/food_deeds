@@ -18,7 +18,6 @@ const EditAccount = ({ location }) => {
     const [image, setImage] = useState("");
     const [url, setUrl] = useState("");
     const [progress, setProgress] = useState(0);
-
     const history = useHistory();
 
     const handleImage = (evt) => {
@@ -40,8 +39,6 @@ const EditAccount = ({ location }) => {
             }
         }
     };
-
-    console.log("userInfo", userInfo.Image);
 
     const handleUpdate = (evt) => {
         if (image) {

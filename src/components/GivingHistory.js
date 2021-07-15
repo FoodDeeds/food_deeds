@@ -8,6 +8,7 @@ import { green, lightGreen } from "@material-ui/core/colors";
 const GivingHistory = (props) => {
   const userInfo = props.userInfo;
   const [donations, setDonations] = useState([]);
+  const [pastDonations, setPastDonations] = useState([]);
 
   useEffect(() => {
     db.collection("Donations")
@@ -20,6 +21,17 @@ const GivingHistory = (props) => {
           }))
         );
       });
+    // Need to change PickupTime to TimeStamp
+    // db.collection("Donations")
+    //   .where("PostingTime", "<", new Date("2021-07-10"))
+    //   .onSnapshot((snapshot) => {
+    //     setPastDonations(
+    //       snapshot.docs.map((doc) => ({
+    //         id: doc.id,
+    //         info: doc.data(),
+    //       }))
+    //     );
+    //   });
   }, [userInfo.id]);
 
   const handleCancel = (donation) => {
@@ -39,9 +51,10 @@ const GivingHistory = (props) => {
   const totalQty = function () {
     let total = 0;
     for (let i = 0; i < donations.length; i++) {
-      let qty = donations[i].info.Quantity;
-      console.log(qty);
-      total += Number.parseInt(qty);
+      if (donations[i].info.Status !== null) {
+        let qty = donations[i].info.Quantity;
+        total += Number.parseInt(qty);
+      }
     }
     return total;
   };

@@ -163,6 +163,7 @@ const PostDonation = (props) => {
             supplierAddress: userInfo.Address,
             supplierCity: userInfo.City,
             supplierZipCode: userInfo.Zipcode,
+            supplierCategory: userInfo.Category,
             coordinates: coordinate,
           })
           .then(() => {

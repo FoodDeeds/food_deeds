@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Button, Header, Segment } from "semantic-ui-react";
 import { auth, db } from "../firebase";
 import { useHistory } from "react-router-dom";
 import { Header, Item, Segment } from "semantic-ui-react";
@@ -11,12 +12,21 @@ const SingleSupplier = (props) => {
   const [selectedDonation, setSelectedDonation] = useState({});
   const [confirmation, setConfirmation] = useState(false);
   const [currentUser, setCurrentUser] = useState("");
+  const [userInfo, setUserInfo] = useState({});
   const history = useHistory();
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         setCurrentUser(user);
+        db.collection("SignedUpUsers")
+          .doc(user.uid)
+          .get()
+          .then((response) => {
+            const data = response.data();
+            setUserInfo(data);
+          });
+
       }
     });
   }, []);
@@ -41,6 +51,12 @@ const SingleSupplier = (props) => {
         );
       });
   }, [props.match.params.id]);
+
+  const handleBack = () => {
+    history.push({
+      pathname: "/"
+    })
+  }
 
   const handleClick = (donation) => {
     setConfirmation(true);
@@ -69,6 +85,7 @@ const SingleSupplier = (props) => {
         paddingLeft: "1%",
       }}
     >
+    <div>
       <div className="supplier-logo">
         {supplierInfo.Image ? (
           <Item.Image
@@ -84,7 +101,11 @@ const SingleSupplier = (props) => {
           />
         )}
       </div>
+
       <div style={{ marginTop: 20 }}>
+
+      <div>
+
         <h2>{supplierInfo.Name}</h2>
         <p>
           {supplierInfo.Address}
@@ -113,6 +134,45 @@ const SingleSupplier = (props) => {
             >
               Reserve
             </Button>
+        <p>
+          {supplierInfo.Email}
+          <br />
+          {supplierInfo.Phone}
+        </p>
+        <br />
+      </div>
+      <Button
+            type="submit"
+            onClick={handleBack}
+            style={{ marginLeft: 10, color: "white" }}
+          >
+            Back to Home
+          </Button>
+      <div>
+        <Header style={{ marginTop: 20 }}>Available Donations</Header>
+        {donations.map((donation) => (
+          <Segment className="result" key={donation.id} style={{ width: 300 }}>
+            <p>
+              {donation.info.Description} <br />
+              Pickup Time: {donation.info.PickupTime} <br />
+              Pickup Date: {donation.info.PickupDate} <br />
+              Quantity: {donation.info.Quantity} boxes
+              {userInfo.Type === "Recipient" || !userInfo.Type ? (
+                <Button
+                  basic
+                  color="green"
+                  style={{
+                    width: 100,
+                    height: 30,
+                    marginRight: 20,
+                  }}
+                  onClick={() => handleClick(donation)}
+                >
+                  Reserve
+                </Button>
+              ) : null}
+              <br />
+            </p>
           </Segment>
         ))}
       </div>

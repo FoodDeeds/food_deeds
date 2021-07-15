@@ -60,17 +60,22 @@ const OrderHistory = (props) => {
                 </Item.Description>
                 <br />
               </Item.Content>
-              <Button
-                basic
-                onClick={() => {
-                  if (window.confirm("Are you sure you want to cancel?"))
-                    handleCancel(donation);
-                }}
-                color="red"
-                style={{ width: 100, height: 30, marginRight: 20 }}
-              >
-                Cancel
-              </Button>
+
+              {donation.info.Status === null ? (
+                <p>This order was canceled by the supplier.</p>
+              ) : (
+                <Button
+                  basic
+                  onClick={() => {
+                    if (window.confirm("Are you sure you want to cancel?"))
+                      handleCancel(donation);
+                  }}
+                  color="red"
+                  style={{ width: 100, height: 30, marginRight: 20 }}
+                >
+                  Cancel
+                </Button>
+              )}
             </Item>
           </Item.Group>
         </div>

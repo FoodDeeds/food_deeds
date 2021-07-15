@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Item } from "semantic-ui-react";
+import { Button, Item, Header, Segment } from "semantic-ui-react";
 import { db } from "../firebase";
 
 import { ToastContainer, toast } from "react-toastify";
@@ -45,7 +45,8 @@ const GivingHistory = (props) => {
     history.push({
       pathname: "/donationedit",
       state: {
-        donation
+        donation,
+        userInfo,
       },
     });
   };
@@ -63,59 +64,57 @@ const GivingHistory = (props) => {
 
   return (
     <div>
-      <h3>Giving History</h3>
+      <Header style={{ marginTop: 20 }}>Giving History</Header>
       <p>You have donated a total of {totalQty()} boxes of food. Way to go!</p>
       {donations.map((donation) => (
-        <div className="result" key={donation.id}>
-          <Item.Group divided style={{ marginLeft: 30 }}>
-            <Item>
-              <br />
-              <Item.Content>
-                <Item.Header as="a">{donation.info.supplierName}</Item.Header>
-                <Item.Meta>
-                  Pick Up Time: <br />
-                  {donation.info.PickupTime} on {donation.info.PickupDate}{" "}
-                  <br />
-                </Item.Meta>
-                Quantity: {donation.info.Quantity} boxes
-                <Item.Description>
-                  {" "}
-                  Description: {donation.info.Description}
-                </Item.Description>
+        <Segment className="result" key={donation.id} style={{ width: 300 }}>
+          {/* <Item.Group divided style={{ marginLeft: 30 }}> */}
+          <Item>
+            <br />
+            <Item.Content>
+              <Item.Description>{donation.info.Description}</Item.Description>
+              <Item.Meta>
+                {donation.info.PickupDate}
                 <br />
-              </Item.Content>
+                at {donation.info.PickupTime} <br />
+              </Item.Meta>
+              Quantity: {donation.info.Quantity} boxes
+              <br />
+            </Item.Content>
 
-              {donation.info.Status === null ? (
+            {donation.info.Status === null ? (
+              <p>
                 <Button
                   basic
                   color="red"
                   style={{ width: 100, height: 30, marginRight: 20 }}
                 >
-                  Cancelled
+                  Canceled
                 </Button>
-              ) : (
-                <div>
-                  <Button
-                    basic
-                    color="green"
-                    onClick={() => handleEdit(donation)}
-                    style={{ width: 100, height: 30, marginRight: 20 }}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    basic
-                    onClick={() => handleCancel(donation)}
-                    color="green"
-                    style={{ width: 100, height: 30, marginRight: 20 }}
-                  >
-                    Cancel
-                  </Button>
-                </div>
-              )}
-            </Item>
-          </Item.Group>
-        </div>
+              </p>
+            ) : (
+              <p>
+                <Button
+                  basic
+                  color="green"
+                  onClick={() => handleEdit(donation)}
+                  style={{ width: 100, height: 30, marginRight: 20 }}
+                >
+                  Edit
+                </Button>
+                <Button
+                  basic
+                  onClick={() => handleCancel(donation)}
+                  color="green"
+                  style={{ width: 100, height: 30, marginRight: 20 }}
+                >
+                  Cancel
+                </Button>
+              </p>
+            )}
+          </Item>
+          {/* </Item.Group> */}
+        </Segment>
       ))}
     </div>
   );

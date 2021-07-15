@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { auth, db } from "../firebase";
-import { Button, Item } from "semantic-ui-react";
+import { Button, Item, Header, Segment } from "semantic-ui-react";
 import { useHistory, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,17 +20,7 @@ const RecDonations = () => {
     });
     db.collection("Donations")
       .where("Status", "==", true)
-      // .orderBy("Timestamp", "desc")
-      .onSnapshot((snapshot) => {
-        setDonations(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            info: doc.data(),
-          }))
-        );
-      });
-    db.collection("Donations")
-      .where("Status", "==", true)
+      .limit(5)
       .onSnapshot((snapshot) => {
         setDonations(
           snapshot.docs.map((doc) => ({
@@ -73,9 +63,9 @@ const RecDonations = () => {
 
   return (
     <div>
-      <h3>Currently Available For Pick-Up</h3>
+      <Header>Currently Available For Pick-Up</Header>
       {donations.map((donation) => (
-        <div className="result" key={donation.id}>
+        <Segment className="result" key={donation.id}>
           <Item.Group divided style={{ marginLeft: 30 }}>
             <Item>
               <br />
@@ -126,7 +116,7 @@ const RecDonations = () => {
               </Button>
             </Item>
           </Item.Group>
-        </div>
+        </Segment>
       ))}
     </div>
   );

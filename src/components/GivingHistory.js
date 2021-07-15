@@ -80,7 +80,6 @@ const GivingHistory = (props) => {
               </Item.Meta>
               Quantity: {donation.info.Quantity} boxes
               <br />
-              Picked up by:
             </Item.Content>
 
             {donation.info.Status === null ? (

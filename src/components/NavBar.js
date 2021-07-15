@@ -75,15 +75,17 @@ const NavBar = (props) => {
                 style={{ marginTop: 10, marginLeft: -50 }}
                 size="huge"
               >
+                Food{" "}
                 <Image
                   src={logo}
                   style={{
                     width: 30,
                     height: 30,
                     marginBottom: 10,
+                    marginLeft: 7
                   }}
                 />
-                Food Deeds
+                {""}Deeds
               </Header>
             </Link>
           </Menu>

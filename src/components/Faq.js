@@ -16,7 +16,7 @@ const Faq = () => {
 
   return (
     <div>
-      <Header>“Alone we can do so little; together we can do so much”</Header>
+      <Header  textAlign="center" >“Alone we can do so little; together we can do so much”</Header>
       <Divider hidden />
       <Image.Group size="medium">
         <Segment>
@@ -24,7 +24,7 @@ const Faq = () => {
             <Header as="h2" attached="top" textAlign="center" >
               Volunteer
             </Header>
-            <Link>
+            <Link to="/">
               <Image src={volunteer} alt="Volunteer" centered/>
             </Link>
           </Item>
@@ -34,7 +34,7 @@ const Faq = () => {
             <Header as="h2" attached="top" textAlign="center" >
               Give What You Can
             </Header>
-            <Link>
+            <Link to="/">
             <Image style={{marginTop: 15}}  src={donation} />
             </Link>
           </Item>
@@ -44,7 +44,7 @@ const Faq = () => {
             <Header as="h2" attached="top" textAlign="center">
               Upcoming Events
             </Header>
-            <Link>
+            <Link to="/">
               <Image style={{marginTop: 15}}  src={calender} />
             </Link>
           </Item>
@@ -54,7 +54,7 @@ const Faq = () => {
             <Header as="h2" attached="top" textAlign="center">
               Learn More
             </Header>
-            <Link>
+            <Link to="/">
               <Item.Image style={{marginTop: 15}}  src={information}  centered/>
             </Link>
           </Item>
@@ -64,7 +64,7 @@ const Faq = () => {
           type="submit"
           onClick={handleBack}
           color = "orange"
-          style={{ marginLeft: "40%", marginTop: "2%", color: "white" }}
+          style={{ marginLeft: "25%", marginTop: "2%", color: "white" }}
         >
           Contact Us
         </Button>

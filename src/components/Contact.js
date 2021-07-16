@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { Header, Form, Button, Image, List } from "semantic-ui-react";
+import React, { useState } from "react";
+import { Header, Form, Button, List, Segment } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 import { db } from "../firebase";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Contact = () => {
   const [name, setName] = useState("");
@@ -29,7 +31,7 @@ const Contact = () => {
       })
       .then(() => {
         setLoader(false);
-        alert("Your message has been submitted👍");
+        showToast();
       })
       .catch((error) => {
         alert(error.message);
@@ -41,83 +43,88 @@ const Contact = () => {
     setMessage("");
   };
 
+  toast.configure();
+  const showToast = () => {
+    toast("Your message has been submitted👍", {
+      position: "top-center",
+      autoClose: 4000,
+    });
+  };
+
   return (
     <div>
-      <Form>
-        <Header
-          as="h2"
+      <Segment>
+        <Form>
+          <Header textAlign="center" size="medium" style={{ marginTop: 30 }}>
+            Ready to help us fight food insecurity?
+            <br />
+            Get in touch with Food Deeds today.
+          </Header>
+          <Form.Field>
+            <label style={{ marginLeft: 5 }}>Name</label>
+            <input
+              required
+              placeholder="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              style={{width: 325, marginRight: 20 }}
+            />
+            <br />
+          </Form.Field>
+          <Form.Field>
+            <label style={{ marginLeft: 5 }}>Email</label>
+            <input
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              style={{ width: 325, marginRight: 30 }}
+            />
+          </Form.Field>
+          <Form.Field>
+            <label style={{ marginLeft: 5 }}>Message</label>
+            <textarea
+              placeholder="Message"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              style={{ width: 325, marginRight: 30 }}
+            ></textarea>
+          </Form.Field>
+        </Form>
+        <br />
+        <Button
+          type="submit"
           color="green"
-          style={{ marginLeft: 35 }}
-          textAlign="center"
+          onClick={handleSubmit}
+          style={{ background: loader ? "orange" : "green" }}
         >
-          Contact Us
-        </Header>
-        <Form.Field>
-          <label style={{ marginLeft: 25 }}>Name</label>
-          <input
-            required
-            placeholder="Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            style={{ marginLeft: 20, width: 350, marginRight: 20 }}
+          Submit Inquiry
+        </Button>
+      </Segment>
+      <Segment>
+        <List>
+          <List.Content as="h3">General Inquiries</List.Content>
+          <List.Item
+            icon="phone"
+            content="1-800-GIV-FOOD"
+            color="green"
+            style={{ marginLeft: 30 }}
           />
-          <br />
-        </Form.Field>
-        <Form.Field>
-          <label style={{ marginLeft: 25 }}>Email</label>
-          <input
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            style={{ marginLeft: 20, width: 350, marginRight: 30 }}
+          <List.Item
+            icon="marker"
+            content="New York, NY 10012"
+            color="green"
+            style={{ marginLeft: 30 }}
           />
-        </Form.Field>
-        <Form.Field>
-          <label style={{ marginLeft: 25 }}>Message</label>
-          <textarea
-            placeholder="Message"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            style={{ marginLeft: 20, width: 350, marginRight: 30 }}
-          ></textarea>
-        </Form.Field>
-      </Form>
-      <br />
-      <Button
-        type="submit"
-        color="green"
-        onClick={handleSubmit}
-        style={{ marginLeft: 125, background: loader ? "orange" : "green" }}
-      >
-        Submit Inquiry
-      </Button>
-      <List>
-        <Header textAlign="center" size="medium" style={{ marginTop: 30 }}>
-          Ready to help us fight food insecurity?
-       <br/>
-       Get in touch with Food Deeds today.
-        </Header>
-        <List.Item
-          icon="phone"
-          content="1-800-GIV-FOOD"
-          color="green"
-          style={{ marginLeft: 30 }}
-        />
-        <List.Item
-          icon="marker"
-          content="New York, NY 10012"
-          color="green"
-          style={{ marginLeft: 30 }}
-        />
-        <List.Item
-          as="a"
-          icon="linkify"
-          content="Food Deeds FAQ"
-          color="green"
-          onClick={handleClick}
-          style={{ marginLeft: 30 }}
-        />
-      </List>
+          <List.Item
+            as="a"
+            icon="linkify"
+            content="Food Deeds FAQ"
+            color="green"
+            onClick={handleClick}
+            style={{ marginLeft: 30 }}
+          />
+        </List>
+      </Segment>
     </div>
   );
 };

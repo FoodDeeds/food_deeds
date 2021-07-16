@@ -58,9 +58,6 @@ const Confirmation = ({ location }) => {
                 {donation.info.supplierCity}
                 {donation.info.supplierState},{donation.info.supplierZipCode}
             </p>
-            {/* <p> Phone Number: {donation.Phone} </p> */}
-            {/* <p> Phone Number: {supplierInfo.Phone} </p> */}
-
             <br />
             {release === true ? (
                 <Button color="red" onClick={handleCancel}>

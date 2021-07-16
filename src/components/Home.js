@@ -15,7 +15,7 @@ const Home = () => {
       <h3>About Us</h3>
       <p>
         Each year, 40% of all edible food in the US is thrown away while 1 in 10
-        households struggles with food insecurity. At FoodDeeds we strive to
+        households struggles with food insecurity. At Food Deeds we strive to
         bridge the gap and connect food banks with excess products from grocery
         stores, delis, and cafes.
       </p>

@@ -14,9 +14,10 @@ const Contact = () => {
   return (
     <List>
       <Header size="medium" style={{ marginTop: 30 }}>
-        Ready to help us fight food insecurity? Get in touch with Food Deeds
-        today.
+        Ready to help us fight food insecurity?
       </Header>
+      <Header as="h4">
+        Get in touch with Food Deeds today.</Header>
 
       <List.Item
         icon="phone"

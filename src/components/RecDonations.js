@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { auth, db } from "../firebase";
+import { auth, db, messaging } from "../firebase";
 import { Button, Item, Header, Segment } from "semantic-ui-react";
 import { useHistory, Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -30,7 +30,16 @@ const RecDonations = () => {
         );
       });
   }, []);
-
+  useEffect(() => {
+    messaging
+      .requestPermission()
+      .then(() => {
+        return messaging.getToken();
+      })
+      .then((data) => {
+        console.warn("token", data);
+      });
+  });
   toast.configure();
   const showToast = () => {
     toast("Please log in to reserve!", {

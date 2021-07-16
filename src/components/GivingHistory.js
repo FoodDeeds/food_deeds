@@ -63,15 +63,23 @@ const GivingHistory = (props) => {
 
   return (
     <div>
+
       <Graphs />
-      <Header style={{ marginTop: 20 }}>Giving History</Header>
-      <p>You have donated a total of {totalQty()} boxes of food. Way to go!</p>
+
+      <Header style={{ marginTop: 20, marginLeft: 30 }}>Giving History</Header>
+      <Item.Description style={{ marginLeft: 30 }}>
+        You have donated a total of {totalQty()} boxes of food. Way to go!
+      </Item.Description>
       {donations.map((donation) => (
-        <Segment className="result" key={donation.id} style={{ width: 300 }}>
+        <Segment
+          className="result"
+          key={donation.id}
+          style={{ width: 300, marginLeft: 30 }}
+        >
           {/* <Item.Group divided style={{ marginLeft: 30 }}> */}
           <Item>
             <br />
-            <Item.Content>
+            <Item.Content style={{ marginTop: -20, marginBottom: 20 }}>
               <Item.Description>{donation.info.Description}</Item.Description>
               <Item.Meta>
                 {donation.info.PickupDate}
@@ -87,7 +95,7 @@ const GivingHistory = (props) => {
                 <Button
                   basic
                   color="red"
-                  style={{ width: 100, height: 30, marginRight: 20 }}
+                  style={{ width: 100, height: 35, marginRight: 20 }}
                 >
                   Canceled
                 </Button>
@@ -98,7 +106,7 @@ const GivingHistory = (props) => {
                   basic
                   color="green"
                   onClick={() => handleEdit(donation)}
-                  style={{ width: 100, height: 30, marginRight: 20 }}
+                  style={{ width: 100, height: 35, marginRight: 20 }}
                 >
                   Edit
                 </Button>
@@ -106,7 +114,7 @@ const GivingHistory = (props) => {
                   basic
                   onClick={() => handleCancel(donation)}
                   color="green"
-                  style={{ width: 100, height: 30, marginRight: 20 }}
+                  style={{ width: 100, height: 35, marginRight: 20 }}
                 >
                   Cancel
                 </Button>

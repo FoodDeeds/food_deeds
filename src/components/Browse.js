@@ -38,7 +38,6 @@ const Browse = () => {
     db.collection("Donations")
       .where("supplierZipCode", "==", zipcode)
       .where("Status", "==", true)
-      // .orderBy("Timestamp", "desc")
       .onSnapshot((snapshot) => {
         setDonations(
           snapshot.docs.map((doc) => ({
@@ -58,7 +57,6 @@ const Browse = () => {
   const handleClick = (donation) => {
     if (currentUser) {
       setSelectedDonation(donation);
-      console.log("donation", donation.id);
       db.collection("Donations").doc(donation.id).set(
         {
           Status: false,
@@ -77,9 +75,6 @@ const Browse = () => {
       showToast();
     }
   };
-
-  // const searchAddress = donations.info.Address + donations.info.City;
-  console.log("searchAddress", donations);
 
   const submit = (evt) => {
     evt.preventDefault();
@@ -114,20 +109,16 @@ const Browse = () => {
   const handleCategory = async (evt, category) => {
     setCategory(category.value);
   };
-  console.log("here is category", category);
   const options = [
     { key: 1, text: "All", value: "All" },
     { key: 2, text: "Grocery Store", value: "Grocery Store" },
     { key: 3, text: "Deli", value: "Deli" },
     { key: 4, text: "Cafe", value: "Cafe" },
   ];
-  console.log(donations);
-
-  console.log("donations after submit>>", donations);
 
   return (
-    <div className="browse">
-      <Header style={{ marginBottom: -70, marginTop: 40 }}>
+    <div className="browse" style={{ marginLeft: 30 }}>
+      <Header style={{ marginBottom: -70, marginTop: 20 }}>
         Search Available Food by Zip Code and Category:
       </Header>
       <Form onSubmit={submit}>
@@ -171,7 +162,10 @@ const Browse = () => {
         zipcode={zipcode}
       />
       <div className="search-results">
-        <Header style={{ marginTop: 20 }}>Showing results:</Header>
+        {donations.length > 0 ? (
+          <Header style={{ marginTop: 20 }}>Showing results:</Header>
+        ) : null}
+
         {zipcode !== ""
           ? donations.map((donation) => (
               <Segment

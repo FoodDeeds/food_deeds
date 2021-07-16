@@ -60,7 +60,7 @@ const RecDonations = () => {
       showToast();
     }
   };
-
+  console.log("postingtime", donations);
   return (
     <div>
       <Header>Currently Available For Pick-Up</Header>

@@ -245,6 +245,3 @@ const Signup = (props) => {
 };
 
 export default Signup;
-
-// <form autoComplete="off" className="form__group" onSubmit={signup}>
-// {error && <span className="error__msg">{error}</span>}

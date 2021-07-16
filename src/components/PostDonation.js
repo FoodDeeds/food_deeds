@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { auth, db, storage } from "../firebase";
-import "./styles.css";
 import { Header, Form, Button, Image } from "semantic-ui-react";
 
 const PostDonation = (props) => {
@@ -200,12 +199,24 @@ const PostDonation = (props) => {
                             Donation Image
                         </label>
                         <div className="imagePreview">
-                            <Image id="image-preview" alt="" />
+                            <Image
+                                id="image-preview"
+                                alt=""
+                                style={{
+                                    marginRight: 20,
+                                    marginTop: 10,
+                                    maxHeight: 250,
+                                    marginLeft: 35
+                                }}
+                            />
                         </div>
                         <Image
                             placeholder="Donation Image"
                             alt=""
-                            style={{ marginRight: 20, marginTop: 10 }}
+                            style={{
+                                marginRight: 20,
+                                marginTop: 10
+                            }}
                         />
                         <input
                             id="file-input"

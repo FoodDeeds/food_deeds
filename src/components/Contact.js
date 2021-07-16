@@ -17,11 +17,11 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
     setLoader(true);
 
-    db.collection("SignedUpUsers")
+    db.collection("Contacts")
       .add({
         name: name,
         email: email,
@@ -86,7 +86,8 @@ const Contact = () => {
       <Button
         type="submit"
         color="green"
-        style={{ marginLeft: 125, background: loader ? "red" : "green" }}
+        onClick={handleSubmit}
+        style={{ marginLeft: 125, background: loader ? "orange" : "green" }}
       >
         Submit Inquiry
       </Button>

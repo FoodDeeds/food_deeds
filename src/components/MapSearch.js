@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
-import { db } from "../firebase";
 import pin from "../images/marker.jpg";
-// import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
-// import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
+
 const REACT_APP_MAPBOX_TOKEN =
   "pk.eyJ1IjoiZm9vZGRlZWRzIiwiYSI6ImNrcW1vaGk2NzA5cTYydW16NnRoNWM1dHoifQ.Zrfb6NXBZ3mTeEUGdYgc6w";
 const MapSearch = (props) => {
@@ -31,8 +29,6 @@ const MapSearch = (props) => {
     }
   }, [donations]);
 
-  // console.log("donations in map search", donations);
-
   return (
     <div>
       <ReactMapGL
@@ -57,7 +53,6 @@ const MapSearch = (props) => {
                     onClick={(evt) => {
                       evt.preventDefault();
                       setSelected(donation);
-                      // console.log(selected);
                     }}
                   />
                 </button>
@@ -76,7 +71,6 @@ const MapSearch = (props) => {
                     onClick={(evt) => {
                       evt.preventDefault();
                       setSelected(allDonation);
-                      // console.log(selected);
                     }}
                   />
                 </button>

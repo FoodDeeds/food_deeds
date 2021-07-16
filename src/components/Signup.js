@@ -229,7 +229,7 @@ const Signup = (props) => {
           </Button>
         </Form>
       </div>
-      <p style={{ marginLeft: 5 }}> Already have an account?</p>
+      <p style={{ marginLeft: 5 }}>Already have an account?</p>
       <Link to="login">
         <Button
           basic

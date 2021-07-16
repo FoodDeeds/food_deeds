@@ -10,6 +10,7 @@ const Contact = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [loader, setLoader] = useState(false);
+  const [error, setError] = useState("");
 
   const history = useHistory();
 
@@ -45,16 +46,16 @@ const Contact = () => {
 
   toast.configure();
   const showToast = () => {
-    toast("Your message has been submitted👍", {
+    toast("Your message has been submitted👍   Please allow 2-3 business days for our team to respond.", {
       position: "top-center",
-      autoClose: 4000,
+      autoClose: 7000,
     });
   };
 
   return (
     <div>
       <Segment>
-        <Form>
+        <Form autoComplete="off">
           <Header textAlign="center" size="medium" style={{ marginTop: 30 }}>
             Ready to help us fight food insecurity?
             <br />
@@ -63,7 +64,6 @@ const Contact = () => {
           <Form.Field>
             <label style={{ marginLeft: 5 }}>Name</label>
             <input
-              required
               placeholder="Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -89,6 +89,7 @@ const Contact = () => {
               style={{ width: 325, marginRight: 30 }}
             ></textarea>
           </Form.Field>
+          {error && <span className="error__msg">{error}</span>}
         </Form>
         <br />
         <Button

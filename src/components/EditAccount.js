@@ -1,128 +1,129 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router";
-import "semantic-ui-css/semantic.min.css";
-import { Header, Form, Button, Image } from "semantic-ui-react";
-import { db, storage } from "../firebase";
+import React, { useState } from 'react'
+import { useHistory } from 'react-router'
+import 'semantic-ui-css/semantic.min.css'
+import { Header, Form, Button, Image } from 'semantic-ui-react'
+import { db, storage } from '../firebase'
 
 const EditAccount = ({ location }) => {
-    const userInfo = location.state.userInfo;
-    const [type, setType] = useState(userInfo.Type);
-    const [category, setCategory] = useState(userInfo.Category);
-    const [name, setName] = useState(userInfo.Name);
-    const [phone, setPhone] = useState(userInfo.Phone);
-    const [email, setEmail] = useState(userInfo.Email);
-    const [password, setPassword] = useState(userInfo.Password);
-    const [address, setAddress] = useState(userInfo.Address);
-    const [zipcode, setZipcode] = useState(userInfo.Zipcode);
-    const [state, setState] = useState(userInfo.State);
-    const [image, setImage] = useState("");
-    const [url, setUrl] = useState("");
-    const [progress, setProgress] = useState(0);
-    const history = useHistory();
+  const userInfo = location.state.userInfo
+  const [type, setType] = useState(userInfo.Type)
+  const [category, setCategory] = useState(userInfo.Category)
+  const [name, setName] = useState(userInfo.Name)
+  const [phone, setPhone] = useState(userInfo.Phone)
+  const [email, setEmail] = useState(userInfo.Email)
+  const [password, setPassword] = useState(userInfo.Password)
+  const [address, setAddress] = useState(userInfo.Address)
+  const [zipcode, setZipcode] = useState(userInfo.Zipcode)
+  const [state, setState] = useState(userInfo.State)
+  const [image, setImage] = useState('')
+  const [url, setUrl] = useState('')
+  const [progress, setProgress] = useState(0)
+  const history = useHistory()
 
-    const handleImage = (evt) => {
-        evt.preventDefault();
-        const file = evt.target.files[0];
+  const handleImage = (evt) => {
+    evt.preventDefault()
+    const file = evt.target.files[0]
 
-        if (file) {
-            const fileType = file["type"];
-            const validImageTypes = ["image/gif", "image/jpeg", "image/png"];
+    if (file) {
+      const fileType = file.type
+      const validImageTypes = ['image/gif', 'image/jpeg', 'image/png']
 
-            if (validImageTypes.includes(fileType)) {
-                setImage(file);
-                const selectedImg = URL.createObjectURL(file);
-                const imagePreview = document.getElementById("image-preview");
-                imagePreview.src = selectedImg;
-                imagePreview.style.display = "block";
-            } else {
-                console.log("image cannot upload");
-            }
-        }
-    };
+      if (validImageTypes.includes(fileType)) {
+        setImage(file)
+        const selectedImg = URL.createObjectURL(file)
+        const imagePreview = document.getElementById('image-preview')
+        imagePreview.src = selectedImg
+        imagePreview.style.display = 'block'
+      } else {
+        console.log('image cannot upload')
+      }
+    }
+  }
 
-    const handleUpdate = (evt) => {
-        if (image) {
-            const uploadTask = storage.ref(`images/${image.name}`).put(image);
+  const handleUpdate = (evt) => {
+    if (image) {
+      const uploadTask = storage.ref(`images/${image.name}`).put(image)
 
-            uploadTask.on(
-                "state_changed",
-                (snapshot) => {
-                    // progress 1%...100%
-                    const progress = Math.round(
-                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                    );
-                    setProgress(progress);
-                },
-                (error) => {
-                    console.log(
-                        "Oh no! There was an error uploading your logo",
-                        error
-                    );
-                },
-                () => {
-                    storage
-                        .ref("images")
-                        .child(image.name)
-                        .getDownloadURL()
-                        .then((url) => {
-                            setUrl(url);
-                            db.collection("SignedUpUsers")
-                                .doc(userInfo.id)
-                                .update({
-                                    Image: url,
-                                    Type: type,
-                                    Category: category,
-                                    Name: name,
-                                    Phone: phone,
-                                    Email: email,
-                                    Password: password,
-                                    Address: address,
-                                    Zipcode: zipcode,
-                                    State: state
-                                })
-                                .then(() => {
-                                    history.push({
-                                        pathname: "/account"
-                                    });
-                                });
-                        });
-                }
-            );
-        } else if (userInfo.Image) {
-            db.collection("SignedUpUsers")
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          // progress 1%...100%
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          )
+          setProgress(progress)
+        },
+        (error) => {
+          console.log(
+            'Oh no! There was an error uploading your logo',
+            error
+          )
+        },
+        () => {
+          storage
+            .ref('images')
+            .child(image.name)
+            .getDownloadURL()
+            .then((url) => {
+              setUrl(url)
+              db.collection('SignedUpUsers')
                 .doc(userInfo.id)
-                .set(
-                    {
-                        Type: type,
-                        Category: category,
-                        Name: name,
-                        Phone: phone,
-                        Email: email,
-                        Password: password,
-                        Address: address,
-                        Zipcode: zipcode,
-                        State: state
-                    },
-                    { merge: true }
-                )
+                .update({
+                  Image: url,
+                  Type: type,
+                  Category: category,
+                  Name: name,
+                  Phone: phone,
+                  Email: email,
+                  Password: password,
+                  Address: address,
+                  Zipcode: zipcode,
+                  State: state
+                })
                 .then(() => {
-                    history.push({
-                        pathname: "/account"
-                    });
-                });
+                  history.push({
+                    pathname: '/account'
+                  })
+                })
+            })
         }
-    };
+      )
+    } else if (userInfo.Image) {
+      db.collection('SignedUpUsers')
+        .doc(userInfo.id)
+        .set(
+          {
+            Type: type,
+            Category: category,
+            Name: name,
+            Phone: phone,
+            Email: email,
+            Password: password,
+            Address: address,
+            Zipcode: zipcode,
+            State: state
+          },
+          { merge: true }
+        )
+        .then(() => {
+          history.push({
+            pathname: '/account'
+          })
+        })
+    }
+  }
 
-    const handleClick = () => {
-        handleUpdate();
-    };
+  const handleClick = () => {
+    handleUpdate()
+  }
 
-    return (
+  return (
         <Form style={{ marginTop: 25 }}>
             <Header size="medium" color="green" style={{ marginLeft: 40 }}>
                 Edit Account Information
             </Header>
-            {!userInfo.Image ? (
+            {!userInfo.Image
+              ? (
                 <Form.Field>
                     <label className="image-upload" style={{ marginLeft: 33 }}>
                         Organization Logo
@@ -138,7 +139,8 @@ const EditAccount = ({ location }) => {
                         style={{ marginLeft: 30, width: 300 }}
                     />
                 </Form.Field>
-            ) : (
+                )
+              : (
                 <div>
                     <Form.Field>
                         <label
@@ -164,7 +166,7 @@ const EditAccount = ({ location }) => {
                         />
                     </Form.Field>
                 </div>
-            )}
+                )}
 
             <Form.Field>
                 <label style={{ marginLeft: 33 }}>Name</label>
@@ -257,7 +259,7 @@ const EditAccount = ({ location }) => {
                 Submit
             </Button>
         </Form>
-    );
-};
+  )
+}
 
-export default EditAccount;
+export default EditAccount

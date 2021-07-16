@@ -1,27 +1,27 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { auth } from "../firebase";
-import { Form, Button } from "semantic-ui-react";
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { auth } from '../firebase'
+import { Form, Button } from 'semantic-ui-react'
 
 const LogIn = (props) => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
 
-    const login = (evt) => {
-        evt.preventDefault();
-        auth.signInWithEmailAndPassword(email, password)
-            .then(() => {
-                // after logged in, empty fields, redirect to home page
-                setEmail("");
-                setPassword("");
-                setError("");
-                props.history.push("/");
-            })
-            .catch((err) => setError(err.message));
-    };
+  const login = (evt) => {
+    evt.preventDefault()
+    auth.signInWithEmailAndPassword(email, password)
+      .then(() => {
+        // after logged in, empty fields, redirect to home page
+        setEmail('')
+        setPassword('')
+        setError('')
+        props.history.push('/')
+      })
+      .catch((err) => setError(err.message))
+  }
 
-    return (
+  return (
         <div>
             <Form style={{ marginLeft: 25, marginTop: 22 }}>
                 <Form.Field
@@ -68,7 +68,7 @@ const LogIn = (props) => {
                 </Button>
             </Link>
         </div>
-    );
-};
+  )
+}
 
-export default LogIn;
+export default LogIn

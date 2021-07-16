@@ -1,66 +1,66 @@
-import React, { useState, useEffect } from "react";
-import { Button, Item, Header, Segment } from "semantic-ui-react";
-import { db } from "../firebase";
+import React, { useState, useEffect } from 'react'
+import { Button, Item, Header, Segment } from 'semantic-ui-react'
+import { db } from '../firebase'
 
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { green, lightGreen } from "@material-ui/core/colors";
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { green, lightGreen } from '@material-ui/core/colors'
 
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom'
 
 const GivingHistory = (props) => {
-  const userInfo = props.userInfo;
-  const [donations, setDonations] = useState([]);
+  const userInfo = props.userInfo
+  const [donations, setDonations] = useState([])
 
-  const history = useHistory();
+  const history = useHistory()
 
   useEffect(() => {
-    db.collection("Donations")
-      .where("supplierId", "==", `${userInfo.id}`)
+    db.collection('Donations')
+      .where('supplierId', '==', `${userInfo.id}`)
       .onSnapshot((snapshot) => {
         setDonations(
           snapshot.docs.map((doc) => ({
             id: doc.id,
-            info: doc.data(),
+            info: doc.data()
           }))
-        );
-      });
-  }, [userInfo.id]);
+        )
+      })
+  }, [userInfo.id])
 
   const handleCancel = (donation) => {
-    toast.configure();
+    toast.configure()
     const notify = () => {
-      toast("This donation has been cancelled.");
-    };
-    notify();
-    db.collection("Donations").doc(donation.id).set(
+      toast('This donation has been cancelled.')
+    }
+    notify()
+    db.collection('Donations').doc(donation.id).set(
       {
-        Status: null,
+        Status: null
       },
       { merge: true }
-    );
-  };
+    )
+  }
 
   const handleEdit = (donation) => {
     history.push({
-      pathname: "/donationedit",
+      pathname: '/donationedit',
       state: {
         donation,
-        userInfo,
-      },
-    });
-  };
+        userInfo
+      }
+    })
+  }
 
   const totalQty = function () {
-    let total = 0;
+    let total = 0
     for (let i = 0; i < donations.length; i++) {
       if (donations[i].info.Status !== null) {
-        let qty = donations[i].info.Quantity;
-        total += Number.parseInt(qty);
+        const qty = donations[i].info.Quantity
+        total += Number.parseInt(qty)
       }
     }
-    return total;
-  };
+    return total
+  }
 
   return (
     <div>
@@ -82,7 +82,8 @@ const GivingHistory = (props) => {
               <br />
             </Item.Content>
 
-            {donation.info.Status === null ? (
+            {donation.info.Status === null
+              ? (
               <p>
                 <Button
                   basic
@@ -92,7 +93,8 @@ const GivingHistory = (props) => {
                   Canceled
                 </Button>
               </p>
-            ) : (
+                )
+              : (
               <p>
                 <Button
                   basic
@@ -111,13 +113,13 @@ const GivingHistory = (props) => {
                   Cancel
                 </Button>
               </p>
-            )}
+                )}
           </Item>
           {/* </Item.Group> */}
         </Segment>
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default GivingHistory;
+export default GivingHistory

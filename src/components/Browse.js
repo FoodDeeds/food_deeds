@@ -1,129 +1,129 @@
-import React, { useState, useEffect } from "react";
-import MapSearch from "./MapSearch";
-import { Button, Dropdown, Form, Header, Segment } from "semantic-ui-react";
-import { auth, db } from "../firebase";
-import { useHistory, Link } from "react-router-dom";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React, { useState, useEffect } from 'react'
+import MapSearch from './MapSearch'
+import { Button, Dropdown, Form, Header, Segment } from 'semantic-ui-react'
+import { auth, db } from '../firebase'
+import { useHistory, Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Browse = () => {
-  const [supplierInfo, setSupplierInfo] = useState({});
-  const [category, setCategory] = useState("");
-  const [zipcode, setZipcode] = useState("");
-  const [donations, setDonations] = useState([]);
-  const [selectedDonation, setSelectedDonation] = useState({});
-  const [currentUser, setCurrentUser] = useState("");
-  const [allDonations, setAllDonations] = useState([]);
-  const history = useHistory();
+  const [supplierInfo, setSupplierInfo] = useState({})
+  const [category, setCategory] = useState('')
+  const [zipcode, setZipcode] = useState('')
+  const [donations, setDonations] = useState([])
+  const [selectedDonation, setSelectedDonation] = useState({})
+  const [currentUser, setCurrentUser] = useState('')
+  const [allDonations, setAllDonations] = useState([])
+  const history = useHistory()
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
-        setCurrentUser(user);
+        setCurrentUser(user)
       }
-    });
-    db.collection("Donations")
-      .where("Status", "==", true)
+    })
+    db.collection('Donations')
+      .where('Status', '==', true)
       .onSnapshot((snapshot) => {
         setAllDonations(
           snapshot.docs.map((doc) => ({
             id: doc.id,
-            info: doc.data(),
+            info: doc.data()
           }))
-        );
-      });
-  }, []);
+        )
+      })
+  }, [])
 
   useEffect(() => {
-    db.collection("Donations")
-      .where("supplierZipCode", "==", zipcode)
-      .where("Status", "==", true)
+    db.collection('Donations')
+      .where('supplierZipCode', '==', zipcode)
+      .where('Status', '==', true)
       // .orderBy("Timestamp", "desc")
       .onSnapshot((snapshot) => {
         setDonations(
           snapshot.docs.map((doc) => ({
             id: doc.id,
-            info: doc.data(),
+            info: doc.data()
           }))
-        );
-      });
-  }, [zipcode]);
-  toast.configure();
+        )
+      })
+  }, [zipcode])
+  toast.configure()
   const showToast = () => {
-    toast("Please log in to reserve!", {
-      position: "top-center",
-      autoClose: 4000,
-    });
-  };
+    toast('Please log in to reserve!', {
+      position: 'top-center',
+      autoClose: 4000
+    })
+  }
   const handleClick = (donation) => {
     if (currentUser) {
-      setSelectedDonation(donation);
-      console.log("donation", donation.id);
-      db.collection("Donations").doc(donation.id).set(
+      setSelectedDonation(donation)
+      console.log('donation', donation.id)
+      db.collection('Donations').doc(donation.id).set(
         {
           Status: false,
-          recipientId: currentUser.uid,
+          recipientId: currentUser.uid
         },
         { merge: true }
-      );
+      )
       history.push({
-        pathname: "/confirmation",
+        pathname: '/confirmation',
         state: {
           donation,
-          supplierInfo,
-        },
-      });
+          supplierInfo
+        }
+      })
     } else {
-      showToast();
+      showToast()
     }
-  };
+  }
 
   // const searchAddress = donations.info.Address + donations.info.City;
-  console.log("searchAddress", donations);
+  console.log('searchAddress', donations)
 
   const submit = (evt) => {
-    evt.preventDefault();
-    if (!category || category === "All") {
-      db.collection("Donations")
-        .where("supplierZipCode", "==", zipcode)
+    evt.preventDefault()
+    if (!category || category === 'All') {
+      db.collection('Donations')
+        .where('supplierZipCode', '==', zipcode)
         // .orderBy("Timestamp", "desc")
         .onSnapshot((snapshot) => {
           setDonations(
             snapshot.docs.map((doc) => ({
               id: doc.id,
-              info: doc.data(),
+              info: doc.data()
             }))
-          );
-        });
+          )
+        })
     } else {
-      db.collection("Donations")
-        .where("supplierZipCode", "==", zipcode)
-        .where("supplierCategory", "==", category)
+      db.collection('Donations')
+        .where('supplierZipCode', '==', zipcode)
+        .where('supplierCategory', '==', category)
         // .orderBy("Timestamp", "desc")
         .onSnapshot((snapshot) => {
           setDonations(
             snapshot.docs.map((doc) => ({
               id: doc.id,
-              info: doc.data(),
+              info: doc.data()
             }))
-          );
-        });
+          )
+        })
     }
-  };
+  }
 
   const handleCategory = async (evt, category) => {
-    setCategory(category.value);
-  };
-  console.log("here is category", category);
+    setCategory(category.value)
+  }
+  console.log('here is category', category)
   const options = [
-    { key: 1, text: "All", value: "All" },
-    { key: 2, text: "Grocery Store", value: "Grocery Store" },
-    { key: 3, text: "Deli", value: "Deli" },
-    { key: 4, text: "Cafe", value: "Cafe" },
-  ];
-  console.log(donations);
+    { key: 1, text: 'All', value: 'All' },
+    { key: 2, text: 'Grocery Store', value: 'Grocery Store' },
+    { key: 3, text: 'Deli', value: 'Deli' },
+    { key: 4, text: 'Cafe', value: 'Cafe' }
+  ]
+  console.log(donations)
 
-  console.log("donations after submit>>", donations);
+  console.log('donations after submit>>', donations)
 
   return (
     <div className="browse">
@@ -140,7 +140,7 @@ const Browse = () => {
             style={{
               width: 200,
               marginLeft: 10,
-              marginTop: 100,
+              marginTop: 100
             }}
           />
           <Dropdown
@@ -151,7 +151,7 @@ const Browse = () => {
             onChange={handleCategory}
             style={{
               marginLeft: 10,
-              marginTop: 100,
+              marginTop: 100
             }}
           />
           <Button
@@ -172,7 +172,7 @@ const Browse = () => {
       />
       <div className="search-results">
         <Header style={{ marginTop: 20 }}>Showing results:</Header>
-        {zipcode !== ""
+        {zipcode !== ''
           ? donations.map((donation) => (
               <Segment
                 className="result"
@@ -185,7 +185,7 @@ const Browse = () => {
                   </Link>
                   <br />
                   {donation.info.supplierAddress} <br />
-                  {donation.info.supplierCity}, {donation.info.supplierState}{" "}
+                  {donation.info.supplierCity}, {donation.info.supplierState}{' '}
                   {donation.info.supplierZipCode}
                   <br />
                   Pickup Time: {donation.info.PickupTime} <br />
@@ -202,7 +202,7 @@ const Browse = () => {
                   </Button>
                 </p>
               </Segment>
-            ))
+          ))
           : allDonations.map((allDonation) => (
               <Segment
                 className="result"
@@ -215,8 +215,8 @@ const Browse = () => {
                   </Link>
                   <br />
                   {allDonation.info.supplierAddress} <br />
-                  {allDonation.info.supplierCity},{" "}
-                  {allDonation.info.supplierState}{" "}
+                  {allDonation.info.supplierCity},{' '}
+                  {allDonation.info.supplierState}{' '}
                   {allDonation.info.supplierZipCode}
                   <br />
                   Pickup Time: {allDonation.info.PickupTime} <br />
@@ -233,10 +233,10 @@ const Browse = () => {
                   </Button>
                 </p>
               </Segment>
-            ))}
+          ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Browse;
+export default Browse

@@ -1,50 +1,50 @@
-import React, { useState, useEffect } from "react";
-import ReactMapGL, { Marker, Popup } from "react-map-gl";
-import { db } from "../firebase";
-import pin from "../images/marker.jpg";
+import React, { useState, useEffect } from 'react'
+import ReactMapGL, { Marker, Popup } from 'react-map-gl'
+import { db } from '../firebase'
+import pin from '../images/marker.jpg'
 // import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 // import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 const REACT_APP_MAPBOX_TOKEN =
-    "pk.eyJ1IjoiZm9vZGRlZWRzIiwiYSI6ImNrcW1vaGk2NzA5cTYydW16NnRoNWM1dHoifQ.Zrfb6NXBZ3mTeEUGdYgc6w";
+    'pk.eyJ1IjoiZm9vZGRlZWRzIiwiYSI6ImNrcW1vaGk2NzA5cTYydW16NnRoNWM1dHoifQ.Zrfb6NXBZ3mTeEUGdYgc6w'
 const MapSearch = (props) => {
-    const { donations, allDonations, zipcode } = props;
+  const { donations, allDonations, zipcode } = props
 
-    const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState(null)
 
-    const [viewport, setViewport] = useState({
-        latitude: 40.7128,
-        longitude: -74.006,
+  const [viewport, setViewport] = useState({
+    latitude: 40.7128,
+    longitude: -74.006,
+    width: 515,
+    height: 400,
+    zoom: 12
+  })
+
+  useEffect(() => {
+    if (donations.length > 0) {
+      setViewport({
+        latitude: donations[0].info.coordinates[1],
+        longitude: donations[0].info.coordinates[0],
         width: 515,
         height: 400,
         zoom: 12
-    });
+      })
+    }
+  }, [donations])
 
-    useEffect(() => {
-        if (donations.length > 0) {
-            setViewport({
-                latitude: donations[0].info.coordinates[1],
-                longitude: donations[0].info.coordinates[0],
-                width: 515,
-                height: 400,
-                zoom: 12
-            });
-        }
-    }, [donations]);
+  // console.log("donations in map search", donations);
 
-    // console.log("donations in map search", donations);
-
-    return (
+  return (
         <div>
             <ReactMapGL
                 {...viewport}
                 mapboxApiAccessToken={REACT_APP_MAPBOX_TOKEN}
                 mapStyle="mapbox://styles/fooddeeds/ckqqr3fl90flt17qq52bd0g3c"
                 onViewportChange={(viewport) => {
-                    setViewport(viewport);
+                  setViewport(viewport)
                 }}
             >
-                {zipcode !== ""
-                    ? donations.map((donation) => (
+                {zipcode !== ''
+                  ? donations.map((donation) => (
                           <Marker
                               key={donation.id}
                               latitude={donation.info.coordinates[1]}
@@ -55,15 +55,15 @@ const MapSearch = (props) => {
                                       src={pin}
                                       alt="marker"
                                       onClick={(evt) => {
-                                          evt.preventDefault();
-                                          setSelected(donation);
-                                          // console.log(selected);
+                                        evt.preventDefault()
+                                        setSelected(donation)
+                                        // console.log(selected);
                                       }}
                                   />
                               </button>
                           </Marker>
-                      ))
-                    : allDonations.map((allDonation) => (
+                  ))
+                  : allDonations.map((allDonation) => (
                           <Marker
                               key={allDonation.id}
                               latitude={allDonation.info.coordinates[1]}
@@ -74,20 +74,21 @@ const MapSearch = (props) => {
                                       src={pin}
                                       alt="marker"
                                       onClick={(evt) => {
-                                          evt.preventDefault();
-                                          setSelected(allDonation);
-                                          // console.log(selected);
+                                        evt.preventDefault()
+                                        setSelected(allDonation)
+                                        // console.log(selected);
                                       }}
                                   />
                               </button>
                           </Marker>
-                      ))}
-                {selected ? (
+                  ))}
+                {selected
+                  ? (
                     <Popup
                         latitude={selected.info.coordinates[1]}
                         longitude={selected.info.coordinates[0]}
                         onClose={() => {
-                            setSelected(null);
+                          setSelected(null)
                         }}
                     >
                         <div>
@@ -95,10 +96,11 @@ const MapSearch = (props) => {
                             <p>{selected.info.supplierAddress}</p>
                         </div>
                     </Popup>
-                ) : null}
+                    )
+                  : null}
             </ReactMapGL>
         </div>
-    );
-};
+  )
+}
 
-export default MapSearch;
+export default MapSearch

@@ -1,49 +1,51 @@
-import React, { useState, useEffect } from "react";
-import { auth, db } from "../firebase";
-import "semantic-ui-css/semantic.min.css";
-import { Button, List, Image } from "semantic-ui-react";
-import EditAccount from "./EditAccount";
-import OrderHistory from "./OrderHistory";
-import GivingHistory from "./GivingHistory";
-import { useHistory } from "react-router-dom";
+import React, { useState, useEffect } from 'react'
+import { auth, db } from '../firebase'
+import 'semantic-ui-css/semantic.min.css'
+import { Button, List, Image } from 'semantic-ui-react'
+import EditAccount from './EditAccount'
+import OrderHistory from './OrderHistory'
+import GivingHistory from './GivingHistory'
+import { useHistory } from 'react-router-dom'
 
 const MyAccount = () => {
-  const [userInfo, setUserInfo] = useState({});
-  const [editForm, setEditForm] = useState(false);
-  const history = useHistory();
+  const [userInfo, setUserInfo] = useState({})
+  const [editForm, setEditForm] = useState(false)
+  const history = useHistory()
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
-        setUserInfo(user);
-        db.collection("SignedUpUsers")
+        setUserInfo(user)
+        db.collection('SignedUpUsers')
           .doc(user.uid)
           .get()
           .then((response) => {
-            const data = response.data();
-            setUserInfo(data);
-          });
+            const data = response.data()
+            setUserInfo(data)
+          })
       } else {
-        setUserInfo({});
+        setUserInfo({})
       }
-    });
-  }, []);
+    })
+  }, [])
 
   const handleEdit = () => {
-    setEditForm(true);
+    setEditForm(true)
     history.push({
-      pathname: "/edit",
+      pathname: '/edit',
       state: {
-        userInfo,
-      },
-    });
-  };
+        userInfo
+      }
+    })
+  }
 
   return (
     <div>
-      {editForm ? (
+      {editForm
+        ? (
         <EditAccount userInfo={userInfo} />
-      ) : (
+          )
+        : (
         <div>
           <List style={{ marginLeft: 30, width: 300 }}>
             <List.Item style={{ width: 300 }}>
@@ -94,14 +96,16 @@ const MyAccount = () => {
             Edit Account
           </Button>
         </div>
-      )}
-      {userInfo.Type === "Recipient" ? (
+          )}
+      {userInfo.Type === 'Recipient'
+        ? (
         <OrderHistory userInfo={userInfo} />
-      ) : (
+          )
+        : (
         <GivingHistory userInfo={userInfo} />
-      )}
+          )}
     </div>
-  );
-};
+  )
+}
 
-export default MyAccount;
+export default MyAccount

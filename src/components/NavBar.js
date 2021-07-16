@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react'
 import {
   Grid,
   Icon,
@@ -8,47 +8,47 @@ import {
   Button,
   Header,
   Image,
-  Sticky,
-} from "semantic-ui-react";
-import { Link, useHistory } from "react-router-dom";
-import { auth, db } from "../firebase";
-import logo from "../images/marker.jpg";
-import welcomeIcon from "../images/post-default.png";
+  Sticky
+} from 'semantic-ui-react'
+import { Link, useHistory } from 'react-router-dom'
+import { auth, db } from '../firebase'
+import logo from '../images/marker.jpg'
+import welcomeIcon from '../images/post-default.png'
 
 const NavBar = (props) => {
-  const [sidebarVisible, setSidebarVisible] = useState(false);
-  const [userInfo, setUserInfo] = useState({});
-  const [currentUser, setCurrentUser] = useState("");
-  const history = useHistory();
+  const [sidebarVisible, setSidebarVisible] = useState(false)
+  const [userInfo, setUserInfo] = useState({})
+  const [currentUser, setCurrentUser] = useState('')
+  const history = useHistory()
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
-        setCurrentUser(user);
-        db.collection("SignedUpUsers")
+        setCurrentUser(user)
+        db.collection('SignedUpUsers')
           .doc(user.uid)
           .get()
           .then((response) => {
-            const data = response.data();
-            setUserInfo(data);
-          });
+            const data = response.data()
+            setUserInfo(data)
+          })
       }
-    });
-  }, []);
+    })
+  }, [])
 
   const handleLogout = (evt) => {
-    evt.preventDefault();
+    evt.preventDefault()
     auth.signOut().then(() => {
-      setCurrentUser("");
-      history.push("/");
-    });
-  };
+      setCurrentUser('')
+      history.push('/')
+    })
+  }
 
   return (
     <Sticky>
       <Grid>
         <Grid.Column>
-          <Menu style={{ width: "100%" }}>
+          <Menu style={{ width: '100%' }}>
             <Icon
               name="content"
               size="huge"
@@ -58,16 +58,16 @@ const NavBar = (props) => {
               style={{
                 marginLeft: -9,
                 marginTop: 10,
-                marginBottom: 10,
+                marginBottom: 10
               }}
             />
             <Link
               to="/"
               style={{
-                display: "flex",
+                display: 'flex',
                 flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
+                justifyContent: 'center',
+                alignItems: 'center'
               }}
             >
               <Header
@@ -75,7 +75,7 @@ const NavBar = (props) => {
                 style={{ marginTop: 10, marginLeft: -50 }}
                 size="huge"
               >
-                Food{" "}
+                Food{' '}
                 <Image
                   src={logo}
                   style={{
@@ -85,7 +85,7 @@ const NavBar = (props) => {
                     marginLeft: 7
                   }}
                 />
-                {""}Deeds
+                {''}Deeds
               </Header>
             </Link>
           </Menu>
@@ -99,12 +99,13 @@ const NavBar = (props) => {
             onMouseEnter={(e) => setSidebarVisible(true)}
             onMouseLeave={(e) => setSidebarVisible(false)}
             color="Standard"
-            style={{ height: "100%" }}
+            style={{ height: '100%' }}
           >
             {currentUser && (
               <Menu.Item>
-                <Item.Description style={{ color: "green" }}>
-                  {userInfo.Image ? (
+                <Item.Description style={{ color: 'green' }}>
+                  {userInfo.Image
+                    ? (
                     <Image
                       src={userInfo.Image}
                       alt=""
@@ -112,10 +113,11 @@ const NavBar = (props) => {
                         width: 50,
                         height: 50,
                         marginBottom: 10,
-                        marginLeft: 35,
+                        marginLeft: 35
                       }}
                     />
-                  ) : (
+                      )
+                    : (
                     <Image
                       src={welcomeIcon}
                       alt=""
@@ -123,10 +125,10 @@ const NavBar = (props) => {
                         width: 50,
                         height: 50,
                         marginBottom: 10,
-                        marginLeft: 35,
+                        marginLeft: 35
                       }}
                     />
-                  )}
+                      )}
                   Welcome, {userInfo.Name}!
                 </Item.Description>
               </Menu.Item>
@@ -134,7 +136,7 @@ const NavBar = (props) => {
             <Link to="/">
               <Menu.Item>
                 <Icon name="home" color="green" />
-                <Item.Description style={{ color: "green" }}>
+                <Item.Description style={{ color: 'green' }}>
                   Home
                 </Item.Description>
               </Menu.Item>
@@ -143,17 +145,17 @@ const NavBar = (props) => {
               <Link to="/account">
                 <Menu.Item>
                   <Icon name="user circle" color="green" />
-                  <Item.Description style={{ color: "green" }}>
+                  <Item.Description style={{ color: 'green' }}>
                     My Account
                   </Item.Description>
                 </Menu.Item>
               </Link>
             )}
-            {userInfo.Type === "Supplier" && (
+            {userInfo.Type === 'Supplier' && (
               <Link to="/donate">
                 <Menu.Item>
                   <Icon name="write square" color="green" />
-                  <Item.Description style={{ color: "green" }}>
+                  <Item.Description style={{ color: 'green' }}>
                     Donate
                   </Item.Description>
                 </Menu.Item>
@@ -162,7 +164,7 @@ const NavBar = (props) => {
             <Link to="/browse">
               <Menu.Item>
                 <Icon name="search" color="green" />
-                <Item.Description style={{ color: "green" }}>
+                <Item.Description style={{ color: 'green' }}>
                   Search
                 </Item.Description>
               </Menu.Item>
@@ -170,12 +172,13 @@ const NavBar = (props) => {
             <Link to="/contact">
               <Menu.Item>
                 <Icon name="question circle " color="green" />
-                <Item.Description style={{ color: "green" }}>
+                <Item.Description style={{ color: 'green' }}>
                   Contact Us
                 </Item.Description>
               </Menu.Item>
             </Link>
-            {currentUser ? (
+            {currentUser
+              ? (
               <Button
                 color="green"
                 className="logout__btn"
@@ -184,14 +187,15 @@ const NavBar = (props) => {
               >
                 LOG OUT
               </Button>
-            ) : (
-              <Item.Description style={{ color: "green" }}>
+                )
+              : (
+              <Item.Description style={{ color: 'green' }}>
                 <Link to="/login">
                   <Button
                     color="green"
                     style={{
                       marginBottom: 10,
-                      marginTop: 10,
+                      marginTop: 10
                     }}
                   >
                     LOG IN
@@ -201,12 +205,12 @@ const NavBar = (props) => {
                   <Button color="green">SIGN UP</Button>
                 </Link>
               </Item.Description>
-            )}
+                )}
           </Sidebar>
         </Grid.Column>
       </Grid>
     </Sticky>
-  );
-};
+  )
+}
 
-export default NavBar;
+export default NavBar

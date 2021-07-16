@@ -1,39 +1,39 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router";
-import { Header, Form, Button, Image } from "semantic-ui-react";
-import { db, storage } from "../firebase";
+import React, { useState } from 'react'
+import { useHistory } from 'react-router'
+import { Header, Form, Button, Image } from 'semantic-ui-react'
+import { db, storage } from '../firebase'
 
 const EditDonation = ({ location }) => {
   const { donation } = location.state
   console.log(donation)
   // need to destructure location.state.donation & location.state.userInfo
-  const [description, setDescription] = useState(donation.info.Description);
-  const [quantity, setQuantity] = useState(donation.info.Quantity);
-  const [pickupDate, setPickupDate] = useState(donation.info.PickupDate);
-  const [pickupTime, setPickupTime] = useState(donation.info.PickupTime);
-  const history = useHistory();
+  const [description, setDescription] = useState(donation.info.Description)
+  const [quantity, setQuantity] = useState(donation.info.Quantity)
+  const [pickupDate, setPickupDate] = useState(donation.info.PickupDate)
+  const [pickupTime, setPickupTime] = useState(donation.info.PickupTime)
+  const history = useHistory()
 
   const handleUpdate = () => {
-    db.collection("Donations")
+    db.collection('Donations')
       .doc(donation.id)
       .set({
         Description: description,
         Quantity: quantity,
         PickupDate: pickupDate,
-        PickupTime: pickupTime,
+        PickupTime: pickupTime
       },
-      {merge: true}
+      { merge: true }
       )
       .then(() => {
         history.push({
-          pathname: "/account"
+          pathname: '/account'
         })
       })
   }
 
   const handleClick = () => {
     history.push({
-      pathname: "/account"
+      pathname: '/account'
     })
   }
 
@@ -83,7 +83,7 @@ const EditDonation = ({ location }) => {
         type="submit"
         onClick={handleUpdate}
         color="green"
-        style={{marginLeft: 45, marginTop: 15, marginBottom: 25 }}
+        style={{ marginLeft: 45, marginTop: 15, marginBottom: 25 }}
       >
         Save Changes
       </Button>
@@ -96,7 +96,7 @@ const EditDonation = ({ location }) => {
         Return to Account
       </Button>
     </Form>
-  );
-};
+  )
+}
 
-export default EditDonation;
+export default EditDonation

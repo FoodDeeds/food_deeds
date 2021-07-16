@@ -1,112 +1,113 @@
-import React, { useEffect, useState } from "react";
-import { Button, Header, Segment, Item } from "semantic-ui-react";
-import { auth, db } from "../firebase";
-import { useHistory } from "react-router-dom";
-import defaultIcon from "../images/Logo-2.png";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
+import React, { useEffect, useState } from 'react'
+import { Button, Header, Segment, Item } from 'semantic-ui-react'
+import { auth, db } from '../firebase'
+import { useHistory } from 'react-router-dom'
+import defaultIcon from '../images/Logo-2.png'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const SingleSupplier = (props) => {
-  const [supplierInfo, setSupplierInfo] = useState({});
-  const [donations, setDonations] = useState([]);
-  const [selectedDonation, setSelectedDonation] = useState({});
-  const [confirmation, setConfirmation] = useState(false);
-  const [currentUser, setCurrentUser] = useState("");
-  const [userInfo, setUserInfo] = useState({});
-  const history = useHistory();
+  const [supplierInfo, setSupplierInfo] = useState({})
+  const [donations, setDonations] = useState([])
+  const [selectedDonation, setSelectedDonation] = useState({})
+  const [confirmation, setConfirmation] = useState(false)
+  const [currentUser, setCurrentUser] = useState('')
+  const [userInfo, setUserInfo] = useState({})
+  const history = useHistory()
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
-        setCurrentUser(user);
-        db.collection("SignedUpUsers")
+        setCurrentUser(user)
+        db.collection('SignedUpUsers')
           .doc(user.uid)
           .get()
           .then((response) => {
-            const data = response.data();
-            setUserInfo(data);
-          });
+            const data = response.data()
+            setUserInfo(data)
+          })
       }
-    });
-  }, []);
+    })
+  }, [])
   useEffect(() => {
-    db.collection("SignedUpUsers")
+    db.collection('SignedUpUsers')
       .doc(props.match.params.id)
       .get()
       .then((response) => {
-        const data = response.data();
-        setSupplierInfo(data);
-      });
-    db.collection("Donations")
-      .where("supplierId", "==", props.match.params.id)
-      .where("Status", "==", true)
+        const data = response.data()
+        setSupplierInfo(data)
+      })
+    db.collection('Donations')
+      .where('supplierId', '==', props.match.params.id)
+      .where('Status', '==', true)
       .onSnapshot((snapshot) => {
         setDonations(
           snapshot.docs.map((doc) => ({
             id: doc.id,
-            info: doc.data(),
+            info: doc.data()
           }))
-        );
-      });
-  }, [props.match.params.id]);
-  toast.configure();
+        )
+      })
+  }, [props.match.params.id])
+  toast.configure()
   const showToast = () => {
-    toast("Please log in to reserve!", {
-      position: "top-center",
-      autoClose: 4000,
-    });
-  };
+    toast('Please log in to reserve!', {
+      position: 'top-center',
+      autoClose: 4000
+    })
+  }
 
   const handleBack = () => {
     history.push({
-      pathname: "/",
-    });
-  };
+      pathname: '/'
+    })
+  }
 
   const handleClick = (donation) => {
     if (currentUser) {
-      setConfirmation(true);
-      setSelectedDonation(donation);
-      db.collection("Donations").doc(donation.id).set(
+      setConfirmation(true)
+      setSelectedDonation(donation)
+      db.collection('Donations').doc(donation.id).set(
         {
           Status: false,
-          recipientId: currentUser.uid,
+          recipientId: currentUser.uid
         },
         { merge: true }
-      );
+      )
       history.push({
-        pathname: "/confirmation",
+        pathname: '/confirmation',
         state: {
           donation,
-          supplierInfo,
-        },
-      });
+          supplierInfo
+        }
+      })
     } else {
-      showToast();
+      showToast()
     }
-  };
+  }
   return (
     <div
       style={{
-        marginTop: "1%",
-        paddingRight: "1%",
-        paddingLeft: "1%",
+        marginTop: '1%',
+        paddingRight: '1%',
+        paddingLeft: '1%'
       }}
     >
       <div className="supplier-logo">
-        {supplierInfo.Image ? (
+        {supplierInfo.Image
+          ? (
           <Item.Image
             src={supplierInfo.Image}
             alt=""
             style={{ marginRight: 20, marginTop: 10 }}
           />
-        ) : (
+            )
+          : (
           <Item.Image
             src={defaultIcon}
             alt=""
             style={{ marginRight: 20, marginTop: 10 }}
           />
-        )}
+            )}
       </div>
       <div style={{ marginTop: 20 }}>
         <h2>{supplierInfo.Name}</h2>
@@ -121,7 +122,7 @@ const SingleSupplier = (props) => {
         <Button
           type="submit"
           onClick={handleBack}
-          style={{ marginLeft: 10, color: "white" }}
+          style={{ marginLeft: 10, color: 'white' }}
         >
           Back to Home
         </Button>
@@ -148,6 +149,6 @@ const SingleSupplier = (props) => {
         ))}
       </div>
     </div>
-  );
-};
-export default SingleSupplier;
+  )
+}
+export default SingleSupplier

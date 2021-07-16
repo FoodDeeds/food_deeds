@@ -1,14 +1,14 @@
-import React from "react";
-import RecDonations from "./RecDonations";
-import logo from "../images/Logo-2.png";
+import React from 'react'
+import RecDonations from './RecDonations'
+import logo from '../images/Logo-2.png'
 
 const Home = () => {
   return (
     <div
       style={{
-        marginTop: "1%",
-        paddingRight: "10%",
-        paddingLeft: "10%",
+        marginTop: '1%',
+        paddingRight: '10%',
+        paddingLeft: '10%'
       }}
     >
       <img src={logo} alt="Logo" />
@@ -21,7 +21,7 @@ const Home = () => {
       </p>
       <RecDonations />
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

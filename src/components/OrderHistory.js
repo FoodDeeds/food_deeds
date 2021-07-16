@@ -1,42 +1,42 @@
-import React, { useState, useEffect } from "react";
-import { Button, Item } from "semantic-ui-react";
-import { db } from "../firebase";
+import React, { useState, useEffect } from 'react'
+import { Button, Item } from 'semantic-ui-react'
+import { db } from '../firebase'
 
 const OrderHistory = (props) => {
-  const [donations, setDonations] = useState([]);
-  const userInfo = props.userInfo;
+  const [donations, setDonations] = useState([])
+  const userInfo = props.userInfo
 
   useEffect(() => {
-    db.collection("Donations")
-      .where("recipientId", "==", `${userInfo.id}`)
+    db.collection('Donations')
+      .where('recipientId', '==', `${userInfo.id}`)
       .onSnapshot((snapshot) => {
         setDonations(
           snapshot.docs.map((doc) => ({
             id: doc.id,
-            info: doc.data(),
+            info: doc.data()
           }))
-        );
-      });
-  }, [userInfo.id]);
+        )
+      })
+  }, [userInfo.id])
 
   const handleCancel = (donation) => {
-    db.collection("Donations").doc(donation.id).set(
+    db.collection('Donations').doc(donation.id).set(
       {
         Status: true,
-        recipientId: null,
+        recipientId: null
       },
       { merge: true }
-    );
-  };
+    )
+  }
   const totalQty = function () {
-    let total = 0;
+    let total = 0
     for (let i = 0; i < donations.length; i++) {
-      let qty = donations[i].info.Quantity;
-      console.log(qty);
-      total += Number.parseInt(qty);
+      const qty = donations[i].info.Quantity
+      console.log(qty)
+      total += Number.parseInt(qty)
     }
-    return total;
-  };
+    return total
+  }
   return (
     <div>
       <h3>Order History</h3>
@@ -50,38 +50,39 @@ const OrderHistory = (props) => {
                 <Item.Header as="a">{donation.info.supplierName}</Item.Header>
                 <Item.Meta>
                   Pick Up Time: <br />
-                  {donation.info.PickupTime} on {donation.info.PickupDate}{" "}
+                  {donation.info.PickupTime} on {donation.info.PickupDate}{' '}
                   <br />
                 </Item.Meta>
                 Quantity: {donation.info.Quantity} boxes
                 <Item.Description>
-                  {" "}
+                  {' '}
                   Description: {donation.info.Description}
                 </Item.Description>
                 <br />
               </Item.Content>
 
-              {donation.info.Status === null ? (
+              {donation.info.Status === null
+                ? (
                 <p>This order was canceled by the supplier.</p>
-              ) : (
+                  )
+                : (
                 <Button
                   basic
                   onClick={() => {
-                    if (window.confirm("Are you sure you want to cancel?"))
-                      handleCancel(donation);
+                    if (window.confirm('Are you sure you want to cancel?')) { handleCancel(donation) }
                   }}
                   color="red"
                   style={{ width: 100, height: 30, marginRight: 20 }}
                 >
                   Cancel
                 </Button>
-              )}
+                  )}
             </Item>
           </Item.Group>
         </div>
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default OrderHistory;
+export default OrderHistory

@@ -1,5 +1,5 @@
-import React from "react";
-import { List, Header } from "semantic-ui-react";
+import React from 'react'
+import { List, Header } from 'semantic-ui-react'
 
 const Contact = () => {
   return (
@@ -34,7 +34,7 @@ const Contact = () => {
         style={{ marginLeft: 30 }}
       />
     </List>
-  );
-};
+  )
+}
 
-export default Contact;
+export default Contact

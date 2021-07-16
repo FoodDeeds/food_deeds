@@ -1,66 +1,66 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Form, Button } from "semantic-ui-react";
-import { auth, db } from "../firebase";
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { Form, Button } from 'semantic-ui-react'
+import { auth, db } from '../firebase'
 
 const Signup = (props) => {
-    // need to add more fields
-    const [type, setType] = useState("Supplier");
-    const [category, setCategory] = useState("");
-    const [name, setName] = useState("");
-    const [phone, setPhone] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [address, setAddress] = useState("");
-    const [city, setCity] = useState("");
-    const [zipcode, setZipcode] = useState("");
-    const [state, setState] = useState("");
-    const [image, setImage] = useState("");
-    const [error, setError] = useState("");
+  // need to add more fields
+  const [type, setType] = useState('Supplier')
+  const [category, setCategory] = useState('')
+  const [name, setName] = useState('')
+  const [phone, setPhone] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [address, setAddress] = useState('')
+  const [city, setCity] = useState('')
+  const [zipcode, setZipcode] = useState('')
+  const [state, setState] = useState('')
+  const [image, setImage] = useState('')
+  const [error, setError] = useState('')
 
-    const signup = (evt) => {
-        evt.preventDefault();
-        auth.createUserWithEmailAndPassword(email, password)
-            .then((userCred) => {
-                db.collection("SignedUpUsers")
-                    .doc(userCred.user.uid)
-                    .set({
-                        // need more fields
-                        id: userCred.user.uid,
-                        Type: type,
-                        Category: category,
-                        Name: name,
-                        Phone: phone,
-                        Email: email,
-                        Password: password,
-                        Address: address,
-                        Zipcode: zipcode,
-                        City: city,
-                        State: state,
-                        Image: image
-                    })
-                    .then(() => {
-                        // after stored in db, empty fields and redirect to login
-                        setType("");
-                        setCategory("");
-                        setName("");
-                        setPhone("");
-                        setEmail("");
-                        setPassword("");
-                        setAddress("");
-                        setCity("");
-                        setZipcode("");
-                        setState("");
-                        setError("");
-                        setImage("");
-                        props.history.push("/login");
-                    })
-                    .catch((err) => setError(err.message));
-            })
-            .catch((err) => setError(err.message));
-    };
+  const signup = (evt) => {
+    evt.preventDefault()
+    auth.createUserWithEmailAndPassword(email, password)
+      .then((userCred) => {
+        db.collection('SignedUpUsers')
+          .doc(userCred.user.uid)
+          .set({
+            // need more fields
+            id: userCred.user.uid,
+            Type: type,
+            Category: category,
+            Name: name,
+            Phone: phone,
+            Email: email,
+            Password: password,
+            Address: address,
+            Zipcode: zipcode,
+            City: city,
+            State: state,
+            Image: image
+          })
+          .then(() => {
+            // after stored in db, empty fields and redirect to login
+            setType('')
+            setCategory('')
+            setName('')
+            setPhone('')
+            setEmail('')
+            setPassword('')
+            setAddress('')
+            setCity('')
+            setZipcode('')
+            setState('')
+            setError('')
+            setImage('')
+            props.history.push('/login')
+          })
+          .catch((err) => setError(err.message))
+      })
+      .catch((err) => setError(err.message))
+  }
 
-    return (
+  return (
         <div>
             <div autoComplete="off">
                 <h2>Sign up</h2>
@@ -81,7 +81,8 @@ const Signup = (props) => {
                         onChange={(evt) => setCategory(evt.target.value)}
                         style={{ width: 350 }}
                     >
-                        {type === "Supplier" ? (
+                        {type === 'Supplier'
+                          ? (
                             <>
                                 <option value="Option">Choose Category</option>
                                 <option value="Grocery Store">
@@ -90,12 +91,13 @@ const Signup = (props) => {
                                 <option value="Deli">Deli</option>
                                 <option value="Cafe">Cafe</option>
                             </>
-                        ) : (
+                            )
+                          : (
                             <>
                                 <option value="Option">Choose Category</option>
                                 <option value="Food bank">Food Bank</option>
                             </>
-                        )}
+                            )}
                     </Form.Field>
                     <Form.Field
                         label="Name"
@@ -240,10 +242,10 @@ const Signup = (props) => {
                 </Button>
             </Link>
         </div>
-    );
-};
+  )
+}
 
-export default Signup;
+export default Signup
 
 // <form autoComplete="off" className="form__group" onSubmit={signup}>
 // {error && <span className="error__msg">{error}</span>}

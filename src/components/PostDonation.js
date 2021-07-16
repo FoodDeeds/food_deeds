@@ -1,111 +1,111 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { auth, db, storage } from "../firebase";
-import "./Post.css";
-import { Header, Form, Button, Image, Label } from "semantic-ui-react";
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import { auth, db, storage } from '../firebase'
+import './Post.css'
+import { Header, Form, Button, Image, Label } from 'semantic-ui-react'
 
 const PostDonation = (props) => {
-  const [userInfo, setUserInfo] = useState({});
-  const [description, setDescription] = useState("");
-  const [quantity, setQuantity] = useState(0);
-  const [pickupDate, setPickupDate] = useState("");
-  const [pickupTime, setPickupTime] = useState("");
-  const [progress, setProgress] = useState(0);
-  const [image, setImage] = useState("");
-  const [url, setUrl] = useState("");
-  const [coordinates, setCoordinates] = useState([]);
+  const [userInfo, setUserInfo] = useState({})
+  const [description, setDescription] = useState('')
+  const [quantity, setQuantity] = useState(0)
+  const [pickupDate, setPickupDate] = useState('')
+  const [pickupTime, setPickupTime] = useState('')
+  const [progress, setProgress] = useState(0)
+  const [image, setImage] = useState('')
+  const [url, setUrl] = useState('')
+  const [coordinates, setCoordinates] = useState([])
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
-        setUserInfo(user);
-        db.collection("SignedUpUsers")
+        setUserInfo(user)
+        db.collection('SignedUpUsers')
           .doc(user.uid)
           .get()
           .then((response) => {
-            const data = response.data();
-            setUserInfo(data);
-          });
+            const data = response.data()
+            setUserInfo(data)
+          })
       }
-    });
-  }, []);
+    })
+  }, [])
 
   const searchAddress =
     `${userInfo.Address}_${userInfo.City}_${userInfo.State}_${userInfo.Zipcode}` ||
-    "";
-  const addressInfo = searchAddress.replaceAll(" ", "_");
-  const baseURL = "https://api.mapbox.com/geocoding/v5/mapbox.places";
+    ''
+  const addressInfo = searchAddress.replaceAll(' ', '_')
+  const baseURL = 'https://api.mapbox.com/geocoding/v5/mapbox.places'
   const REACT_APP_MAPBOX_TOKEN =
-    "pk.eyJ1IjoiZm9vZGRlZWRzIiwiYSI6ImNrcW1vaGk2NzA5cTYydW16NnRoNWM1dHoifQ.Zrfb6NXBZ3mTeEUGdYgc6w";
+    'pk.eyJ1IjoiZm9vZGRlZWRzIiwiYSI6ImNrcW1vaGk2NzA5cTYydW16NnRoNWM1dHoifQ.Zrfb6NXBZ3mTeEUGdYgc6w'
   // baseURL + addressInfo + JSON access token + our Token
-  const combineAddress = `${baseURL}/${addressInfo}.json?access_token=${REACT_APP_MAPBOX_TOKEN}`;
+  const combineAddress = `${baseURL}/${addressInfo}.json?access_token=${REACT_APP_MAPBOX_TOKEN}`
 
   const getCoordinates = async () => {
-    const { data } = await axios.get(combineAddress);
-    const coordinates = data.features[0].geometry.coordinates;
-    setCoordinates(coordinates);
+    const { data } = await axios.get(combineAddress)
+    const coordinates = data.features[0].geometry.coordinates
+    setCoordinates(coordinates)
     console.log(
-      "coordinate data fields>>>",
+      'coordinate data fields>>>',
       data.features[0].geometry.coordinates
-    );
-    return coordinates;
-  };
+    )
+    return coordinates
+  }
 
   const handleClick = (evt) => {
-    evt.preventDefault();
-    props.history.push("/");
-  };
+    evt.preventDefault()
+    props.history.push('/')
+  }
 
   const handleImage = (evt) => {
-    evt.preventDefault();
-    const file = evt.target.files[0];
+    evt.preventDefault()
+    const file = evt.target.files[0]
 
     if (file) {
-      const fileType = file["type"];
-      const validImageTypes = ["image/gif", "image/jpeg", "image/png"];
+      const fileType = file.type
+      const validImageTypes = ['image/gif', 'image/jpeg', 'image/png']
 
       if (validImageTypes.includes(fileType)) {
-        setImage(file);
-        const selectedImg = URL.createObjectURL(file);
-        const imagePreview = document.getElementById("image-preview");
-        imagePreview.src = selectedImg;
-        imagePreview.style.display = "block";
+        setImage(file)
+        const selectedImg = URL.createObjectURL(file)
+        const imagePreview = document.getElementById('image-preview')
+        imagePreview.src = selectedImg
+        imagePreview.style.display = 'block'
       } else {
-        console.log("image cannot upload");
+        console.log('image cannot upload')
       }
     }
-  };
+  }
 
   const handleUpload = (evt) => {
-    evt.preventDefault();
+    evt.preventDefault()
     // getCoordinates();
     if (image) {
-      const uploadTask = storage.ref(`images/${image.name}`).put(image);
+      const uploadTask = storage.ref(`images/${image.name}`).put(image)
 
       uploadTask.on(
-        "state_changed",
+        'state_changed',
         (snapshot) => {
           // progress 1%...100%
           const progress = Math.round(
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          );
-          setProgress(progress);
+          )
+          setProgress(progress)
         },
         (error) => {
           // Error function...
-          console.log("error uploading picture", error);
+          console.log('error uploading picture', error)
           // alert(error.message);
         },
         () => {
           // upload complete function...
           storage
-            .ref("images")
+            .ref('images')
             .child(image.name) // Upload the file and metadata
             .getDownloadURL()
             .then((url) => {
-              setUrl(url);
+              setUrl(url)
               getCoordinates().then((coordinate) => {
-                db.collection("Donations")
+                db.collection('Donations')
                   .add({
                     postImageUrl: url,
                     Description: description,
@@ -120,29 +120,29 @@ const PostDonation = (props) => {
                     supplierCity: userInfo.City,
                     supplierZipCode: userInfo.Zipcode,
                     supplierCategory: userInfo.Category,
-                    coordinates: coordinate,
+                    coordinates: coordinate
                   })
                   .then(() => {
-                    setUrl("");
-                    setProgress(0);
-                    setDescription("");
-                    setImage(null);
-                    setDescription("");
-                    setImage("");
-                    setQuantity("");
-                    setPickupDate("");
-                    setPickupTime("");
+                    setUrl('')
+                    setProgress(0)
+                    setDescription('')
+                    setImage(null)
+                    setDescription('')
+                    setImage('')
+                    setQuantity('')
+                    setPickupDate('')
+                    setPickupTime('')
                     // setUserInfo({});
                     // setCoordinates([]);
-                    props.history.push("/");
-                  });
-              });
-            });
+                    props.history.push('/')
+                  })
+              })
+            })
         }
-      );
+      )
     } else {
       getCoordinates().then((coordinate) => {
-        db.collection("Donations")
+        db.collection('Donations')
           .add({
             postImageUrl: null,
             Description: description,
@@ -157,32 +157,32 @@ const PostDonation = (props) => {
             supplierCity: userInfo.City,
             supplierZipCode: userInfo.Zipcode,
             supplierCategory: userInfo.Category,
-            coordinates: coordinate,
+            coordinates: coordinate
           })
           .then(() => {
-            setUrl("");
-            setProgress(0);
-            setDescription("");
-            setImage(null);
-            setDescription("");
-            setImage("");
-            setQuantity("");
-            setPickupDate("");
-            setPickupTime("");
+            setUrl('')
+            setProgress(0)
+            setDescription('')
+            setImage(null)
+            setDescription('')
+            setImage('')
+            setQuantity('')
+            setPickupDate('')
+            setPickupTime('')
             // setUserInfo({});
             // setCoordinates([]);
-            props.history.push("/");
-          });
-      });
+            props.history.push('/')
+          })
+      })
     }
-  };
+  }
 
   if (!userInfo.id) {
     return (
       <div>
         <h2>You have to log in</h2>
       </div>
-    );
+    )
   } else {
     return (
       <div>
@@ -231,7 +231,7 @@ const PostDonation = (props) => {
             />
           </Form.Field>
           <Header as="h4" style={{ marginLeft: 30 }}>
-            {" "}
+            {' '}
             These items need to be picked up by:
           </Header>
           <Form.Field>
@@ -267,8 +267,8 @@ const PostDonation = (props) => {
         </Button>
         <Button onClick={handleClick}>Cancel</Button>
       </div>
-    );
+    )
   }
-};
+}
 
-export default PostDonation;
+export default PostDonation

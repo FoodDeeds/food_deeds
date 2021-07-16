@@ -1,7 +1,16 @@
 import React from "react";
 import { List, Header } from "semantic-ui-react";
+import { useHistory } from "react-router-dom";
 
 const Contact = () => {
+  const history = useHistory();
+
+  const handleClick = () => {
+    history.push({
+      pathname: "/faq",
+    });
+  };
+
   return (
     <List>
       <Header size="medium" style={{ marginTop: 30 }}>
@@ -28,9 +37,11 @@ const Contact = () => {
         style={{ marginLeft: 30 }}
       />
       <List.Item
+        as="a"
         icon="linkify"
-        content={<a href="www.FoodDeeds.org">Food Deeds FAQ</a>}
+        content="Food Deeds FAQ"
         color="green"
+        onClick={handleClick}
         style={{ marginLeft: 30 }}
       />
     </List>

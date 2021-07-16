@@ -121,13 +121,10 @@ const Browse = () => {
     { key: 3, text: "Deli", value: "Deli" },
     { key: 4, text: "Cafe", value: "Cafe" },
   ];
-  console.log(donations);
-
-  console.log("donations after submit>>", donations);
 
   return (
-    <div className="browse">
-      <Header style={{ marginBottom: -70, marginTop: 40 }}>
+    <div className="browse" style={{ marginLeft: 30 }}>
+      <Header style={{ marginBottom: -70, marginTop: 20 }}>
         Search Available Food by Zip Code and Category:
       </Header>
       <Form onSubmit={submit}>

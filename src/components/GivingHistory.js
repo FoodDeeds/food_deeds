@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Button, Item, Header, Segment } from "semantic-ui-react";
 import { db } from "../firebase";
-
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { green, lightGreen } from "@material-ui/core/colors";
-
 import { useHistory } from "react-router-dom";
+import Graphs from "./Graphs";
 
 const GivingHistory = (props) => {
   const userInfo = props.userInfo;
@@ -64,6 +63,9 @@ const GivingHistory = (props) => {
 
   return (
     <div>
+
+      <Graphs />
+
       <Header style={{ marginTop: 20, marginLeft: 30 }}>Giving History</Header>
       <Item.Description style={{ marginLeft: 30 }}>
         You have donated a total of {totalQty()} boxes of food. Way to go!

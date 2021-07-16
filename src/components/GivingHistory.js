@@ -74,7 +74,6 @@ const GivingHistory = (props) => {
           key={donation.id}
           style={{ width: 300, marginLeft: 30 }}
         >
-          {/* <Item.Group divided style={{ marginLeft: 30 }}> */}
           <Item>
             <br />
             <Item.Content style={{ marginTop: -20, marginBottom: 20 }}>
@@ -131,7 +130,6 @@ const GivingHistory = (props) => {
               </p>
             )}
           </Item>
-          {/* </Item.Group> */}
         </Segment>
       ))}
     </div>

@@ -16,7 +16,6 @@ const Confirmation = ({ location }) => {
     }, []);
 
     const handleCancel = () => {
-        console.log("clicked release");
         setRelease(false);
         db.collection("Donations").doc(donation.id).set(
             {

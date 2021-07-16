@@ -3,8 +3,8 @@ import { List, Header } from "semantic-ui-react";
 
 const Contact = () => {
   return (
-    <List>
-      <Header size="medium" style={{ marginTop: 30 }}>
+    <List style={{ marginLeft: 30 }}>
+      <Header size="medium" style={{ marginTop: -10 }}>
         Ready to help us fight food insecurity? Get in touch with Food Deeds
         today.
       </Header>
@@ -29,7 +29,9 @@ const Contact = () => {
       />
       <List.Item
         icon="linkify"
-        content={<a href="www.FoodDeeds.org">Food Deeds FAQ</a>}
+        content={
+          <a href="https://capstone-fooddeeds.web.app/">Food Deeds FAQ</a>
+        }
         color="green"
         style={{ marginLeft: 30 }}
       />

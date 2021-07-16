@@ -14,6 +14,7 @@ import SingleSupplier from "./components/SingleSupplier";
 import Confirmation from "./components/Confirmation";
 import NavBar from "./components/NavBar";
 import EditDonation from "./components/EditDonation";
+import Faq from "./components/Faq";
 
 const Routes = () => {
   return (
@@ -35,6 +36,7 @@ const Routes = () => {
         <Route exact path="/browse" component={Browse} />
         <Route exact path="/supplier/:id" component={SingleSupplier} />
         <Route exact path="/confirmation" component={Confirmation} />
+        <Route exact path="/faq" component={Faq}/>
       </Switch>
     </Router>
   );

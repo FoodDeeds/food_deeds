@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
-import { Header, Form, Button, Image } from "semantic-ui-react";
-import { db, storage } from "../firebase";
+import { Header, Form, Button} from "semantic-ui-react";
+import { db } from "../firebase";
 
 const EditDonation = ({ location }) => {
   const { donation } = location.state
-  console.log(donation)
-  // need to destructure location.state.donation & location.state.userInfo
   const [description, setDescription] = useState(donation.info.Description);
   const [quantity, setQuantity] = useState(donation.info.Quantity);
   const [pickupDate, setPickupDate] = useState(donation.info.PickupDate);

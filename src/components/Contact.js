@@ -18,7 +18,6 @@ const Contact = () => {
       </Header>
       <Header as="h4">
         Get in touch with Food Deeds today.</Header>
-
       <List.Item
         icon="phone"
         content="1-800-GIV-FOOD"

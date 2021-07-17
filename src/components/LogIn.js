@@ -12,7 +12,6 @@ const LogIn = (props) => {
         evt.preventDefault();
         auth.signInWithEmailAndPassword(email, password)
             .then(() => {
-                // after logged in, empty fields, redirect to home page
                 setEmail("");
                 setPassword("");
                 setError("");

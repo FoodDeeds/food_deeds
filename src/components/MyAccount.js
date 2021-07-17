@@ -6,17 +6,30 @@ import EditAccount from "./EditAccount";
 import OrderHistory from "./OrderHistory";
 import GivingHistory from "./GivingHistory";
 import { useHistory } from "react-router-dom";
-
+import notificationLogo from "../images/Logo-3.png";
 const MyAccount = () => {
   const [userInfo, setUserInfo] = useState({});
   const [editForm, setEditForm] = useState(false);
   const history = useHistory();
 
   const confirmSubscription = () => {
-    const options = {
-      body: "You have successfully subscribed to our notification service",
-    };
-    new Notification("Successfully subscribed!", options);
+    //displaying notification from service worker
+    if ("serviceWorker" in navigator) {
+      const options = {
+        body: "You have successfully subscribed to our notification service",
+        icon: notificationLogo,
+        // image: (won't be seen on mac)
+        dir: "ltr", //Text left to right
+        lang: "en-US", //Language
+        vibrate: [100, 50, 200], //vibration pattern 100 ms, pause for 50 and vibrate again for 200
+        // badge: for andriod,
+        tag: "confirm-notification", //To stack notification(one notification at a time)
+        renotify: false, // new notifications won't vibrate after the first one
+      };
+      navigator.serviceWorker.ready.then((swRegistration) => {
+        swRegistration.showNotification("Successfully subscribed!", options);
+      });
+    }
   };
   const notificationPermission = async () => {
     //To ask user for notification permission

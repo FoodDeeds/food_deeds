@@ -33,7 +33,7 @@ const RecDonations = () => {
 
   toast.configure();
   const showToast = () => {
-    toast("Please log in to reserve!", {
+    toast("Please log in to reserve a donation!", {
       position: "top-center",
       autoClose: 4000,
     });

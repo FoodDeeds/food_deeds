@@ -21,40 +21,40 @@ const Faq = () => {
       <Image.Group size="medium">
         <Segment>
           <Item attached>
+          <Link to="/volunteer">
             <Header as="h2" attached="top" textAlign="center" >
               Volunteer
             </Header>
-            <Link to="/">
               <Image src={volunteer} alt="Volunteer" centered/>
             </Link>
           </Item>
         </Segment>
         <Segment>
           <Item attached>
+          <Link to="/">
             <Header as="h2" attached="top" textAlign="center" >
               Give What You Can
             </Header>
-            <Link to="/">
             <Image style={{marginTop: 15}}  src={donation} />
             </Link>
           </Item>
         </Segment>
         <Segment>
           <Item attached>
+          <Link to="/">
             <Header as="h2" attached="top" textAlign="center">
               Upcoming Events
             </Header>
-            <Link to="/">
               <Image style={{marginTop: 15}}  src={calender} />
             </Link>
           </Item>
         </Segment>
         <Segment>
           <Item attached>
+          <Link to="/">
             <Header as="h2" attached="top" textAlign="center">
               Learn More
             </Header>
-            <Link to="/">
               <Item.Image style={{marginTop: 15}}  src={information}  centered/>
             </Link>
           </Item>

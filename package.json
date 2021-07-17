@@ -22,6 +22,7 @@
         "react-toastify": "^7.0.4",
         "semantic-ui-css": "^2.4.1",
         "semantic-ui-react": "^2.0.3",
+        "web-push": "^3.4.5",
         "web-vitals": "^0.2.4",
         "workbox-background-sync": "^5.1.4",
         "workbox-broadcast-update": "^5.1.4",
@@ -41,7 +42,8 @@
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "deploy": "npm run build && firebase deploy"
+        "deploy": "npm run build && firebase deploy",
+        "web-push": "web-push"
     },
     "eslintConfig": {
         "extends": [

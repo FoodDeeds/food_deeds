@@ -54,6 +54,7 @@ const Browse = () => {
       autoClose: 4000,
     });
   };
+
   const handleClick = (donation) => {
     if (currentUser) {
       setSelectedDonation(donation);
@@ -109,6 +110,7 @@ const Browse = () => {
   const handleCategory = async (evt, category) => {
     setCategory(category.value);
   };
+  
   const options = [
     { key: 1, text: "All", value: "All" },
     { key: 2, text: "Grocery Store", value: "Grocery Store" },

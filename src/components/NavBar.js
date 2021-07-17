@@ -82,7 +82,7 @@ const NavBar = (props) => {
                     width: 30,
                     height: 30,
                     marginBottom: 10,
-                    marginLeft: 7
+                    marginLeft: 7,
                   }}
                 />
                 {""}Deeds
@@ -176,14 +176,16 @@ const NavBar = (props) => {
               </Menu.Item>
             </Link>
             {currentUser ? (
-              <Button
-                color="green"
-                className="logout__btn"
-                onClick={handleLogout}
-                style={{ marginBottom: 10, marginTop: 10 }}
-              >
-                LOG OUT
-              </Button>
+              <>
+                <Button
+                  color="green"
+                  className="logout__btn"
+                  onClick={handleLogout}
+                  style={{ marginBottom: 10, marginTop: 10 }}
+                >
+                  LOG OUT
+                </Button>
+              </>
             ) : (
               <Item.Description style={{ color: "green" }}>
                 <Link to="/login">

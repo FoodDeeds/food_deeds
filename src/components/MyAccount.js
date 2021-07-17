@@ -12,6 +12,23 @@ const MyAccount = () => {
   const [editForm, setEditForm] = useState(false);
   const history = useHistory();
 
+  const confirmSubscription = () => {
+    const options = {
+      body: "You have successfully subscribed to our notification service",
+    };
+    new Notification("Successfully subscribed!", options);
+  };
+  const notificationPermission = async () => {
+    //To ask user for notification permission
+    await Notification.requestPermission((result) => {
+      console.log("User Choice", result);
+      if (result !== "granted") {
+        console.log("Permission not granted");
+      } else {
+        confirmSubscription();
+      }
+    });
+  };
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -84,6 +101,12 @@ const MyAccount = () => {
             <List.Item>
               <List.Header>Category:</List.Header>
               {userInfo.Category}
+            </List.Item>
+            <List.Item>
+              <List.Header>Notifications</List.Header>
+              <Button basic color="grey" onClick={notificationPermission}>
+                Enable
+              </Button>
             </List.Item>
           </List>
           <Button

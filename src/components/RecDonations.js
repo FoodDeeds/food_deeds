@@ -30,16 +30,16 @@ const RecDonations = () => {
         );
       });
   }, []);
-  useEffect(() => {
-    messaging
-      .requestPermission()
-      .then(() => {
-        return messaging.getToken();
-      })
-      .then((data) => {
-        console.warn("token", data);
-      });
-  });
+  // useEffect(() => {
+  //   messaging
+  //     .requestPermission()
+  //     .then(() => {
+  //       return messaging.getToken();
+  //     })
+  //     .then((data) => {
+  //       console.warn("token", data);
+  //     });
+  // });
   toast.configure();
   const showToast = () => {
     toast("Please log in to reserve!", {

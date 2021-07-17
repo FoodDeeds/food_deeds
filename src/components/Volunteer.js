@@ -1,24 +1,64 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Form,
   Input,
   TextArea,
   Divider,
-  Header,
   Button,
   Segment,
 } from "semantic-ui-react";
+import { db } from "../firebase";
+import { useHistory } from "react-router-dom";
 
 const Volunteer = () => {
-  // const [firstName, setFirstName] = useState("");
-  // const [lastName, setLastName] = useState("");
-  // const [address, setAddress] = useState("");
-  // const [city, setCity] = useState("");
-  // const [state, setState] = useState("");
-  // const [zipcode, setZipcode] = useState("");
-  // const [borough, setBorough] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [phone, setPhone] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [zipcode, setZipcode] = useState("");
+  const [borough, setBorough] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const history = useHistory();
+  console.log("state", state);
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+
+    db.collection("Volunteers")
+      .add({
+        firstName: firstName,
+        lastName: lastName,
+        address: address,
+        city: city,
+        state: state,
+        zipcode: zipcode,
+        borough: borough,
+        email: email,
+        phone: phone,
+        message: message,
+      })
+      .then(() => {
+        setFirstName("");
+        setLastName("");
+        setAddress("");
+        setCity("");
+        setState("");
+        setZipcode("");
+        setBorough("");
+        setEmail("");
+        setPhone("");
+        setMessage("");
+        setError("");
+        history.push("/faq");
+      })
+      .catch((error) => {
+        setError(error.message);
+      });
+  };
 
   return (
     <div>
@@ -26,28 +66,26 @@ const Volunteer = () => {
         <Form.Group widths="equal">
           <Form.Field
             required
-            control={Input}
             label="First Name"
+            control="input"
+            onChange={(evt) => setFirstName(evt.target.value)}
+            value={firstName}
             placeholder="First Name"
           />
           <Form.Field
             required
-            control={Input}
             label="Last Name"
+            control="input"
+            onChange={(evt) => setLastName(evt.target.value)}
+            value={lastName}
             placeholder="Last Name"
-          />
-          <Form.Field
-            required
-            control={Input}
-            label="Pronouns"
-            placeholder="Pronouns"
           />
         </Form.Group>
         <Form.Field
           label="Address"
           control={Input}
-          // onChange={(evt) => setAddress(evt.target.value)}
-          // value={address}
+          onChange={(evt) => setAddress(evt.target.value)}
+          value={address}
           placeholder="Address"
         />
         <Form.Group widths="equal">
@@ -55,15 +93,16 @@ const Volunteer = () => {
             required
             label="City"
             control={Input}
-            // onChange={(evt) => setCity(evt.target.value)}
-            // value={city}
+            onChange={(evt) => setCity(evt.target.value)}
+            value={city}
             placeholder="City"
           />
           <Form.Field
             required
+            placeholder="Select State"
             label="State"
             control="select"
-            placeholder="Select State"
+            onChange={(evt) => setState(evt.target.value)}
           >
             <option></option>
             <option value="Alabama">AL</option>
@@ -120,15 +159,21 @@ const Volunteer = () => {
           <Form.Field
             label="Zipcode"
             control={Input}
-            // onChange={(evt) => setAddress(evt.target.value)}
-            // value={address}
+            onChange={(evt) => setZipcode(evt.target.value)}
+            value={zipcode}
             placeholder="Zipcode"
           />
-          <Form.Field label="Borough" control="select">
+          <Form.Field
+            required
+            placeholder="Select State"
+            label="State"
+            control="select"
+            onChange={(evt) => setBorough(evt.target.value)}
+          >
             <option>Select NYC Borough</option>
             <option>Bronx</option>
             <option>Queens</option>
-            <option>Manhatten</option>
+            <option>Manhattan</option>
             <option>Brooklyn</option>
             <option>Staten Island</option>
           </Form.Field>
@@ -138,44 +183,29 @@ const Volunteer = () => {
             required
             label="Email"
             control={Input}
-            // onChange={(evt) => setEmail(evt.target.value)}
-            // value={email}
+            onChange={(evt) => setEmail(evt.target.value)}
+            value={email}
             placeholder="Email Address"
           />
           <Form.Field
             label="Phone Number"
             control={Input}
-            // onChange={(evt) => setPhone(evt.target.value)}
-            // value={phone}
+            onChange={(evt) => setPhone(evt.target.value)}
+            value={phone}
             placeholder="(xxx)-xxx-xxxx"
           />
         </Form.Group>
-        <Header as="h5">Preferred Communication Method:</Header>
-        <Form.Group>
-          <Form.Field>
-            <Form.Checkbox label="Ok to Call" />
-            <Form.Checkbox label="Ok to Email" />
-            <Form.Checkbox label="Ok to Mail" />
-            <Form.Checkbox label="Ok to Text/SMS" />
-            <Form.Checkbox label="Do not Call" />
-            <Form.Checkbox label="Do not Email" />
-            <Form.Checkbox label="Do not Mail" />
-            <Form.Checkbox label="Do not Text/SMS" />
-          </Form.Field>
-        </Form.Group>
         <Divider hidden />
         <Form.Field
-          id="form-textarea-control-opinion"
           control={TextArea}
           label="How did you hear about us?"
+          value={message}
+          onChange={(evt) => setMessage(evt.target.value)}
         />
       </Form>
       <Divider hidden />
       <Segment basic textAlign={"center"}>
-        <Button
-          positive
-          style={{textAlign: "center"}}
-        >
+        <Button onClick={handleSubmit} positive style={{ textAlign: "center" }}>
           Submit Info
         </Button>
       </Segment>

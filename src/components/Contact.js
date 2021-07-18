@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Header, Form, Button, List, Segment } from "semantic-ui-react";
+import { Header, Form, Button, List, Segment, Divider } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 import { db } from "../firebase";
 import { toast } from "react-toastify";
@@ -57,7 +57,7 @@ const Contact = () => {
 
   return (
     <div>
-      <Segment>
+      <Segment textAlign={"center"} >
         <Form>
           <Header textAlign="center" size="medium" style={{ marginTop: 30 }}>
             Ready to help us fight food insecurity?
@@ -129,6 +129,7 @@ const Contact = () => {
           />
         </List>
       </Segment>
+      <Divider />
     </div>
   );
 };

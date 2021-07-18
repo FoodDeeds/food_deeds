@@ -60,14 +60,15 @@ const Faq = () => {
           </Item>
         </Segment>
       </Image.Group>
+      <Segment basic textAlign={"center"}>
       <Button
           type="submit"
           onClick={handleBack}
           color = "orange"
-          style={{ marginLeft: "25%", marginTop: "2%", color: "white" }}
         >
           Contact Us
         </Button>
+        </Segment>
     </div>
   );
 };

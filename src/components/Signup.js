@@ -3,7 +3,31 @@ import { Link } from "react-router-dom";
 import { Form, Button } from "semantic-ui-react";
 import { auth, db } from "../firebase";
 
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
+
+const validationSchema = Yup.object().shape({
+    Type: Yup.string().required("Type is required"),
+    Category: Yup.string().required("Category is required"),
+    Name: Yup.string().required("Name is required"),
+    Phone: Yup.string().required("Phone is required"),
+    Email: Yup.string().required("Email is required").email("Email is invalid"),
+    Password: Yup.string()
+        .required("Password is required")
+        .min(6, "Password must be at least 6 characters")
+        .max(40, "Password must not exceed 40 characters"),
+    Address: Yup.string().required("Address is required"),
+    Zipcode: Yup.string().required("Zipcode is required"),
+    City: Yup.string().required("City is required"),
+    State: Yup.string().required("State is required")
+});
+
 const Signup = (props) => {
+    const { register, handleSubmit, errors } = useForm({
+        resolver: yupResolver(validationSchema)
+    });
+
     const [type, setType] = useState("Supplier");
     const [category, setCategory] = useState("");
     const [name, setName] = useState("");
@@ -17,7 +41,7 @@ const Signup = (props) => {
     const [image, setImage] = useState("");
     const [error, setError] = useState("");
 
-    const signup = (evt) => {
+    const onSubmit = (evt) => {
         evt.preventDefault();
         auth.createUserWithEmailAndPassword(email, password)
             .then((userCred) => {
@@ -62,8 +86,12 @@ const Signup = (props) => {
             <div autoComplete="off">
                 <h2>Sign up</h2>
                 <br />
-                <Form style={{ marginLeft: 5 }} autoComplete="off">
-                    <Form.Field
+                <Form
+                    onSubmit={handleSubmit(onSubmit)}
+                    style={{ marginLeft: 5 }}
+                    autoComplete="off"
+                >
+                    <Form.Input
                         label="Type"
                         control="select"
                         onChange={(evt) => setType(evt.target.value)}
@@ -71,8 +99,8 @@ const Signup = (props) => {
                     >
                         <option value="Supplier">Supplier</option>
                         <option value="Recipient">Recipient</option>
-                    </Form.Field>
-                    <Form.Field
+                    </Form.Input>
+                    <Form.Input
                         label="Category"
                         control="select"
                         onChange={(evt) => setCategory(evt.target.value)}
@@ -93,32 +121,41 @@ const Signup = (props) => {
                                 <option value="Food bank">Food Bank</option>
                             </>
                         )}
-                    </Form.Field>
-                    <Form.Field
+                        ref={register}
+                    </Form.Input>
+
+                    <Form.Input
                         label="Name"
                         control="input"
                         onChange={(evt) => setName(evt.target.value)}
                         value={name}
                         style={{ width: 350 }}
                         placeholder="Name"
+                        ref={register}
                     />
-                    <Form.Field
+                    {/* {errors.Name?.message} */}
+
+                    <Form.Input
                         label="Phone Number"
                         control="input"
                         onChange={(evt) => setPhone(evt.target.value)}
                         value={phone}
                         style={{ width: 350 }}
                         placeholder="Phone Number"
+                        ref={register}
                     />
-                    <Form.Field
+
+                    <Form.Input
                         label="Email"
                         control="input"
                         onChange={(evt) => setEmail(evt.target.value)}
                         value={email}
                         style={{ width: 350 }}
                         placeholder="Email Address"
+                        ref={register}
                     />
-                    <Form.Field
+
+                    <Form.Input
                         label="Password"
                         control="input"
                         onChange={(evt) => setPassword(evt.target.value)}
@@ -127,8 +164,9 @@ const Signup = (props) => {
                         placeholder="Password"
                         name="password"
                         type="password"
+                        ref={register}
                     />
-                    <Form.Field
+                    <Form.Input
                         label="Address"
                         control="input"
                         onChange={(evt) => setAddress(evt.target.value)}
@@ -136,29 +174,35 @@ const Signup = (props) => {
                         style={{ width: 350 }}
                         placeholder="Address"
                     />
-                    <Form.Field
+
+                    <Form.Input
                         label="Zip Code"
                         control="input"
                         onChange={(evt) => setZipcode(evt.target.value)}
                         value={zipcode}
                         style={{ width: 350 }}
                         placeholder="ZipCode"
+                        ref={register}
                     />
-                    <Form.Field
+
+                    <Form.Input
                         label="City"
                         control="input"
                         onChange={(evt) => setCity(evt.target.value)}
                         value={city}
                         style={{ width: 350 }}
                         placeholder="City"
+                        ref={register}
                     />
-                    <Form.Field
+
+                    <Form.Input
                         label="State"
                         control="select"
                         onChange={(evt) => setState(evt.target.value)}
                         value={state}
                         style={{ width: 200 }}
                         placeholder="Select State"
+                        ref={register}
                     >
                         <option></option>
                         <option value="Alabama">AL</option>
@@ -211,12 +255,15 @@ const Signup = (props) => {
                         <option value="West Virginia">WV</option>
                         <option value="Wisconsin">WI</option>
                         <option value="Wyoming">WY</option>
-                    </Form.Field>
-                    {error && <span className="error__msg">{error}</span>}
+                    </Form.Input>
+                    {errors && (
+                        <span className="error__msg">{errors.message}</span>
+                    )}
+
                     <Button
+                        type="submit"
                         control="button"
                         animated="fade"
-                        onClick={signup}
                         style={{ marginTop: 10, marginBottom: 30, width: 115 }}
                         size="small"
                         basic

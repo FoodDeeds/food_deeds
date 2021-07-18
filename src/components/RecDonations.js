@@ -31,13 +31,13 @@ const RecDonations = () => {
             });
     }, []);
 
-    toast.configure();
-    const showToast = () => {
-        toast("Please log in to reserve!", {
-            position: "top-center",
-            autoClose: 4000
-        });
-    };
+  toast.configure();
+  const showToast = () => {
+    toast("Please log in to reserve a donation!", {
+      position: "top-center",
+      autoClose: 4000,
+    });
+  };
 
     const handleClick = (donation) => {
         if (currentUser) {

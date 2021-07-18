@@ -23,7 +23,7 @@ const OrderHistory = (props) => {
 
   toast.configure();
   const showToast = () => {
-    toast("Your reservation is canceled!", {
+    toast("Your reservation is canceled", {
       position: "top-center",
       autoClose: 4000,
     });

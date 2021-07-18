@@ -14,6 +14,7 @@ import SingleSupplier from "./components/SingleSupplier";
 import Confirmation from "./components/Confirmation";
 import NavBar from "./components/NavBar";
 import EditDonation from "./components/EditDonation";
+import Volunteer from "./components/Volunteer";
 import Faq from "./components/Faq";
 
 const Routes = () => {
@@ -37,6 +38,7 @@ const Routes = () => {
         <Route exact path="/supplier/:id" component={SingleSupplier} />
         <Route exact path="/confirmation" component={Confirmation} />
         <Route exact path="/faq" component={Faq}/>
+        <Route exact path="/volunteer" component={Volunteer}/>
       </Switch>
     </Router>
   );

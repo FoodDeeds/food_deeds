@@ -10,6 +10,7 @@ const Contact = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [loader, setLoader] = useState(false);
+  const [error, setError] = useState("");
 
   const history = useHistory();
 
@@ -34,7 +35,7 @@ const Contact = () => {
         showToast();
       })
       .catch((error) => {
-        alert(error.message);
+        setError(error.message);
         setLoader(false);
       });
 
@@ -45,10 +46,13 @@ const Contact = () => {
 
   toast.configure();
   const showToast = () => {
-    toast("Your message has been submitted👍", {
-      position: "top-center",
-      autoClose: 4000,
-    });
+    toast(
+      "Your message has been submitted 👍   Please allow 2-3 business days for our team to respond.",
+      {
+        position: "top-center",
+        autoClose: 7000,
+      }
+    );
   };
 
   return (
@@ -60,18 +64,17 @@ const Contact = () => {
             <br />
             Get in touch with Food Deeds today.
           </Header>
-          <Form.Field>
+          <Form.Field required>
             <label style={{ marginLeft: 5 }}>Name</label>
             <input
-              required
               placeholder="Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              style={{width: 325, marginRight: 20 }}
+              style={{ width: 325, marginRight: 20 }}
             />
             <br />
           </Form.Field>
-          <Form.Field>
+          <Form.Field required>
             <label style={{ marginLeft: 5 }}>Email</label>
             <input
               placeholder="Email"
@@ -80,7 +83,7 @@ const Contact = () => {
               style={{ width: 325, marginRight: 30 }}
             />
           </Form.Field>
-          <Form.Field>
+          <Form.Field required>
             <label style={{ marginLeft: 5 }}>Message</label>
             <textarea
               placeholder="Message"
@@ -89,6 +92,7 @@ const Contact = () => {
               style={{ width: 325, marginRight: 30 }}
             ></textarea>
           </Form.Field>
+          {error && <span className="error__msg">{error}</span>}
         </Form>
         <br />
         <Button
@@ -118,7 +122,7 @@ const Contact = () => {
           <List.Item
             as="a"
             icon="linkify"
-            content="Food Deeds FAQ"
+            content="Get Involved FAQ"
             color="green"
             onClick={handleClick}
             style={{ marginLeft: 30 }}

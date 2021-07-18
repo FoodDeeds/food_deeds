@@ -1,6 +1,6 @@
 {
     "name": "Food Deeds",
-    "short_name": "FD",
+    "short_name": "Food Deeds",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#edeef0",

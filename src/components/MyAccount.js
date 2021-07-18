@@ -6,10 +6,12 @@ import EditAccount from "./EditAccount";
 import OrderHistory from "./OrderHistory";
 import GivingHistory from "./GivingHistory";
 import { useHistory } from "react-router-dom";
+import notificationPermission from "../utils";
 
 const MyAccount = () => {
   const [userInfo, setUserInfo] = useState({});
   const [editForm, setEditForm] = useState(false);
+  const [clicked, setClicked] = useState(true);
   const history = useHistory();
 
   useEffect(() => {
@@ -84,6 +86,31 @@ const MyAccount = () => {
             <List.Item>
               <List.Header>Category:</List.Header>
               {userInfo.Category}
+            </List.Item>
+            <List.Item>
+              <List.Header>Notifications</List.Header>
+              {clicked ? (
+                <Button
+                  basic
+                  color="grey"
+                  onClick={() => {
+                    setClicked(!clicked);
+                    notificationPermission();
+                  }}
+                >
+                  Enable
+                </Button>
+              ) : (
+                <Button
+                  basic
+                  color="grey"
+                  onClick={() => {
+                    setClicked(!clicked);
+                  }}
+                >
+                  Enabled
+                </Button>
+              )}
             </List.Item>
           </List>
           <Button

@@ -23,7 +23,6 @@ const Volunteer = () => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const history = useHistory();
-  console.log("state", state);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();

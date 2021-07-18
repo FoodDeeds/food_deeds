@@ -3,20 +3,18 @@ import { Pie } from "react-chartjs-2";
 
 const Graphs = ({ donations }) => {
   const filterDate = (month) => {
-    const julyDonation = donations.filter((july) =>
+    const monthlyDonation = donations.filter((july) =>
       july.info.PickupDate.includes(month)
     );
     let total = 0;
-    for (let i = 0; i < julyDonation.length; i++) {
-      if (julyDonation[i].info.Status !== null) {
-        let qty = julyDonation[i].info.Quantity;
+    for (let i = 0; i < monthlyDonation.length; i++) {
+      if (monthlyDonation[i].info.Status !== null) {
+        let qty = monthlyDonation[i].info.Quantity;
         total += Number.parseInt(qty);
       }
     }
     return total;
   };
-
-  console.log("july>>>", filterDate());
 
   const labels = () => {
     let result = [];
@@ -31,7 +29,8 @@ const Graphs = ({ donations }) => {
         result.push(dates[i]);
       }
     }
-    let newLabel = result.slice(-3);
+    console.log("result", result);
+    let newLabel = result.sort().slice(-3);
     return newLabel;
   };
 
@@ -61,8 +60,8 @@ const Graphs = ({ donations }) => {
             },
           ],
         }}
-        height={400}
-        width={100}
+        height={200}
+        width={200}
         options={{
           maintainAspectRatio: false,
 

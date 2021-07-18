@@ -58,7 +58,7 @@ const LogIn = (props) => {
       </Form>
       <br />
 
-      <Segment padded="'very'" textAlign={"center"}>
+      <Segment padded="very" textAlign={"center"}>
         <p style={{ textAlign: "center" }}>Don't have an account?</p>
         <Link to="signup">
           <Button basic color="grey" size="small" style={{ marginLeft: 20 }}>

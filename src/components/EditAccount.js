@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
 import "semantic-ui-css/semantic.min.css";
-import { Header, Form, Button, Image } from "semantic-ui-react";
+import {
+    Header,
+    Form,
+    Button,
+    Image,
+    Loader,
+    Segment,
+    Dimmer
+} from "semantic-ui-react";
 import { db, storage } from "../firebase";
 
 const EditAccount = ({ location }) => {
@@ -35,7 +43,7 @@ const EditAccount = ({ location }) => {
                 imagePreview.src = selectedImg;
                 imagePreview.style.display = "block";
             } else {
-                console.log("image cannot upload");
+                window.alert("image cannot upload");
             }
         }
     };
@@ -47,14 +55,13 @@ const EditAccount = ({ location }) => {
             uploadTask.on(
                 "state_changed",
                 (snapshot) => {
-                    // progress 1%...100%
                     const progress = Math.round(
                         (snapshot.bytesTransferred / snapshot.totalBytes) * 100
                     );
                     setProgress(progress);
                 },
                 (error) => {
-                    console.log(
+                    window.alert(
                         "Oh no! There was an error uploading your logo",
                         error
                     );
@@ -117,6 +124,18 @@ const EditAccount = ({ location }) => {
         handleUpdate();
     };
 
+    if (progress) {
+        return (
+            <Segment>
+                <Dimmer active inverted>
+                    <Loader inverted>Loading {progress}%</Loader>
+                </Dimmer>
+
+                <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
+            </Segment>
+        );
+    }
+
     return (
         <Form style={{ marginTop: 25 }}>
             <Header size="medium" color="green" style={{ marginLeft: 40 }}>
@@ -148,7 +167,16 @@ const EditAccount = ({ location }) => {
                             Organization Logo
                         </label>
                         <div className="imagePreview">
-                            <Image id="image-preview" alt="" />
+                            <Image
+                                id="image-preview"
+                                alt=""
+                                style={{
+                                    marginRight: 20,
+                                    marginTop: 10,
+                                    maxHeight: 250,
+                                    marginLeft: 35
+                                }}
+                            />
                         </div>
                         <Image
                             src={userInfo.Image}

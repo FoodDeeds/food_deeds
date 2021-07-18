@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { auth, db } from "../firebase";
-import { Button, Item, Header, Segment } from "semantic-ui-react";
+import {
+  Button,
+  Item,
+  Header,
+  Segment,
+  Loader,
+  Dimmer,
+  Image,
+} from "semantic-ui-react";
 import { useHistory, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -10,6 +18,7 @@ const RecDonations = () => {
   const [currentUser, setCurrentUser] = useState("");
   const [donations, setDonations] = useState([]);
   const [supplierInfo, setSupplierInfo] = useState({});
+  const [loading, setLoading] = useState(true);
   const history = useHistory();
 
   useEffect(() => {
@@ -28,12 +37,13 @@ const RecDonations = () => {
             info: doc.data(),
           }))
         );
+        setLoading(false);
       });
   }, []);
 
   toast.configure();
   const showToast = () => {
-    toast("Please log in to reserve!", {
+    toast("Please log in to reserve a donation!", {
       position: "top-center",
       autoClose: 4000,
     });
@@ -60,10 +70,28 @@ const RecDonations = () => {
       showToast();
     }
   };
-
+  
   return (
     <div>
-      <Header>Currently Available For Pick-Up</Header>
+      {loading ? (
+        <Segment>
+          <Dimmer active inverted>
+            <Loader inverted>Loading</Loader>
+          </Dimmer>
+
+          <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
+        </Segment>
+      ) : (
+        <Header 
+          textAlign="center"
+          style={{
+          fontFamily: "Alternate Gothic",
+          fontSize: 17,
+          letterSpacing: 1
+          }} 
+        >AVAILABLE DONATIONS:</Header>
+      )}
+
       {donations.map((donation) => (
         <Segment className="result" key={donation.id}>
           <Item.Group divided style={{ marginLeft: 30 }}>
@@ -97,9 +125,6 @@ const RecDonations = () => {
                   {" "}
                   Description: {donation.info.Description}
                 </Item.Description>
-                {/* removed city state zipcode from form, data needs to come from somewhere else */}
-                {/* {donation.info.City}, {donation.info.State}
-                        {donation.info.PostalCode} */}
                 <br />
               </Item.Content>
               <Button

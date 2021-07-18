@@ -23,7 +23,7 @@ const OrderHistory = (props) => {
 
   toast.configure();
   const showToast = () => {
-    toast("Your reservation is canceled!", {
+    toast("Your reservation is canceled", {
       position: "top-center",
       autoClose: 4000,
     });
@@ -42,7 +42,6 @@ const OrderHistory = (props) => {
     let total = 0;
     for (let i = 0; i < donations.length; i++) {
       let qty = donations[i].info.Quantity;
-      console.log(qty);
       total += Number.parseInt(qty);
     }
     return total;

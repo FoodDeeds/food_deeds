@@ -29,14 +29,11 @@ const Graphs = ({ donations }) => {
         result.push(dates[i]);
       }
     }
-    console.log("result", result);
     let newLabel = result.sort().slice(-3);
     return newLabel;
   };
 
   const data = labels().map((label) => filterDate(label));
-  console.log("labels", labels());
-  console.log("data", data);
   return (
     <div>
       <Pie

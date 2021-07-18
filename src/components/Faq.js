@@ -20,7 +20,7 @@ const Faq = () => {
       <Divider hidden />
       <Image.Group size="medium">
         <Segment>
-          <Item attached>
+          <Item attached="true">
           <Link to="/volunteer">
             <Header as="h2" attached="top" textAlign="center" >
               Volunteer
@@ -30,7 +30,7 @@ const Faq = () => {
           </Item>
         </Segment>
         <Segment>
-          <Item attached>
+          <Item attached="true">
           <Link to="/">
             <Header as="h2" attached="top" textAlign="center" >
               Give What You Can
@@ -40,7 +40,7 @@ const Faq = () => {
           </Item>
         </Segment>
         <Segment>
-          <Item attached>
+          <Item attached="true">
           <Link to="/">
             <Header as="h2" attached="top" textAlign="center">
               Upcoming Events
@@ -50,7 +50,7 @@ const Faq = () => {
           </Item>
         </Segment>
         <Segment>
-          <Item attached>
+          <Item attached="true">
           <Link to="/">
             <Header as="h2" attached="top" textAlign="center">
               Learn More

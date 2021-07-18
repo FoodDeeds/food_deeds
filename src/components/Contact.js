@@ -78,7 +78,7 @@ const Contact = () => {
               placeholder="Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              style={{ width: 325, marginRight: 20 }}
+              style={{ width: 325}}
             />
             <br />
           </Form.Field>
@@ -88,7 +88,7 @@ const Contact = () => {
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              style={{ width: 325, marginRight: 30 }}
+              style={{ width: 325 }}
             />
           </Form.Field>
           <Form.Field required>
@@ -97,7 +97,7 @@ const Contact = () => {
               placeholder="Message"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              style={{ width: 325, marginRight: 30 }}
+              style={{ width: 325 }}
             ></textarea>
           </Form.Field>
           {error && <span className="error__msg">{error}</span>}

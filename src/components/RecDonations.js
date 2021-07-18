@@ -70,7 +70,7 @@ const RecDonations = () => {
       showToast();
     }
   };
-
+  
   return (
     <div>
       {loading ? (
@@ -82,8 +82,16 @@ const RecDonations = () => {
           <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
         </Segment>
       ) : (
-        <Header>Currently Available For Pick-Up</Header>
+        <Header 
+          textAlign="center"
+          style={{
+          fontFamily: "Alternate Gothic",
+          fontSize: 17,
+          letterSpacing: 1
+          }} 
+        >AVAILABLE DONATIONS:</Header>
       )}
+
       {donations.map((donation) => (
         <Segment className="result" key={donation.id}>
           <Item.Group divided style={{ marginLeft: 30 }}>

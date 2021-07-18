@@ -1,31 +1,46 @@
 import React from "react";
 import RecDonations from "./RecDonations";
 import logo from "../images/Logo-2.png";
-import { Image, Header, Item, Segment } from "semantic-ui-react";
+import { Image, Header, Item, Segment, Divider } from "semantic-ui-react";
 
 const Home = () => {
   return (
     <div
       style={{
-        marginTop: "2%",
-        paddingRight: "5%",
-        paddingLeft: "5%"
+        paddingRight: "2.5%",
+        paddingLeft: "2.5%",
       }}
     >
+       <Divider hidden />
       <Image src={logo} alt="Logo" centered />
-      <Segment style={{marginTop: 30, marginBottom: 30}}>
+      <Divider hidden />
+      <Segment style={{ marginTop: 30, marginBottom: 30 }}>
         <Item attached>
-          <Header as="h3" attached="top" textAlign="center">
-            About us
+          <Header
+            attached="top"
+            textAlign="center"
+            style={{
+              fontSize: 22,
+              fontFamily: "Georgia, sans-serif",
+              border: "1px",
+              letterSpacing: 1
+            }}
+          >
+            ABOUT US
           </Header>
+          <Divider />
         </Item>
-        <Header as="h5" textAlign="center">
+        <Header
+          textAlign="center"
+          style={{ fontSize: 18, fontFamily: "Alternate Gothic", fontWeight: "normal" }}
+        >
           Each year, 40% of all edible food in the US is thrown away while 1 in
           10 households struggles with food insecurity. At Food Deeds we strive
-          to bridge the gap by connecting food banks with excess product available at 
-          grocery stores, delis, and cafes.
+          to bridge the gap by connecting food banks with excess product
+          available at grocery stores, delis, and cafes.
         </Header>
       </Segment>
+      <br/>
       <RecDonations />
     </div>
   );

@@ -164,9 +164,8 @@ const Volunteer = () => {
             placeholder="Zipcode"
           />
           <Form.Field
-            required
-            placeholder="Select State"
-            label="State"
+            placeholder="Select Borough"
+            label="Borough"
             control="select"
             onChange={(evt) => setBorough(evt.target.value)}
           >

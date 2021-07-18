@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Header, Form, Button, List, Segment, Divider } from "semantic-ui-react";
+import {
+  Header,
+  Form,
+  Button,
+  List,
+  Segment,
+  Divider,
+} from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 import { db } from "../firebase";
 import { toast } from "react-toastify";
@@ -57,15 +64,16 @@ const Contact = () => {
 
   return (
     <div>
-      <Segment textAlign={"center"} >
+      <Segment textAlign={"center"}>
         <Form>
           <Header textAlign="center" size="medium" style={{ marginTop: 30 }}>
             Ready to help us fight food insecurity?
             <br />
             Get in touch with Food Deeds today.
           </Header>
+          <br />
           <Form.Field required>
-            <label style={{ marginLeft: 5 }}>Name</label>
+            <label>Name</label>
             <input
               placeholder="Name"
               value={name}
@@ -75,7 +83,7 @@ const Contact = () => {
             <br />
           </Form.Field>
           <Form.Field required>
-            <label style={{ marginLeft: 5 }}>Email</label>
+            <label>Email</label>
             <input
               placeholder="Email"
               value={email}
@@ -84,7 +92,7 @@ const Contact = () => {
             />
           </Form.Field>
           <Form.Field required>
-            <label style={{ marginLeft: 5 }}>Message</label>
+            <label>Message</label>
             <textarea
               placeholder="Message"
               value={message}

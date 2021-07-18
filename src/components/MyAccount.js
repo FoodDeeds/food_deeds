@@ -11,6 +11,7 @@ import notificationPermission from "../utils";
 const MyAccount = () => {
   const [userInfo, setUserInfo] = useState({});
   const [editForm, setEditForm] = useState(false);
+  const [clicked, setClicked] = useState(true);
   const history = useHistory();
 
   useEffect(() => {
@@ -88,9 +89,28 @@ const MyAccount = () => {
             </List.Item>
             <List.Item>
               <List.Header>Notifications</List.Header>
-              <Button basic color="grey" onClick={notificationPermission}>
-                Enable
-              </Button>
+              {clicked ? (
+                <Button
+                  basic
+                  color="grey"
+                  onClick={() => {
+                    setClicked(!clicked);
+                    notificationPermission();
+                  }}
+                >
+                  Enable
+                </Button>
+              ) : (
+                <Button
+                  basic
+                  color="grey"
+                  onClick={() => {
+                    setClicked(!clicked);
+                  }}
+                >
+                  Enabled
+                </Button>
+              )}
             </List.Item>
           </List>
           <Button

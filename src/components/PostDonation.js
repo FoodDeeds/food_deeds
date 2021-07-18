@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { auth, db, storage } from "../firebase";
-import { Header, Form, Button, Image } from "semantic-ui-react";
+import {
+    Header,
+    Form,
+    Button,
+    Image,
+    Loader,
+    Segment,
+    Dimmer
+} from "semantic-ui-react";
 
 const PostDonation = (props) => {
     const [userInfo, setUserInfo] = useState({});
@@ -170,6 +178,18 @@ const PostDonation = (props) => {
             </div>
         );
     } else {
+        if (progress) {
+            return (
+                <Segment>
+                    <Dimmer active inverted>
+                        <Loader inverted>Loading {progress}%</Loader>
+                    </Dimmer>
+
+                    <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
+                </Segment>
+            );
+        }
+
         return (
             <div>
                 <Form>

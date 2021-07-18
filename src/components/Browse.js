@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from "react";
 import MapSearch from "./MapSearch";
-import { Button, Dropdown, Form, Header, Segment } from "semantic-ui-react";
+import {
+  Button,
+  Dropdown,
+  Form,
+  Header,
+  Segment,
+  Loader,
+  Dimmer,
+  Image,
+} from "semantic-ui-react";
 import { auth, db } from "../firebase";
 import { useHistory, Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -14,6 +23,7 @@ const Browse = () => {
   const [selectedDonation, setSelectedDonation] = useState({});
   const [currentUser, setCurrentUser] = useState("");
   const [allDonations, setAllDonations] = useState([]);
+  const [loading, setLoading] = useState(true);
   const history = useHistory();
 
   useEffect(() => {
@@ -45,6 +55,7 @@ const Browse = () => {
             info: doc.data(),
           }))
         );
+        setLoading(false);
       });
   }, [zipcode]);
   toast.configure();
@@ -110,14 +121,24 @@ const Browse = () => {
   const handleCategory = async (evt, category) => {
     setCategory(category.value);
   };
-  
+
   const options = [
     { key: 1, text: "All", value: "All" },
     { key: 2, text: "Grocery Store", value: "Grocery Store" },
     { key: 3, text: "Deli", value: "Deli" },
     { key: 4, text: "Cafe", value: "Cafe" },
   ];
+  if (loading) {
+    return (
+      <Segment>
+        <Dimmer active inverted>
+          <Loader inverted>Loading</Loader>
+        </Dimmer>
 
+        <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
+      </Segment>
+    );
+  }
   return (
     <div className="browse" style={{ marginLeft: 30 }}>
       <Header style={{ marginBottom: -70, marginTop: 20 }}>

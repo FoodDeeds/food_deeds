@@ -22,7 +22,7 @@ const Home = () => {
         <Header as="h5" textAlign="center">
           Each year, 40% of all edible food in the US is thrown away while 1 in
           10 households struggles with food insecurity. At Food Deeds we strive
-          to bridge the gap and connect food banks with excess products from
+          to bridge the gap by connecting food banks with excess product available at 
           grocery stores, delis, and cafes.
         </Header>
       </Segment>

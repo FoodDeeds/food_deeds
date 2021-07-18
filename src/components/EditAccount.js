@@ -35,7 +35,7 @@ const EditAccount = ({ location }) => {
                 imagePreview.src = selectedImg;
                 imagePreview.style.display = "block";
             } else {
-                console.log("image cannot upload");
+                window.alert("image cannot upload");
             }
         }
     };
@@ -47,14 +47,13 @@ const EditAccount = ({ location }) => {
             uploadTask.on(
                 "state_changed",
                 (snapshot) => {
-                    // progress 1%...100%
                     const progress = Math.round(
                         (snapshot.bytesTransferred / snapshot.totalBytes) * 100
                     );
                     setProgress(progress);
                 },
                 (error) => {
-                    console.log(
+                    window.alert(
                         "Oh no! There was an error uploading your logo",
                         error
                     );

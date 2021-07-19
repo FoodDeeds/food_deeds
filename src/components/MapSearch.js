@@ -12,8 +12,8 @@ const MapSearch = (props) => {
   const [viewport, setViewport] = useState({
     latitude: 40.7128,
     longitude: -74.006,
-    width: 515,
-    height: 400,
+    width: 300,
+    height: 350,
     zoom: 12,
   });
 
@@ -22,8 +22,8 @@ const MapSearch = (props) => {
       setViewport({
         latitude: donations[0].info.coordinates[1],
         longitude: donations[0].info.coordinates[0],
-        width: 515,
-        height: 400,
+        width: 300,
+        height: 350,
         zoom: 12,
       });
     }

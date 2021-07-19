@@ -1,21 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Food Deeds App</title>
         <style type="text/css">
-        </style>
-        <link rel="manifest" href="/manifest.json">
+            html {
+                height: 100%;
+            }
+            body {
+                height: 100%;
+                margin: 0;
+                background: #fff;
+                display: flex;
+                align-items: center;
+                text-align: center;
+                justify-content: center;
+            }
 
+            .overall {
+                align-items: center;
+                width: 80%;
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+                padding: 40px 8%;
+                border-radius: 20px;
+                background: rgb(115, 214, 106);
+            }
+
+            .message {
+                font-size: 2em;
+            }
+        </style>
+        <link rel="manifest" href="manifest.json" />
     </head>
+
     <body>
-        <div>
-            <h2>
-                <h3 class="text-center mdl-color-text--primary">Uh oh! Your internet connection is currently offline.</h3>
-                <span>Please go online to view Food Deeds</span>
-                <p>Feel free to navigate back to the <a href="/"> home page </a></p>
-            </h2>
+        <div class="overall">
+            <h4 class="message">
+                <p>Uh oh! You are currently offline.</p>
+                <p>
+                    Check your Internet connection, then start rescuing food at
+                    <a href="/">Food Deeds</a>.
+                </p>
+            </h4>
         </div>
     </body>
 </html>

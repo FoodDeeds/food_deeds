@@ -18,6 +18,7 @@ const RecDonations = () => {
   const [currentUser, setCurrentUser] = useState("");
   const [donations, setDonations] = useState([]);
   const [supplierInfo, setSupplierInfo] = useState({});
+  const [userInfo, setUserInfo] = useState({});
   const [loading, setLoading] = useState(true);
   const history = useHistory();
 
@@ -25,6 +26,13 @@ const RecDonations = () => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         setCurrentUser(user);
+        db.collection("SignedUpUsers")
+          .doc(user.uid)
+          .get()
+          .then((response) => {
+            const data = response.data();
+            setUserInfo(data);
+          });
       }
     });
     db.collection("Donations")
@@ -43,7 +51,7 @@ const RecDonations = () => {
 
   toast.configure();
   const showToast = () => {
-    toast("Please log in to reserve a donation!", {
+    toast("Please log in as a registered recipient to reserve a donation!", {
       position: "top-center",
       autoClose: 4000,
     });
@@ -66,8 +74,8 @@ const RecDonations = () => {
           supplierInfo,
         },
       });
-    } else {
-      showToast();
+      // } else {
+      //   showToast();
     }
   };
 
@@ -85,14 +93,14 @@ const RecDonations = () => {
         <Header
           textAlign="center"
           style={{
-          fontFamily: "Alternate Gothic",
-          fontSize: 17,
-          letterSpacing: 1.25,
-        }}
-      >
-        AVAILABLE DONATIONS:
-      </Header>
-       )}
+            fontFamily: "Alternate Gothic",
+            fontSize: 17,
+            letterSpacing: 1.25,
+          }}
+        >
+          AVAILABLE DONATIONS:
+        </Header>
+      )}
       {donations.map((donation) => (
         <Segment className="result" key={donation.id}>
           <Item.Group divided style={{ marginLeft: 30 }}>
@@ -132,18 +140,26 @@ const RecDonations = () => {
                 </Item.Description>
                 <br />
               </Item.Content>
-              <Button
-                basic
-                color="green"
-                style={{
-                  width: 100,
-                  height: 40,
-                  marginRight: 20,
-                }}
-                onClick={() => handleClick(donation)}
-              >
-                Reserve
-              </Button>
+              {userInfo.Type === "Recipient" ? (
+                <Button
+                  basic
+                  color="green"
+                  style={{ marginTop: 20 }}
+                  onClick={() => handleClick(donation)}
+                  alt=""
+                >
+                  Reserve
+                </Button>
+              ) : (
+                <Button
+                  basic
+                  color="green"
+                  style={{ marginTop: 20 }}
+                  onClick={() => showToast()}
+                >
+                  Reserve
+                </Button>
+              )}
             </Item>
           </Item.Group>
         </Segment>

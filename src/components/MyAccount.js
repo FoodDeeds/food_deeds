@@ -75,6 +75,7 @@ const MyAccount = () => {
                             <Grid.Column>
                                 <List.Item style={{ width: 300 }}>
                                     <Image
+                                    centered
                                         src={userInfo.Image}
                                         alt=""
                                         style={{ marginTop: 10 }}

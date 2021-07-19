@@ -144,7 +144,7 @@ const RecDonations = () => {
               {userInfo.Type === "Recipient" ? (
                 <Button
                   basic
-                  color="green"
+                  positive
                   style={{ marginTop: 20 }}
                   onClick={() => handleClick(donation)}
                   alt=""
@@ -154,7 +154,7 @@ const RecDonations = () => {
               ) : (
                 <Button
                   basic
-                  color="green"
+                  positive
                   style={{ marginTop: 20 }}
                   onClick={() => showToast()}
                 >

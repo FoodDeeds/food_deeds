@@ -42,7 +42,7 @@ const Confirmation = ({ location }) => {
 
   return (
     <div>
-      <Segment textAlign={"center"}>
+      <Segment textAlign={"center"} vertical>
         <Grid textAlign={"center"} padded="very">
           <Segment padded="very" attached="top" textAlign="center">
             {release === true ? (
@@ -80,15 +80,14 @@ const Confirmation = ({ location }) => {
                 Reserve
               </Button>
             )}
-          </Segment>
-        </Grid>
-        <Divider hidden />
-        <Segment padded="very">
-          <Link to="signup">
+             <Link to="/account">
+               <Divider hidden />
             <Button color="grey">Go to My Account</Button>
           </Link>
-        </Segment>
-        <Divider hidden />
+          </Segment>
+
+        </Grid>
+
       </Segment>
     </div>
   );

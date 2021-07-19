@@ -64,6 +64,7 @@ const Signup = (props) => {
                 <br />
                 <Form style={{ marginLeft: 5 }} autoComplete="off">
                     <Form.Field
+                        required
                         label="Type"
                         control="select"
                         onChange={(evt) => setType(evt.target.value)}
@@ -73,6 +74,7 @@ const Signup = (props) => {
                         <option value="Recipient">Recipient</option>
                     </Form.Field>
                     <Form.Field
+                        required
                         label="Category"
                         control="select"
                         onChange={(evt) => setCategory(evt.target.value)}
@@ -95,6 +97,7 @@ const Signup = (props) => {
                         )}
                     </Form.Field>
                     <Form.Field
+                        required
                         label="Name"
                         control="input"
                         onChange={(evt) => setName(evt.target.value)}
@@ -103,6 +106,7 @@ const Signup = (props) => {
                         placeholder="Name"
                     />
                     <Form.Field
+                        required
                         label="Phone Number"
                         control="input"
                         onChange={(evt) => setPhone(evt.target.value)}
@@ -111,6 +115,7 @@ const Signup = (props) => {
                         placeholder="Phone Number"
                     />
                     <Form.Field
+                        required
                         label="Email"
                         control="input"
                         onChange={(evt) => setEmail(evt.target.value)}
@@ -119,6 +124,7 @@ const Signup = (props) => {
                         placeholder="Email Address"
                     />
                     <Form.Field
+                        required
                         label="Password"
                         control="input"
                         onChange={(evt) => setPassword(evt.target.value)}
@@ -129,6 +135,7 @@ const Signup = (props) => {
                         type="password"
                     />
                     <Form.Field
+                        required
                         label="Address"
                         control="input"
                         onChange={(evt) => setAddress(evt.target.value)}
@@ -137,6 +144,7 @@ const Signup = (props) => {
                         placeholder="Address"
                     />
                     <Form.Field
+                        required
                         label="Zip Code"
                         control="input"
                         onChange={(evt) => setZipcode(evt.target.value)}
@@ -145,6 +153,7 @@ const Signup = (props) => {
                         placeholder="ZipCode"
                     />
                     <Form.Field
+                        required
                         label="City"
                         control="input"
                         onChange={(evt) => setCity(evt.target.value)}
@@ -153,6 +162,7 @@ const Signup = (props) => {
                         placeholder="City"
                     />
                     <Form.Field
+                        required
                         label="State"
                         control="select"
                         onChange={(evt) => setState(evt.target.value)}

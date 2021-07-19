@@ -124,6 +124,7 @@ const MyAccount = () => {
           <GivingHistory userInfo={userInfo} />
         )}
       </Segment>
+      <Divider />
     </div>
   );
 };

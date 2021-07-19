@@ -141,14 +141,11 @@ const Browse = () => {
 
   return (
     <div className="browse" style={{ marginLeft: 30 }}>
-      <Header style={{ marginBottom: -70, marginTop: 20 }}>
-        Search Available Food by Zip Code and Category:
-      </Header>
       <Form onSubmit={submit}>
-        <Form.Group width="equal">
+        <Form.Group widths="equal">
           <div
             style={{
-              marginTop: 80,
+              marginTop: -15,
             }}
           >
             <input

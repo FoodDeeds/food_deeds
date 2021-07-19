@@ -70,7 +70,7 @@ const RecDonations = () => {
       showToast();
     }
   };
-  
+
   return (
     <div>
       {loading ? (
@@ -82,16 +82,17 @@ const RecDonations = () => {
           <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
         </Segment>
       ) : (
-        <Header 
+        <Header
           textAlign="center"
           style={{
           fontFamily: "Alternate Gothic",
           fontSize: 17,
-          letterSpacing: 1
-          }} 
-        >AVAILABLE DONATIONS:</Header>
-      )}
-
+          letterSpacing: 1.25,
+        }}
+      >
+        AVAILABLE DONATIONS:
+      </Header>
+       )}
       {donations.map((donation) => (
         <Segment className="result" key={donation.id}>
           <Item.Group divided style={{ marginLeft: 30 }}>
@@ -99,19 +100,23 @@ const RecDonations = () => {
               <br />
               {donation.info.postImageUrl ? (
                 <Item.Image
+                  as="a"
                   src={donation.info.postImageUrl}
                   alt=""
+                  href={`/supplier/${donation.info.supplierId}`}
                   style={{ marginRight: 70, marginTop: 10 }}
                 />
               ) : (
                 <Item.Image
+                  as="a"
                   src={post}
                   alt=""
+                  href={`/supplier/${donation.info.supplierId}`}
                   style={{ marginRight: 70, marginTop: 10 }}
                 />
               )}
               <br />
-              <Item.Content style={{}}>
+              <Item.Content>
                 <Link to={`/supplier/${donation.info.supplierId}`}>
                   <Item.Header as="a">{donation.info.supplierName}</Item.Header>
                 </Link>

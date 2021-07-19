@@ -42,6 +42,7 @@ const Home = () => {
       </Segment>
       <br/>
       <RecDonations />
+      <Divider />
     </div>
   );
 };

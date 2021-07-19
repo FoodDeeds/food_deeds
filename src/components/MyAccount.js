@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { auth, db } from "../firebase";
 import "semantic-ui-css/semantic.min.css";
-import { Button, List, Image } from "semantic-ui-react";
+import {
+  Button,
+  List,
+  Image,
+  Loader,
+  Dimmer,
+  Segment,
+} from "semantic-ui-react";
 import EditAccount from "./EditAccount";
 import OrderHistory from "./OrderHistory";
 import GivingHistory from "./GivingHistory";
@@ -12,6 +19,7 @@ const MyAccount = () => {
   const [userInfo, setUserInfo] = useState({});
   const [editForm, setEditForm] = useState(false);
   const [clicked, setClicked] = useState(true);
+  const [loading, setLoading] = useState(true);
   const history = useHistory();
 
   useEffect(() => {
@@ -24,6 +32,7 @@ const MyAccount = () => {
           .then((response) => {
             const data = response.data();
             setUserInfo(data);
+            setLoading(false);
           });
       } else {
         setUserInfo({});
@@ -40,7 +49,19 @@ const MyAccount = () => {
       },
     });
   };
+  if (loading) {
+    return (
+      <div>
+        <Segment>
+          <Dimmer active inverted>
+            <Loader inverted>Loading</Loader>
+          </Dimmer>
 
+          <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
+        </Segment>
+      </div>
+    );
+  }
   return (
     <div>
       {editForm ? (

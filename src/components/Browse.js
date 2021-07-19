@@ -141,41 +141,48 @@ const Browse = () => {
 
   return (
     <div className="browse" style={{ marginLeft: 30 }}>
-      <Header style={{ marginBottom: -70, marginTop: 20 }}>
-        Search Available Food by Zip Code and Category:
-      </Header>
       <Form onSubmit={submit}>
-        <Form.Group width="equal">
-          <input
-            type="text"
-            required
-            onChange={(evt) => setZipcode(evt.target.value)}
-            placeholder="Zip Code"
+        <Form.Group widths="equal">
+          <div
             style={{
-              width: 200,
-              marginLeft: 10,
-              marginTop: 100,
+              marginTop: -15,
             }}
-          />
-          <Dropdown
-            clearable
-            options={options}
-            selection
-            placeholder="Category"
-            onChange={handleCategory}
-            style={{
-              marginLeft: 10,
-              marginTop: 100,
-            }}
-          />
-          <Button
-            type="submit"
-            basic
-            color="green"
-            style={{ width: 85, marginLeft: 20, marginTop: 100 }}
           >
-            Search
-          </Button>
+            <input
+              type="text"
+              required
+              onChange={(evt) => setZipcode(evt.target.value)}
+              placeholder="Zip Code"
+              style={{
+                width: 200,
+                marginLeft: 10,
+                marginTop: 20,
+              }}
+            />
+            <Dropdown
+              clearable
+              options={options}
+              selection
+              placeholder="Category"
+              onChange={handleCategory}
+              style={{
+                marginLeft: 10,
+                marginTop: 20,
+              }}
+            />
+            <Button
+              type="submit"
+              basic
+              color="green"
+              style={{
+                width: 85,
+                marginLeft: 20,
+                marginTop: 20,
+              }}
+            >
+              Search
+            </Button>
+          </div>
         </Form.Group>
       </Form>
       <br />
@@ -203,7 +210,7 @@ const Browse = () => {
               <Segment
                 className="result"
                 key={donation.id}
-                style={{ width: 300 }}
+                style={{ width: 300, marginTop: 30 }}
               >
                 <p>
                   <Link to={`/supplier/${donation.info.supplierId}`}>
@@ -233,7 +240,7 @@ const Browse = () => {
               <Segment
                 className="result"
                 key={allDonation.id}
-                style={{ width: 300 }}
+                style={{ width: 300, marginTop: 30 }}
               >
                 <p>
                   <Link to={`/supplier/${allDonation.info.supplierId}`}>

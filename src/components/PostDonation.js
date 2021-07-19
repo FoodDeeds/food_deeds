@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { auth, db, storage } from "../firebase";
-import { Header, Form, Button, Image } from "semantic-ui-react";
+import {
+    Header,
+    Form,
+    Button,
+    Image,
+    Loader,
+    Segment,
+    Dimmer
+} from "semantic-ui-react";
 
 const PostDonation = (props) => {
     const [userInfo, setUserInfo] = useState({});
@@ -170,13 +178,25 @@ const PostDonation = (props) => {
             </div>
         );
     } else {
+        if (progress) {
+            return (
+                <Segment>
+                    <Dimmer active inverted>
+                        <Loader inverted>Loading {progress}%</Loader>
+                    </Dimmer>
+
+                    <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
+                </Segment>
+            );
+        }
+
         return (
             <div>
                 <Form>
                     <Header as="h2" color="green" style={{ marginLeft: 35 }}>
                         Post A New Donation
                     </Header>
-                    <Form.Field>
+                    <Form.Field required>
                         <label style={{ marginLeft: 25 }}>Description</label>
                         <input
                             required
@@ -230,7 +250,7 @@ const PostDonation = (props) => {
                             }}
                         />
                     </Form.Field>
-                    <Form.Field>
+                    <Form.Field required>
                         <label style={{ marginLeft: 25 }}>Quantity</label>
                         <input
                             placeholder="Number of Boxes"
@@ -247,7 +267,7 @@ const PostDonation = (props) => {
                         {" "}
                         These items need to be picked up by:
                     </Header>
-                    <Form.Field>
+                    <Form.Field required>
                         <label style={{ marginLeft: 25 }}>Date</label>
                         <input
                             type="date"
@@ -262,7 +282,7 @@ const PostDonation = (props) => {
                         />
                         <br />
                     </Form.Field>
-                    <Form.Field>
+                    <Form.Field required>
                         <label style={{ marginLeft: 25 }}>Time</label>
                         <input
                             type="time"

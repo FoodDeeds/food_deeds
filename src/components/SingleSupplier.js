@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Button, Header, Segment, Item } from "semantic-ui-react";
+import {
+    Button,
+    Header,
+    Segment,
+    Item,
+    Dimmer,
+    Loader,
+    Image
+} from "semantic-ui-react";
 import { auth, db } from "../firebase";
 import { useHistory } from "react-router-dom";
 import defaultIcon from "../images/Logo-2.png";
@@ -13,6 +21,7 @@ const SingleSupplier = (props) => {
     const [confirmation, setConfirmation] = useState(false);
     const [currentUser, setCurrentUser] = useState("");
     const [userInfo, setUserInfo] = useState({});
+    const [loading, setLoading] = useState(true);
 
     const history = useHistory();
 
@@ -49,6 +58,7 @@ const SingleSupplier = (props) => {
                         info: doc.data()
                     }))
                 );
+                setLoading(false);
             });
     }, [props.match.params.id]);
 
@@ -91,6 +101,19 @@ const SingleSupplier = (props) => {
         }
     };
 
+    if (loading) {
+        return (
+            <div>
+                <>
+                    <Dimmer active inverted>
+                        <Loader inverted>Loading</Loader>
+                    </Dimmer>
+
+                    <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
+                </>
+            </div>
+        );
+    }
     return (
         <div
             style={{
@@ -119,7 +142,7 @@ const SingleSupplier = (props) => {
                 <p>
                     {supplierInfo.Address}
                     <br />
-                    {supplierInfo.City}, {supplierInfo.State},{" "}
+                    {supplierInfo.City}, {supplierInfo.State}{" "}
                     {supplierInfo.Zipcode}
                 </p>
                 <p>{supplierInfo.Phone}</p>

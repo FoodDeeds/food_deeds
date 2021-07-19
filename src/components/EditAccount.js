@@ -21,6 +21,7 @@ const EditAccount = ({ location }) => {
     const [email, setEmail] = useState(userInfo.Email);
     const [password, setPassword] = useState(userInfo.Password);
     const [address, setAddress] = useState(userInfo.Address);
+    const [city, setCity] = useState(userInfo.City);
     const [zipcode, setZipcode] = useState(userInfo.Zipcode);
     const [state, setState] = useState(userInfo.State);
     const [image, setImage] = useState("");
@@ -84,6 +85,7 @@ const EditAccount = ({ location }) => {
                                     Email: email,
                                     Password: password,
                                     Address: address,
+                                    City: city,
                                     Zipcode: zipcode,
                                     State: state
                                 })
@@ -107,6 +109,7 @@ const EditAccount = ({ location }) => {
                         Email: email,
                         Password: password,
                         Address: address,
+                        City: city,
                         Zipcode: zipcode,
                         State: state
                     },
@@ -237,6 +240,15 @@ const EditAccount = ({ location }) => {
                     placeholder="Address"
                     value={address}
                     onChange={(evt) => setAddress(evt.target.value)}
+                    style={{ marginLeft: 30, width: 300 }}
+                />
+            </Form.Field>
+            <Form.Field>
+                <label style={{ marginLeft: 33 }}>City</label>
+                <input
+                    placeholder="City"
+                    value={city}
+                    onChange={(evt) => setCity(evt.target.value)}
                     style={{ marginLeft: 30, width: 300 }}
                 />
             </Form.Field>

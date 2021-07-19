@@ -15,12 +15,12 @@ import {
 import OrderHistory from "./OrderHistory";
 import GivingHistory from "./GivingHistory";
 import { useHistory } from "react-router-dom";
-import notificationPermission from "../utils";
+// import notificationPermission from "../utils";
 
 const MyAccount = () => {
     const [userInfo, setUserInfo] = useState({});
     const [editForm, setEditForm] = useState(false);
-    const [clicked, setClicked] = useState(true);
+    // const [clicked, setClicked] = useState(true);
     const [loading, setLoading] = useState(true);
     const history = useHistory();
 
@@ -120,10 +120,10 @@ const MyAccount = () => {
                                 </List.Item>
                             </Grid.Column>
                             <List.Item>
-                                <List.Header style={{ marginTop: 20 }}>
+                                {/* <List.Header style={{ marginTop: 20 }}>
                                     Notifications
-                                </List.Header>
-                                {clicked ? (
+                                </List.Header> */}
+                                {/* {clicked ? (
                                     <Button
                                         basic
                                         color="grey"
@@ -144,7 +144,7 @@ const MyAccount = () => {
                                     >
                                         Enabled
                                     </Button>
-                                )}
+                                )} */}
                             </List.Item>
                         </List>
                     </Grid>

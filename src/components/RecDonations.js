@@ -91,10 +91,11 @@ const RecDonations = () => {
         </Segment>
       ) : (
         <Header
+          size="medium"
+          color="green"
           textAlign="center"
           style={{
             fontFamily: "Alternate Gothic",
-            fontSize: 17,
             letterSpacing: 1.25,
           }}
         >
@@ -143,7 +144,7 @@ const RecDonations = () => {
               {userInfo.Type === "Recipient" ? (
                 <Button
                   basic
-                  color="green"
+                  positive
                   style={{ marginTop: 20 }}
                   onClick={() => handleClick(donation)}
                   alt=""
@@ -153,7 +154,7 @@ const RecDonations = () => {
               ) : (
                 <Button
                   basic
-                  color="green"
+                  positive
                   style={{ marginTop: 20 }}
                   onClick={() => showToast()}
                 >

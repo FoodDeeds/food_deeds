@@ -6,6 +6,7 @@ import {
   Divider,
   Button,
   Segment,
+  Header
 } from "semantic-ui-react";
 import { db } from "../firebase";
 import { useHistory } from "react-router-dom";
@@ -61,8 +62,9 @@ const Volunteer = () => {
 
   return (
     <div>
+      <Segment padded="very">
       <Form>
-        <Form.Group widths="equal">
+        <Form.Group widths="equal" >
           <Form.Field
             required
             label="First Name"
@@ -206,6 +208,7 @@ const Volunteer = () => {
         <Button onClick={handleSubmit} positive style={{ textAlign: "center" }}>
           Submit Info
         </Button>
+      </Segment>
       </Segment>
     </div>
   );

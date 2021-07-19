@@ -18,14 +18,14 @@ const Faq = () => {
     <div>
       <Header  textAlign="center" >“Alone we can do so little; together we can do so much”</Header>
       <Divider hidden />
-      <Image.Group size="medium">
+      <Image.Group size="medium" >
         <Segment>
           <Item attached="true">
           <Link to="/volunteer">
             <Header as="h2" attached="top" textAlign="center" >
               Volunteer
             </Header>
-              <Image src={volunteer} alt="Volunteer" centered/>
+            <Image centered src={volunteer} alt="Volunteer" />
             </Link>
           </Item>
         </Segment>

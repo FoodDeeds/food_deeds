@@ -91,10 +91,11 @@ const RecDonations = () => {
         </Segment>
       ) : (
         <Header
+          size="medium"
+          color="green"
           textAlign="center"
           style={{
             fontFamily: "Alternate Gothic",
-            fontSize: 17,
             letterSpacing: 1.25,
           }}
         >

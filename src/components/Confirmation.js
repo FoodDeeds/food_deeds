@@ -63,8 +63,8 @@ const Confirmation = ({ location }) => {
             <Grid.Row> Quantity: {donation.info.Quantity} boxes</Grid.Row>
             <Grid.Row> Pick-up time: {donation.info.PickupTime}</Grid.Row>
             <br />
-            <Grid.Row>Supplier Name: {donation.info.supplierName} </Grid.Row>
-            <Grid.Row>Address: {donation.info.supplierAddress} </Grid.Row>
+            <Grid.Row> Supplier Name: {donation.info.supplierName} </Grid.Row>
+            <Grid.Row> Address: {donation.info.supplierAddress} </Grid.Row>
             <Grid.Row>
               {donation.info.supplierCity}
               {donation.info.supplierState}, {donation.info.supplierZipCode}

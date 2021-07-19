@@ -112,7 +112,7 @@ const Signup = (props) => {
                         onChange={(evt) => setPhone(evt.target.value)}
                         value={phone}
                         style={{ width: 350 }}
-                        placeholder="Phone Number"
+                        placeholder="(xxx)-xxx-xxxx"
                     />
                     <Form.Field
                         required

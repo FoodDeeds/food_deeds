@@ -8,32 +8,31 @@ const Home = () => {
     <div
       style={{
         paddingRight: "2.5%",
-        paddingLeft: "2.5%"
+        paddingLeft: "2.5%",
       }}
     >
-        <Divider />
-      <Segment padded="very" vertical >
+      <Divider />
+      <Segment padded="very" vertical>
         <Item attached>
-        <Image src={logo} alt="Logo" centered />
-        <Header
-          textAlign="center"
-          style={{
-            fontFamily: "Georgia, sans-serif",
-            letterSpacing: 1.25,
-            fontSize: 18,
-            marginLeft: 25,
-            marginRight: 25
-          }}
-        >
-          Each year, 40% of all edible food in the US is thrown away while 1 in
-          10 households struggles with food insecurity. At Food Deeds we strive
-          to bridge the gap by connecting food banks with excess product
-          available at grocery stores, delis, and cafes.
-        </Header>
+          <Image src={logo} alt="Logo" centered />
+          <Header
+            textAlign="center"
+            style={{
+              fontFamily: "Georgia, sans-serif",
+              letterSpacing: 1.25,
+              fontSize: "16px",
+              marginLeft: 25,
+              marginRight: 25,
+            }}
+          >
+            Each year, 40% of all edible food in the US is thrown away while 1
+            in 10 households struggles with food insecurity. At Food Deeds we
+            strive to bridge the gap by connecting food banks with excess
+            product available at grocery stores, delis, and cafes.
+          </Header>
         </Item>
       </Segment>
-
-      <Divider hidden/>
+      <Divider hidden />
       <RecDonations />
       <Divider />
     </div>

@@ -16,6 +16,7 @@ import NavBar from "./components/NavBar";
 import EditDonation from "./components/EditDonation";
 import Volunteer from "./components/Volunteer";
 import Faq from "./components/Faq";
+import Progress from "./components/InProgress";
 
 const Routes = () => {
   return (
@@ -38,6 +39,7 @@ const Routes = () => {
         <Route exact path="/supplier/:id" component={SingleSupplier} />
         <Route exact path="/confirmation" component={Confirmation} />
         <Route exact path="/faq" component={Faq}/>
+        <Route exact path="/progress" component={Progress}/>
         <Route exact path="/volunteer" component={Volunteer}/>
       </Switch>
     </Router>

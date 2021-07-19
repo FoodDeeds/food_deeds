@@ -1,5 +1,12 @@
 import React from "react";
-import { Divider, Image, Header, Item, Segment, Button } from "semantic-ui-react";
+import {
+  Divider,
+  Image,
+  Header,
+  Item,
+  Segment,
+  Button,
+} from "semantic-ui-react";
 import donation from "../images/donation.png";
 import volunteer from "../images/volunteer.png";
 import calender from "../images/calender.jpg";
@@ -16,59 +23,69 @@ const Faq = () => {
 
   return (
     <div>
-      <Header  textAlign="center" >“Alone we can do so little; together we can do so much”</Header>
+      <Header
+        textAlign="center"
+        style={{
+          fontFamily: "Georgia, serif",
+          fontStyle: "italic",
+          fontSize: "20px",
+          marginTop: "1%",
+        }}
+      >
+        “Alone we can do so little; <br /> together we can do so much”
+      </Header>
       <Divider hidden />
-      <Image.Group size="medium" >
-        <Segment>
+      <Image.Group size="medium">
+        <Segment vertical>
           <Item attached="true">
-          <Link to="/volunteer">
-            <Header as="h2" attached="top" textAlign="center" >
-              Volunteer
-            </Header>
-            <Image centered src={volunteer} alt="Volunteer" />
+            <Link to="/volunteer">
+              <Header as="h2" attached="top" textAlign="center">
+                Volunteer
+              </Header>
+              <Image centered src={volunteer} alt="Volunteer" />
             </Link>
           </Item>
         </Segment>
-        <Segment>
+        <Segment vertical>
           <Item attached="true">
-          <Link to="/">
-            <Header as="h2" attached="top" textAlign="center" >
-              Give What You Can
-            </Header>
-            <Image style={{marginTop: 15}}  src={donation} />
+            <Link to="/progress">
+              <Header as="h2" attached="top" textAlign="center">
+                Give What You Can
+              </Header>
+              <Image style={{ marginTop: 15 }} src={donation} />
             </Link>
           </Item>
         </Segment>
-        <Segment>
+        <Segment vertical>
           <Item attached="true">
-          <Link to="/">
-            <Header as="h2" attached="top" textAlign="center">
-              Upcoming Events
-            </Header>
-              <Image style={{marginTop: 15}}  src={calender} />
+            <Link to="/progress">
+              <Header as="h2" attached="top" textAlign="center">
+                Upcoming Events
+              </Header>
+              <Image style={{ marginTop: 15 }} src={calender} />
             </Link>
           </Item>
         </Segment>
-        <Segment>
+        <Segment vertical>
           <Item attached="true">
-          <Link to="/">
-            <Header as="h2" attached="top" textAlign="center">
-              Learn More
-            </Header>
-              <Item.Image style={{marginTop: 15}}  src={information}  centered/>
+            <Link to="/progress">
+              <Header as="h2" attached="top" textAlign="center">
+                Learn More
+              </Header>
+              <Item.Image
+                style={{ marginTop: 15 }}
+                src={information}
+                centered
+              />
             </Link>
           </Item>
         </Segment>
       </Image.Group>
       <Segment basic textAlign={"center"}>
-      <Button
-          type="submit"
-          onClick={handleBack}
-          color = "orange"
-        >
+        <Button type="submit" onClick={handleBack} color="orange">
           Contact Us
         </Button>
-        </Segment>
+      </Segment>
     </div>
   );
 };

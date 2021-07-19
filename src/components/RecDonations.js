@@ -141,26 +141,28 @@ const RecDonations = () => {
                 </Item.Description>
                 <br />
               </Item.Content>
-              {userInfo.Type === "Recipient" ? (
-                <Button
-                  basic
-                  positive
-                  style={{ marginTop: 20 }}
-                  onClick={() => handleClick(donation)}
-                  alt=""
-                >
-                  Reserve
-                </Button>
-              ) : (
-                <Button
-                  basic
-                  positive
-                  style={{ marginTop: 20 }}
-                  onClick={() => showToast()}
-                >
-                  Reserve
-                </Button>
-              )}
+              <Segment vertical>
+                {userInfo.Type === "Recipient" ? (
+                  <Button
+                    basic
+                    positive
+                    style={{ marginTop: 20 }}
+                    onClick={() => handleClick(donation)}
+                    alt=""
+                  >
+                    Reserve
+                  </Button>
+                ) : (
+                  <Button
+                    basic
+                    positive
+                    style={{ marginTop: 20 }}
+                    onClick={() => showToast()}
+                  >
+                    Reserve
+                  </Button>
+                )}
+              </Segment>
             </Item>
           </Item.Group>
         </Segment>

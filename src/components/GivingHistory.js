@@ -63,16 +63,16 @@ const GivingHistory = (props) => {
   return (
     <div>
       <Graphs donations={donations} />
-
-      <Header style={{ marginTop: 20, marginLeft: 30 }}>Giving History</Header>
-      <Item.Description style={{ marginLeft: 30 }}>
+      <Header style={{ letterSpacing: 1 }}>GIVING HISTORY</Header>
+      <Item.Description>
         You have donated a total of {totalQty()} boxes of food. Way to go!
       </Item.Description>
       {donations.map((donation) => (
         <Segment
+          padded="very"
+          textAlign={"center"}
           className="result"
           key={donation.id}
-          style={{ width: 300, marginLeft: 30 }}
         >
           <Item>
             <br />
@@ -95,7 +95,6 @@ const GivingHistory = (props) => {
                   style={{
                     width: 100,
                     height: 35,
-                    marginRight: 20,
                   }}
                 >
                   Canceled
@@ -110,7 +109,6 @@ const GivingHistory = (props) => {
                   style={{
                     width: 100,
                     height: 35,
-                    marginRight: 20,
                   }}
                 >
                   Edit
@@ -122,7 +120,6 @@ const GivingHistory = (props) => {
                   style={{
                     width: 100,
                     height: 35,
-                    marginRight: 20,
                   }}
                 >
                   Cancel

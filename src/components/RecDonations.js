@@ -68,7 +68,7 @@ const RecDonations = () => {
         style={{
           fontFamily: "Alternate Gothic",
           fontSize: 17,
-          letterSpacing: 1
+          letterSpacing: 1.25,
         }}
       >
         AVAILABLE DONATIONS:
@@ -80,19 +80,23 @@ const RecDonations = () => {
               <br />
               {donation.info.postImageUrl ? (
                 <Item.Image
+                  as="a"
                   src={donation.info.postImageUrl}
                   alt=""
+                  href={`/supplier/${donation.info.supplierId}`}
                   style={{ marginRight: 70, marginTop: 10 }}
                 />
               ) : (
                 <Item.Image
+                  as="a"
                   src={post}
                   alt=""
+                  href={`/supplier/${donation.info.supplierId}`}
                   style={{ marginRight: 70, marginTop: 10 }}
                 />
               )}
               <br />
-              <Item.Content style={{}}>
+              <Item.Content>
                 <Link to={`/supplier/${donation.info.supplierId}`}>
                   <Item.Header as="a">{donation.info.supplierName}</Item.Header>
                 </Link>

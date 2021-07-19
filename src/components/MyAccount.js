@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { auth, db } from "../firebase";
 import "semantic-ui-css/semantic.min.css";
-import { Button, List, Image } from "semantic-ui-react";
+import {
+  Button,
+  List,
+  Image,
+  Divider,
+  Segment,
+  Grid,
+  Header,
+} from "semantic-ui-react";
 import EditAccount from "./EditAccount";
 import OrderHistory from "./OrderHistory";
 import GivingHistory from "./GivingHistory";
@@ -45,61 +53,77 @@ const MyAccount = () => {
         <EditAccount userInfo={userInfo} />
       ) : (
         <div>
-          <List style={{ marginLeft: 30, width: 300 }}>
-            <List.Item style={{ width: 300 }}>
-              <Image
-                src={userInfo.Image}
-                alt=""
-                style={{ marginRight: 20, marginTop: 10 }}
-              />
-            </List.Item>
-            <List.Item style={{ marginTop: 25 }}>
-              <List.Header>Name:</List.Header>
-              {userInfo.Name}
-            </List.Item>
-            <List.Item>
-              <List.Header>Email:</List.Header>
-              {userInfo.Email}
-            </List.Item>
-            <List.Item>
-              <List.Header>Phone:</List.Header>
-              {userInfo.Phone}
-            </List.Item>
-            <List.Item>
-              <List.Header>Address:</List.Header>
-              {userInfo.Address}
-            </List.Item>
-            <List.Item>
-              <List.Header>State:</List.Header>
-              {userInfo.State}
-            </List.Item>
-            <List.Item>
-              <List.Header>Zipcode:</List.Header>
-              {userInfo.Zipcode}
-            </List.Item>
-            <List.Item>
-              <List.Header>Type:</List.Header>
-              {userInfo.Type}
-            </List.Item>
-            <List.Item>
-              <List.Header>Category:</List.Header>
-              {userInfo.Category}
-            </List.Item>
-          </List>
-          <Button
-            color="green"
-            onClick={handleEdit}
-            style={{ marginLeft: 50, marginTop: 15, width: 250 }}
-          >
-            Edit Account
-          </Button>
+          <Segment>
+            <Grid centered columns={2}>
+              <List>
+                <Grid.Column>
+                  <List.Item style={{ width: 300 }}>
+                    <Image
+                      src={userInfo.Image}
+                      alt=""
+                      style={{ marginTop: 10 }}
+                    />
+                  </List.Item>
+                </Grid.Column>
+                <Grid.Column>
+                  <List.Item style={{ marginTop: 20 }}>
+                    <Header as="h4" style={{ marginRight: 25 }}>
+                      Name:
+                    </Header>
+                    {userInfo.Name}
+                  </List.Item>
+                  <List.Item style={{ marginTop: 20 }}>
+                    <Header as="h4">Email:</Header>
+                    {userInfo.Email}
+                  </List.Item>
+                  <List.Item style={{ marginTop: 20 }}>
+                    <Header as="h4">Phone:</Header>
+                    {userInfo.Phone}
+                  </List.Item>
+                  <List.Item style={{ marginTop: 20 }}>
+                    <Header as="h4">Address:</Header>
+                    {userInfo.Address}
+                  </List.Item>
+                  <List.Item style={{ marginTop: 20 }}>
+                    <Header as="h4">State:</Header>
+                    {userInfo.State}
+                  </List.Item>
+                  <List.Item style={{ marginTop: 20 }}>
+                    <Header as="h4">Zipcode:</Header>
+                    {userInfo.Zipcode}
+                  </List.Item>
+                  <List.Item style={{ marginTop: 20 }}>
+                    <Header as="h4">Type:</Header>
+                    {userInfo.Type}
+                  </List.Item>
+                  <List.Item style={{ marginTop: 20 }}>
+                    <Header as="h4">Category:</Header>
+                    {userInfo.Category}
+                  </List.Item>
+                </Grid.Column>
+              </List>
+            </Grid>
+            <Divider hidden />
+            <Segment basic textAlign={"center"}>
+              <Button
+                color="green"
+                onClick={handleEdit}
+                positive
+                style={{ textAlign: "center" }}
+              >
+                Edit Account
+              </Button>
+            </Segment>
+          </Segment>
         </div>
       )}
-      {userInfo.Type === "Recipient" ? (
-        <OrderHistory userInfo={userInfo} />
-      ) : (
-        <GivingHistory userInfo={userInfo} />
-      )}
+      <Segment padded="very" textAlign={"center"}>
+        {userInfo.Type === "Recipient" ? (
+          <OrderHistory userInfo={userInfo} />
+        ) : (
+          <GivingHistory userInfo={userInfo} />
+        )}
+      </Segment>
     </div>
   );
 };

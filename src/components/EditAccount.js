@@ -138,18 +138,18 @@ const EditAccount = ({ location }) => {
   }
 
   return (
-    <Form style={{ marginTop: 25 }}>
-      <Segment textAlign={"center"}>
-        <Header size="medium" color="green">
+    <Form  >
+      <Segment textAlign={"center"} vertical>
+        <Header size="medium" color="green" style={{ letterSpacing: 1 }}>
           EDIT ACCOUNT INFO
         </Header>
-      </Segment>
-      <Segment textAlign={"center"}>
+      </Segment >
+      <Segment textAlign={"center"} vertical>
         {!userInfo.Image ? (
           <Form.Field>
             <label className="image-upload">Organization Logo</label>
             <div className="imagePreview">
-              <Image id="image-preview" alt="" />
+              <Image centered id="image-preview" alt="" />
             </div>
             <input
               id="file-input"
@@ -163,14 +163,11 @@ const EditAccount = ({ location }) => {
           <div>
             <Form.Field>
               <label className="image-upload">Organization Logo</label>
-              <div className="imagePreview">
-                <Image id="image-preview" alt="" />
-              </div>
               <br />
               <Image
+                centered
                 src={userInfo.Image}
-                alt=""
-                style={{ marginRight: 20, marginTop: 10 }}
+                alt="logo"
               />
               <br />
               <input

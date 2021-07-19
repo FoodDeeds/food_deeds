@@ -64,7 +64,7 @@ const Contact = () => {
 
   return (
     <div>
-      <Segment textAlign={"center"}>
+      <Segment textAlign={"center"} vertical>
         <Form>
           <Header textAlign="center" size="medium" style={{ marginTop: 30 }}>
             Ready to help us fight food insecurity?
@@ -111,8 +111,9 @@ const Contact = () => {
         >
           Submit Inquiry
         </Button>
+        <Divider hidden/>
       </Segment>
-      <Segment>
+      <Segment vertical>
         <List>
           <List.Content as="h3">General Inquiries</List.Content>
           <List.Item
@@ -137,7 +138,7 @@ const Contact = () => {
           />
         </List>
       </Segment>
-      <Divider />
+      <Divider hidden/>
     </div>
   );
 };

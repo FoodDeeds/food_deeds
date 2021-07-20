@@ -164,6 +164,7 @@ const Volunteer = () => {
               <option value="Wyoming">WY</option>
             </Form.Field>
             <Form.Field
+              required
               label="Zipcode"
               control={Input}
               onChange={(evt) => setZipcode(evt.target.value)}

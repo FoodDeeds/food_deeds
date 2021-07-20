@@ -112,7 +112,7 @@ const SingleSupplier = (props) => {
       </div>
     );
   }
-  console.log("user info", userInfo);
+  
   return (
     <div
       style={{

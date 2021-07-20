@@ -214,7 +214,7 @@ const Browse = () => {
               >
                 <p>
                   <Link to={`/supplier/${donation.info.supplierId}`}>
-                    {donation.info.supplierName}
+                   <b>{donation.info.supplierName}</b> 
                   </Link>
                   <br />
                   {donation.info.supplierAddress} <br />
@@ -244,7 +244,7 @@ const Browse = () => {
               >
                 <p>
                   <Link to={`/supplier/${allDonation.info.supplierId}`}>
-                    {allDonation.info.supplierName}
+                    <b>{allDonation.info.supplierName} </b>
                   </Link>
                   <br />
                   {allDonation.info.supplierAddress} <br />

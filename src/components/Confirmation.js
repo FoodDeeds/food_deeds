@@ -59,15 +59,15 @@ const Confirmation = ({ location }) => {
               </Header>
             )}
             <Divider hidden />
-            <Grid.Row> Pick-up Date: {donation.info.PickupDate}</Grid.Row>
-            <Grid.Row> Quantity: {donation.info.Quantity} boxes</Grid.Row>
-            <Grid.Row> Pick-up time: {donation.info.PickupTime}</Grid.Row>
+            <Grid.Row> <b>Pick-up Date: </b>{donation.info.PickupDate}</Grid.Row>
+            <Grid.Row> <b>Quantity: </b> {donation.info.Quantity} boxes</Grid.Row>
+            <Grid.Row> <b>Pick-up time: </b> {donation.info.PickupTime}</Grid.Row>
             <br />
-            <Grid.Row> Supplier Name: {donation.info.supplierName} </Grid.Row>
-            <Grid.Row> Address: {donation.info.supplierAddress} </Grid.Row>
+            <Grid.Row> {donation.info.supplierName} </Grid.Row>
+            <Grid.Row> {donation.info.supplierAddress} </Grid.Row>
             <Grid.Row>
-              {donation.info.supplierCity}
-              {donation.info.supplierState}, {donation.info.supplierZipCode}
+              {donation.info.supplierCity}, 
+              {' '}{donation.info.supplierState} {donation.info.supplierZipCode}
             </Grid.Row>
             <br />
             <br />

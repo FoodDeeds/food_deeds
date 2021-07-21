@@ -2,9 +2,10 @@
 
 <img src="/src/images/Logo-2.png" width="300">
 
+## <a href="https://capstone-fooddeeds.web.app"> Deployed on Firebase </a>
+
 ## <a href="https://youtu.be/OvNzmsk0RFg"> Demo Video on YouTube </a>
 
-## <a href="https://capstone-fooddeeds.web.app"> Deployed on Firebase </a>
 
 <h3>FoodDeeds is a Progressive Web Application (PWA) that fights food insecurity by connecting food suppliers with those in need.</h3>
 
